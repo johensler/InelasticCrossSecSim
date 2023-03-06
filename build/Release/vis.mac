@@ -1,0 +1,51 @@
+# Macro file for the visualization setting in the initialization phase 
+# of the krakow sim when running in interactive mode
+#
+#Opens OpenGl viewer
+/vis/open OGL
+
+#Sets default viepoint 
+/vis/viewer/set/viewpointVector 1 0 0 
+
+#Draws construction
+/vis/drawVolume
+/vis/geometry/set/visibility logicWorld 0 true
+
+/vis/geometry/set/forceSolid logicDet0 1 1
+/vis/geometry/set/forceSolid logicDet1 1 1
+/vis/geometry/set/forceSolid logicDet2 1 1
+/vis/geometry/set/forceSolid logicDet3 1 1
+/vis/geometry/set/forceSolid logicDet4 1 1
+/vis/geometry/set/forceSolid logicDet5 1 1
+/vis/geometry/set/colour logicDet0 1 0.1 0.7 0.8 1
+/vis/geometry/set/colour logicDet1 1 0.1 0.7 0.8 1
+/vis/geometry/set/colour logicDet2 1 0.1 0.7 0.8 1
+/vis/geometry/set/colour logicDet3 1 0.1 0.7 0.8 1
+/vis/geometry/set/colour logicDet4 1 0.1 0.7 0.8 1
+/vis/geometry/set/colour logicDet5 1 0.1 0.7 0.8 1
+
+/vis/geometry/set/forceSolid logicOB0 1 1
+/vis/geometry/set/forceSolid logicOB1 1 1
+/vis/geometry/set/colour logicOB0 1 0 0.66 1 1
+/vis/geometry/set/colour logicOB1 1 0 0.66 1 1
+
+/vis/geometry/set/forceSolid logicTarget 1 1
+/vis/geometry/set/colour logicTarget 1 grey 1
+
+/vis/geometry/set/forceWireframe logicVeto 1 1
+/vis/geometry/set/colour logicVeto 1 magenta 1
+
+/vis/viewer/set/autoRefresh true
+
+#Draws trajectories
+/vis/scene/add/trajectories smooth
+
+#Adds cooridnate Axes 
+/vis/scene/add/axes 0 0 0 0.05
+
+#Accumulates all events from /run/beamOn in viewer
+/vis/scene/endOfEventAction accumulate 99
+
+#Filter only show proton
+#/vis/filtering/trajectories/create/particleFilter
+#/vis/filtering/trajectories/particleFilter-0/add e-

@@ -1,0 +1,182 @@
+
+#RUN 0
+/gun/momentumAmp 200 MeV
+/construction/target_thickness 1 mm
+/run/reinitializeGeometry
+/run/beamOn 500000
+
+#RUN 1 
+/gun/momentumAmp 217 MeV
+/run/beamOn 500000
+
+#RUN 2 
+/gun/momentumAmp 228 MeV
+/run/beamOn 500000
+
+#RUN 3
+/gun/momentumAmp 235 MeV
+/run/beamOn 500000
+
+#RUN 4
+/gun/momentumAmp 241 MeV
+/run/beamOn 500000
+
+#RUN 5 
+/gun/momentumAmp 254 MeV
+/run/beamOn 500000
+
+#RUN 6 
+/gun/momentumAmp 255 MeV
+/run/beamOn 500000
+
+#RUN 7
+/gun/momentumAmp 266 MeV
+/run/beamOn 500000
+
+#RUN 8 
+/gun/momentumAmp 276 MeV
+/run/beamOn 500000
+
+#RUN 9
+/gun/momentumAmp 277 MeV
+/run/beamOn 500000
+
+#RUN 10 
+/gun/momentumAmp 288 MeV
+/run/beamOn 500000
+
+#RUN 11
+/gun/momentumAmp 293 MeV
+/run/beamOn 500000
+
+#RUN 12
+/gun/momentumAmp 343 MeV
+/run/beamOn 500000
+
+#RUN 13
+/gun/momentumAmp 388 MeV
+/run/beamOn 500000
+
+#RUN 14 
+/gun/momentumAmp 433 MeV
+/run/beamOn 500000
+
+#RUN 15
+/gun/momentumAmp 444 MeV
+/run/beamOn 500000
+
+#RUN 16
+/gun/momentumAmp 474 MeV
+/run/beamOn 500000
+
+#RUN 17
+/gun/momentumAmp 517 MeV
+/run/beamOn 500000
+
+#RUN 18
+/gun/momentumAmp 519 MeV
+/run/beamOn 500000
+
+#RUN 19
+/gun/momentumAmp 550 MeV
+/run/beamOn 500000
+
+#RUN 20
+/gun/momentumAmp 608 MeV
+/run/beamOn 500000
+
+#RUN 21
+/gun/momentumAmp 617 MeV
+/run/beamOn 500000
+
+#RUN 22
+/gun/momentumAmp 650 MeV
+/run/beamOn 500000
+
+#RUN 23
+/gun/momentumAmp 703 MeV
+/run/beamOn 500000
+
+#RUN 24
+/gun/momentumAmp 713 MeV
+/run/beamOn 500000
+
+#RUN 25
+/gun/momentumAmp 750 MeV
+/run/beamOn 500000
+
+#RUN 26              
+/gun/momentumAmp 793 MeV
+/run/beamOn 500000
+
+#RUN 27
+/gun/momentumAmp 816 MeV
+/run/beamOn 500000
+
+#RUN 28              
+/gun/momentumAmp 850 MeV
+/run/beamOn 500000
+
+#RUN 29
+/gun/momentumAmp 880 MeV
+/run/beamOn 500000
+
+#RUN 30
+/gun/momentumAmp 900 MeV
+/run/beamOn 500000
+
+#RUN 31
+/gun/momentumAmp 950 MeV
+/run/beamOn 500000
+
+#RUN 32
+/gun/momentumAmp 1000 MeV
+/run/beamOn 500000
+
+#RUN 33
+/gun/momentumAmp 1045 MeV
+/run/beamOn 500000
+
+#RUN 34
+/gun/momentumAmp 1045 MeV
+/run/beamOn 500000
+
+#RUN 35
+/gun/momentumAmp 1159 MeV
+/run/beamOn 500000
+
+#RUN 36              
+/gun/momentumAmp 1200 MeV
+/run/beamOn 500000
+
+#RUN 37
+/gun/momentumAmp 1250 MeV
+/run/beamOn 500000
+
+#RUN 38
+/gun/momentumAmp 1300 MeV
+/run/beamOn 500000
+
+#RUN 39
+/gun/momentumAmp 1350 MeV
+/run/beamOn 500000
+
+#RUN 40
+/gun/momentumAmp 1400 MeV
+/run/beamOn 500000
+
+#RUN 41
+/gun/momentumAmp 1450 MeV
+/run/beamOn 500000
+
+#RUN 42
+/gun/momentumAmp 1500 MeV
+/run/beamOn 500000
+
+#RUN 43
+/gun/momentumAmp 1534 MeV
+/run/beamOn 500000
+
+#RUN 44
+/gun/momentumAmp 1600 MeV
+/run/beamOn 500000

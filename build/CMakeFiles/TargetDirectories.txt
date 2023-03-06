@@ -1,0 +1,4 @@
+C:/Geant4/AbsorptionCrossSecSim/build/CMakeFiles/sim.dir
+C:/Geant4/AbsorptionCrossSecSim/build/CMakeFiles/AbsorptionCrossSecSim.dir
+C:/Geant4/AbsorptionCrossSecSim/build/CMakeFiles/ALL_BUILD.dir
+C:/Geant4/AbsorptionCrossSecSim/build/CMakeFiles/ZERO_CHECK.dir

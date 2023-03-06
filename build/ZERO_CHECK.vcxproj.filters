@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Geant4\AbsorptionCrossSecSim\build\CMakeFiles\f1af1b3af41ede998b33346f30287609\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{33457BF1-7304-3D72-A109-7C14A402616E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
