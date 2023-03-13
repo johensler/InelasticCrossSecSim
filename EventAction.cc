@@ -6,6 +6,7 @@
 
 EventAction::EventAction()
 {
+
 }
 
 EventAction::~EventAction()
@@ -170,55 +171,22 @@ void EventAction::EndOfEventAction(const G4Event *event)
             }
 
             // Store production angles according to produced type
-            if (ParticleTypeSecondaries[i] == "proton")
-            {
-                man->FillNtupleDColumn(1, 0, phi);
-                man->FillNtupleDColumn(1, 1, theta);
-                man->AddNtupleRow(1);
-            }
-            else if (ParticleTypeSecondaries[i] == "neutron")
-            {
-                man->FillNtupleDColumn(2, 0, phi);
-                man->FillNtupleDColumn(2, 1, theta);
-                man->AddNtupleRow(2);
-            }
-            else if (ParticleTypeSecondaries[i] == "gamma")
-            {
-                man->FillNtupleDColumn(3, 0, phi);
-                man->FillNtupleDColumn(3, 1, theta);
-                man->AddNtupleRow(3);
-            }
-            else if (ParticleTypeSecondaries[i] == "pi+" || ParticleTypeSecondaries[i] == "pi-")
-            {
-                man->FillNtupleDColumn(4, 0, phi);
-                man->FillNtupleDColumn(4, 1, theta);
-                man->AddNtupleRow(4);
-            }
-            else if (ParticleTypeSecondaries[i] == "e+" || ParticleTypeSecondaries[i] == "e-")
-            {
-                man->FillNtupleDColumn(5, 0, phi);
-                man->FillNtupleDColumn(5, 1, theta);
-                man->AddNtupleRow(5);
-            }
-            else if (ParticleTypeSecondaries[i] == "deuteron")
-            {
-                man->FillNtupleDColumn(6, 0, phi);
-                man->FillNtupleDColumn(6, 1, theta);
-                man->AddNtupleRow(6);
-            }
-            else if (ParticleTypeSecondaries[i] == "alpha")
-            {
-                man->FillNtupleDColumn(7, 0, phi);
-                man->FillNtupleDColumn(7, 1, theta);
-                man->AddNtupleRow(7);
+            if(particle_map.find(ParticleTypeSecondaries[i]) == particle_map.end())
+            {   
+                //Particle type not declared
+                G4cout << ParticleTypeSecondaries[i] << G4endl;
+                man->FillNtupleDColumn(9, 0, phi);
+                man->FillNtupleDColumn(9, 1, theta);
+                man->AddNtupleRow(9);
             }
             else
-            {
-                G4cout << ParticleTypeSecondaries[i] << G4endl;
-                man->FillNtupleDColumn(8, 0, phi);
-                man->FillNtupleDColumn(8, 1, theta);
-                man->AddNtupleRow(8);
+            {   
+                int NtupleIndex = particle_map[ParticleTypeSecondaries[i]];
+                man->FillNtupleDColumn(NtupleIndex, 0, phi);
+                man->FillNtupleDColumn(NtupleIndex, 1, theta);
+                man->AddNtupleRow(NtupleIndex);
             }
+
             i++;
         }
     }

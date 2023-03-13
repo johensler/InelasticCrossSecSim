@@ -43,6 +43,18 @@ public:
 private:
     bool atLeastThree(bool a, bool b, bool c, bool d, bool e);
     bool atLeastFour(bool a, bool b, bool c, bool d, bool e);
+
+    std::map<std::string, int> particle_map = {
+        {"proton", 1},
+        {"neutron", 2},
+        {"gamma", 3},
+        {"pi+", 4},
+        {"pi-", 4},
+        {"e+", 5},
+        {"e-", 5},
+        {"deuteron", 6},
+        {"alpha", 7},
+        {"He3", 8}};
 };
 
 #endif

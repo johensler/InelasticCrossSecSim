@@ -58,6 +58,12 @@ RunAction::RunAction()
     man->FinishNtuple();
 
     //  Create 9th  ntuple (id = 8)
+    man->CreateNtuple("Helium3ProductionDist", "Helium3ProductionDist");
+    man->CreateNtupleDColumn("phiDist");   // column Id = 0
+    man->CreateNtupleDColumn("thetaDist"); // column Id = 1
+    man->FinishNtuple();
+
+    //  Create 9th  ntuple (id = 9)
     man->CreateNtuple("UndeclaredProductionDist", "UndeclaredProductionDist");
     man->CreateNtupleDColumn("phiDist");   // column Id = 0
     man->CreateNtupleDColumn("thetaDist"); // column Id = 1
