@@ -63,7 +63,19 @@ RunAction::RunAction()
     man->CreateNtupleDColumn("thetaDist"); // column Id = 1
     man->FinishNtuple();
 
-    //  Create 9th  ntuple (id = 9)
+    //  Create 10th  ntuple (id = 9)
+    man->CreateNtuple("TritonProductionDist", "TritonProductionDist");
+    man->CreateNtupleDColumn("phiDist");   // column Id = 0
+    man->CreateNtupleDColumn("thetaDist"); // column Id = 1
+    man->FinishNtuple();
+
+    //  Create 11th  ntuple (id = 10)
+    man->CreateNtuple("MuonProductionDist", "MuonProductionDist");
+    man->CreateNtupleDColumn("phiDist");   // column Id = 0
+    man->CreateNtupleDColumn("thetaDist"); // column Id = 1
+    man->FinishNtuple();
+
+    //  Create 12th  ntuple (id = 11)
     man->CreateNtuple("UndeclaredProductionDist", "UndeclaredProductionDist");
     man->CreateNtupleDColumn("phiDist");   // column Id = 0
     man->CreateNtupleDColumn("thetaDist"); // column Id = 1

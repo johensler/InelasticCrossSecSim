@@ -54,7 +54,10 @@ private:
         {"e-", 5},
         {"deuteron", 6},
         {"alpha", 7},
-        {"He3", 8}};
+        {"He3", 8},
+        {"triton", 9},
+        {"mu+", 10},
+        {"mu-", 10}};
 };
 
 #endif

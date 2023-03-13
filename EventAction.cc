@@ -175,9 +175,9 @@ void EventAction::EndOfEventAction(const G4Event *event)
             {   
                 //Particle type not declared
                 G4cout << ParticleTypeSecondaries[i] << G4endl;
-                man->FillNtupleDColumn(9, 0, phi);
-                man->FillNtupleDColumn(9, 1, theta);
-                man->AddNtupleRow(9);
+                man->FillNtupleDColumn(11, 0, phi);
+                man->FillNtupleDColumn(11, 1, theta);
+                man->AddNtupleRow(11);
             }
             else
             {   

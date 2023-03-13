@@ -29,13 +29,9 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     solidTarget = new G4Box("solidTarget", 5 / 2 * mm, 5 / 2 * mm, target_thickness / 2);
     solidDet = new G4Box("solidDet", 1024 * 29.24 / 2 * micrometer, 512 * 26.88 / 2 * micrometer, 50 / 2 * micrometer);
 
-    // G4Box *Box1 = new G4Box("Box1", 5 / 2 * cm, 3 / 2 * cm, target_thickness / 2);
-    // G4Box *Box2 = new G4Box("Box2", 5.2 / 2 * cm, 3.2 / 2 * cm, target_thickness / 2 + 2);
     G4Box *Box1 = new G4Box("Box1", 5 / 2 * mm, 5 / 2 * mm, target_thickness / 2);
     G4Box *Box2 = new G4Box("Box2", 5.2 / 2 * mm, 5.2 / 2 * mm, target_thickness / 2 + 2);
     solidVeto = new G4SubtractionSolid("solidVeto", Box2, Box1);
-
-    // solidVeto = new G4Sphere("solidVeto", 2.7 * cm, 2.9 * cm, 0, 360 * degree, 0, 180 * degree);
 
     // LOGIC VOLUMES ......oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
     logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld");
