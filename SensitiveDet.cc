@@ -50,7 +50,8 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
     // VetoDetector
     if (CopyNo == 100)
     {
-        // Three needed properties to be counted as passed
+        // Handle primary particles ------------------------------------------------------------------------------------------------------------------------------------
+        //  Three needed properties to be counted as passed
         //(i) particle moved from veto to world volume (not double count incoming particles)
         //(ii) particle is of specified (produced) type
         //(iii) particle produced in world (reject secondary particles)
@@ -70,6 +71,17 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             // G4cout << "Primary particle entered target" << G4endl;
             eventAction->InTrack = track->GetMomentumDirection();
         }
+
+        // Handle secondary particles ------------------------------------------------------------------------------------------------------------------------------------
+        //  Two needed properties to be counted as passed secondary
+        //(i) particle moved from veto to world volume (not double count incoming particles)
+        //(ii) particle produced in target (reject primary particles)
+        if (PostStepVolume == "physWorld" && PreStepVolume == "physVeto" && ParticleOriginVolume == "physTarget")
+        {
+            // G4cout << "Secondary " << track->GetParticleDefinition()->GetParticleName() << " left target" << G4endl;
+            eventAction->OutTrackSecondaries.push_back(track->GetMomentumDirection());
+            eventAction->ParticleTypeSecondaries.push_back(track->GetParticleDefinition()->GetParticleName());
+        }
     }
 
     else if (CopyNo == 101)
@@ -81,6 +93,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             {
                 // G4cout << "Inelastic Interaction" << G4endl;
                 eventAction->bIsAbsorbed = true;
+                eventAction->bIsPassed = false;
             }
             // G4String ProcessName = preStepPoint->GetProcessDefinedStep()->GetProcessName();
             // G4String ProcessName2 = postStepPoint->GetProcessDefinedStep()->GetProcessName();
@@ -89,8 +102,8 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         }
     }
 
-    // Telescope Detectors
-    else if (0 <= CopyNo && CopyNo <= 7)
+    // ALPIDEs
+    else if (0 <= CopyNo && CopyNo <= 43)
     {
         // Three needed properties to be counted as passed
         //(i) Step at Boundary (to not double count for multiple steps)
@@ -108,8 +121,83 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
                 // G4cout << "Proton registered in Det 1" << G4endl;
                 eventAction->bHitDet1 = true;
             }
+            else if (CopyNo == 2)
+            {
+                // G4cout << "Proton registered in Det 2" << G4endl;
+                eventAction->bHitDet2 = true;
+            }
+            else if (CopyNo == 3)
+            {
+                // G4cout << "Proton registered in Det 3" << G4endl;
+                eventAction->bHitDet3 = true;
+            }
+            else if (CopyNo == 4)
+            {
+                // G4cout << "Proton registered in Det 4" << G4endl;
+                eventAction->bHitDet4 = true;
+            }
+            else if (CopyNo == 5)
+            {
+                // G4cout << "Proton registered in Det 5" << G4endl;
+                eventAction->bHitDet5 = true;
+            }
+            else if (10 <= CopyNo && CopyNo <= 23)
+            {
+                // G4cout << "Proton registered in OBM1" << G4endl;
+                eventAction->bHitOB0 = true;
+            }
+            else if (30 <= CopyNo && CopyNo <= 43)
+            {
+                // G4cout << "Proton registered in OBM2" << G4endl;
+                eventAction->bHitOB1 = true;
+            }
+        }
+
+        // Handle measured data: All charged particles
+        if (PreStepStatus == fGeomBoundary && (track->GetParticleDefinition()->GetPDGCharge() == 1 || track->GetParticleDefinition()->GetPDGCharge() == -1))
+        {
+
+            if (CopyNo == 0)
+            {
+                // G4cout << "Proton registered in Det 0" << G4endl;
+                eventAction->bChargedHitDet0 = true;
+            }
+            else if (CopyNo == 1)
+            {
+                // G4cout << "Proton registered in Det 1" << G4endl;
+                eventAction->bChargedHitDet1 = true;
+            }
+            else if (CopyNo == 2)
+            {
+                // G4cout << "Proton registered in Det 2" << G4endl;
+                eventAction->bChargedHitDet2 = true;
+            }
+            else if (CopyNo == 3)
+            {
+                // G4cout << "Proton registered in Det 3" << G4endl;
+                eventAction->bChargedHitDet3 = true;
+            }
+            else if (CopyNo == 4)
+            {
+                // G4cout << "Proton registered in Det 4" << G4endl;
+                eventAction->bChargedHitDet4 = true;
+            }
+            else if (CopyNo == 5)
+            {
+                // G4cout << "Proton registered in Det 5" << G4endl;
+                eventAction->bChargedHitDet5 = true;
+            }
+            else if (10 <= CopyNo && CopyNo <= 23)
+            {
+                // G4cout << "Proton registered in OBM1" << G4endl;
+                eventAction->bChargedHitOB0 = true;
+            }
+            else if (30 <= CopyNo && CopyNo <= 43)
+            {
+                // G4cout << "Proton registered in OBM2" << G4endl;
+                eventAction->bChargedHitOB1 = true;
+            }
         }
     }
     return true;
 }
-

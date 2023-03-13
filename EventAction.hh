@@ -25,10 +25,24 @@ public:
     G4bool bHitOB0 = false;
     G4bool bHitOB1 = false;
 
+    G4bool bChargedHitDet0 = false;
+    G4bool bChargedHitDet1 = false;
+    G4bool bChargedHitDet2 = false;
+    G4bool bChargedHitDet3 = false;
+    G4bool bChargedHitDet4 = false;
+    G4bool bChargedHitDet5 = false;
+    G4bool bChargedHitOB0 = false;
+    G4bool bChargedHitOB1 = false;
+
     G4ThreeVector InTrack;
     G4ThreeVector OutTrack;
 
+    std::vector<G4ThreeVector> OutTrackSecondaries;
+    std::vector<std::string> ParticleTypeSecondaries;
+
 private:
+    bool atLeastThree(bool a, bool b, bool c, bool d, bool e);
+    bool atLeastFour(bool a, bool b, bool c, bool d, bool e);
 };
 
 #endif

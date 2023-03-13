@@ -37,44 +37,37 @@ private:
     G4double world_halfsizeY = 0.12 * m;
     G4double world_halfsizeZ = 0.2 * m;
 
-    // Solids
+    // Solids-------------------------------------------------------------
     G4Box *solidWorld;
     G4Box *solidTarget;
     G4Box *solidDet;
-    G4Box *solidOB;
     G4SubtractionSolid *solidVeto;
-
-    // Logics
+    // G4Sphere *solidVeto;
+    // Logics-------------------------------------------------------------
     G4LogicalVolume *logicWorld;
     G4LogicalVolume *logicTarget;
     G4LogicalVolume *logicVeto;
 
-    G4LogicalVolume *logicDet0;
-    G4LogicalVolume *logicDet1;
-    G4LogicalVolume *logicDet2;
-    G4LogicalVolume *logicDet3;
-    G4LogicalVolume *logicDet4;
-    G4LogicalVolume *logicDet5;
+    // Single ALPIDE
+    G4LogicalVolume *logicALPIDE;
 
-    G4LogicalVolume *logicOB0;
-    G4LogicalVolume *logicOB1;
-
-    // Physics
+    // Physics-------------------------------------------------------------
     G4VPhysicalVolume *physWorld;
     G4VPhysicalVolume *physTarget;
     G4VPhysicalVolume *physVeto;
 
-    G4VPhysicalVolume *physDet0;
-    G4VPhysicalVolume *physDet1;
-    G4VPhysicalVolume *physDet2;
-    G4VPhysicalVolume *physDet3;
-    G4VPhysicalVolume *physDet4;
-    G4VPhysicalVolume *physDet5;
+    // Signle ALPIDEs
+    G4VPhysicalVolume *physALPIDE0;
+    G4VPhysicalVolume *physALPIDE1;
+    G4VPhysicalVolume *physALPIDE2;
+    G4VPhysicalVolume *physALPIDE3;
+    G4VPhysicalVolume *physALPIDE4;
+    G4VPhysicalVolume *physALPIDE5;
 
-    G4VPhysicalVolume *physOB0;
-    G4VPhysicalVolume *physOB1;
+    // OBM 1
+    // std::vector<G4VPhysicalVolume *> physOBM1;
 
-    // Mats
+    // Mats-------------------------------------------------------------
     G4Material *worldMat;
     G4Material *targetMat;
     G4Material *detMat;
