@@ -1,5 +1,5 @@
 #RUN 0
-/gun/momentumAmp 2000 MeV
-/construction/target_thickness 5 mm
+/gun/momentumAmp 300 MeV
+/construction/target_thickness  5 mm
 /run/reinitializeGeometry
-/run/beamOn 100000
+/run/beamOn 20000

@@ -36,13 +36,6 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
     // Get the Copy Nr of the detector hit (to differentiate between the different detectors)
     G4int CopyNo = aStep->GetPreStepPoint()->GetPhysicalVolume()->GetCopyNo();
 
-    // Acess the primary particle type
-    // if (runManager && runManager->GetCurrentEvent())
-    // {
-    //     PrimaryDefinition = runManager->GetCurrentEvent()->GetPrimaryVertex()->GetPrimary()->GetParticleDefinition();
-    //     G4cout << "Primary Particle " << PrimaryDefinition->GetParticleName() << G4endl;
-    // }
-
     // Temporary particle definition and inelastic process (not dynamic by now)
     G4ParticleDefinition *ParticleDefinition = G4Proton::Definition();
     G4String InelasitcProcessName = "protonInelastic";
@@ -58,8 +51,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         if (PostStepVolume == "physWorld" && PreStepVolume == "physVeto" && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
         {
             // G4cout << "Primary particle left target" << G4endl;
-            eventAction->OutTrack = track->GetMomentumDirection();
-            eventAction->bIsPassed = true;
+            eventAction->OutTrack = preStepPoint->GetMomentumDirection();
         }
 
         // Three needed properties to be counted as entered particle
@@ -69,10 +61,10 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         if (PostStepVolume == "physTarget" && PreStepVolume == "physVeto" && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
         {
             // G4cout << "Primary particle entered target" << G4endl;
-            eventAction->InTrack = track->GetMomentumDirection();
+            eventAction->InTrack = preStepPoint->GetMomentumDirection();
         }
 
-        // Handle secondary particles ------------------------------------------------------------------------------------------------------------------------------------
+        // Handle outgoing secondary particles ------------------------------------------------------------------------------------------------------------------------------------
         //  Two needed properties to be counted as passed secondary
         //(i) particle moved from veto to world volume (not double count incoming particles)
         //(ii) particle produced in target (reject primary particles)
@@ -86,6 +78,19 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
 
     else if (CopyNo == 101)
     {
+        // Detect ingoing primary particle
+        if (PreStepStatus == fGeomBoundary && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
+        {
+            // G4cout << "Particle entered the target" << G4endl;
+            eventAction->bIsEntered = true;
+        }
+        // Detect outgoing priamry particle NOT USED FOR NOW-> outgoing counted as ingoing and no inelastic interaction
+        // if (PostStepStatus == fGeomBoundary && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
+        // {
+        //     eventAction->bIsPassed = true;
+        // }
+
+        // Track inelastic interaction
         if (preStepPoint->GetProcessDefinedStep())
         {
             G4String ProcessName = postStepPoint->GetProcessDefinedStep()->GetProcessName();
@@ -93,18 +98,14 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             {
                 // G4cout << "Inelastic Interaction" << G4endl;
                 eventAction->bIsAbsorbed = true;
-                eventAction->bIsPassed = false;
             }
-            // G4String ProcessName = preStepPoint->GetProcessDefinedStep()->GetProcessName();
-            // G4String ProcessName2 = postStepPoint->GetProcessDefinedStep()->GetProcessName();
-            // G4cout << "preStep " << track->GetParticleDefinition()->GetParticleName() << " " << ProcessName << G4endl;
-            // G4cout << "postStep " << track->GetParticleDefinition()->GetParticleName() << " " << ProcessName2 << G4endl;
         }
     }
 
     // ALPIDEs
     else if (0 <= CopyNo && CopyNo <= 43)
     {
+        //Monte Carlo: Consider only the primary particles to study the "real" scenario 
         // Three needed properties to be counted as passed
         //(i) Step at Boundary (to not double count for multiple steps)
         //(ii) particle is of specified (produced) type
@@ -153,7 +154,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             }
         }
 
-        // Handle measured data: All charged particles
+        // Handle measurement: All Charged particles are measured
         if (PreStepStatus == fGeomBoundary && (track->GetParticleDefinition()->GetPDGCharge() == 1 || track->GetParticleDefinition()->GetPDGCharge() == -1))
         {
 

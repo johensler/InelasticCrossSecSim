@@ -14,6 +14,7 @@ public:
     void BeginOfEventAction(const G4Event *event) override;
     void EndOfEventAction(const G4Event *event) override;
 
+    G4bool bIsEntered = false;
     G4bool bIsPassed = false;
     G4bool bIsAbsorbed = false;
     G4bool bHitDet0 = false;

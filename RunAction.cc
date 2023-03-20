@@ -5,8 +5,11 @@ RunAction::RunAction()
     G4AnalysisManager *man = G4AnalysisManager::Instance();
     G4RunManager::GetRunManager()->SetPrintProgress(1);
 
-    // Create Histogramm to store counted particles
+    // Create Histogramm to store counted particles (Monte Carlo)
     man->CreateH1("Pcount", "Particles counted", 10, 0, 10);
+
+    // Create Histogramm to store counted particles (Measurement)
+    man->CreateH1("PcountMeas", "Particles counted (measurement)", 10, 0, 10);
 
     // Create n-Tuples to store scattering angles / secondaries
     //  Create 1st ntuple (id = 0)

@@ -21,7 +21,7 @@ public:
     // Defines the distance between the beam exit and the target position
     G4double d_BeamStart_target = 6 * cm;
     G4double BeamAngle = 0 * degree;
-    G4double BeamRadius = 0.1 * cm;
+    G4double BeamRadius = 0 * cm;
 
 private:
     G4TwoVector RandPointInCircle(G4ThreeVector position, G4double radius);

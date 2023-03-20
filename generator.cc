@@ -11,7 +11,7 @@ PrimaryGenerator::PrimaryGenerator()
     fParticleGun->SetParticleDefinition(particle);
 
     // Define beam position
-    G4double posX = tan(BeamAngle) * d_BeamStart_target;
+    G4double posX = 0; // tan(BeamAngle) * d_BeamStart_target;
     G4double posY = 0;
     G4double posZ = -d_BeamStart_target;
 
@@ -23,7 +23,7 @@ PrimaryGenerator::PrimaryGenerator()
     // Define particles momentum direction
     G4double momY = 0;
     G4double momZ = 1;
-    G4double momX = -tan(BeamAngle) * momZ;
+    G4double momX = 0; //-tan(BeamAngle) * momZ;
 
     G4ThreeVector momentum(momX, momY, momZ);
     fParticleGun->SetParticleMomentumDirection(momentum);
