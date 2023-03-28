@@ -175,7 +175,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
         bIsNoOutTrack = true;
         man->FillH1(1, 1);
     }
-    G4cout << "Out Tracks: " << NrOutTrack << G4endl;
 
     // Elastic Scattering Distribution data storage --------------------------------------------------------------------------------
     if (OutTrack != G4ThreeVector(0, 0, 0))

@@ -2,4 +2,4 @@
 /gun/momentumAmp 300 MeV
 /construction/target_thickness 5 mm
 /run/reinitializeGeometry
-/run/beamOn 1000000
+/run/beamOn 100000
