@@ -57,11 +57,9 @@ void EventAction::BeginOfEventAction(const G4Event *event)
 
 void EventAction::EndOfEventAction(const G4Event *event)
 {
-    // Get AnalysisManager
-    G4AnalysisManager *man = G4AnalysisManager::Instance();
+    G4AnalysisManager *man = G4AnalysisManager::Instance(); // Get AnalysisManager
 
     // Inelastic cross section data storage ---------------------------------------------------------------------
-
     // Store number of particles entering the target
     if (bIsEntered)
     {
@@ -95,7 +93,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
         man->FillH1(0, 3);
     }
 
-    // Handle measurement data: All Charged particles are measured -------------------------------------------------------------------------------------------------
+    // Handle measurement signatures: All Charged particles are measured -------------------------------------------------------------------------------------------------
     // Distinguish three measurement signatures: i) track in track out (TITO), ii)track in no (track) out (TINO), iii) track in, multiple out (TIMO)
     // Track in: 3 planes infornt hit, Track out: the first plane after target is hit and min 3 planes total after target
 
@@ -174,6 +172,22 @@ void EventAction::EndOfEventAction(const G4Event *event)
     {
         bIsNoOutTrack = true;
         man->FillH1(1, 1);
+    }
+    // Categorise proccesses ------------------------------------------------------------------------------
+    // (I)TITO
+    if (bIsOutSingleTrack)
+    {
+        // Two possible cases considerd:
+        //(I.i) ElasP (Elastic interacted primary particle)
+        if (!bIsAbsorbed)
+        {
+            man->FillH1(1, 4);
+        }
+        // (I.ii) InelasO (Inelastic interaction with one charde particle in acceptance)
+        else
+        {
+            man->FillH1(1, 5);
+        }
     }
 
     // Elastic Scattering Distribution data storage --------------------------------------------------------------------------------
