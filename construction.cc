@@ -25,7 +25,6 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
 {
     // SOLID VOLUMES ......oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
     solidWorld = new G4Box("solidWorld", world_halfsizeX, world_halfsizeY, world_halfsizeZ); // half of the length
-    // solidTarget = new G4Box("solidTarget", 5 / 2 * cm, 3 / 2 * cm, target_thickness / 2);
     solidTarget = new G4Box("solidTarget", 5 / 2 * cm, 5 / 2 * cm, target_thickness / 2);
     solidDet = new G4Box("solidDet", 1024 * 29.24 / 2 * micrometer, 512 * 26.88 / 2 * micrometer, 50 / 2 * micrometer);
 
@@ -64,17 +63,15 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     physALPIDE4 = new G4PVPlacement(0, G4ThreeVector(0., 0., det4Zpos), logicALPIDE, "physALPIDE4", logicWorld, false, 4, true);
     physALPIDE5 = new G4PVPlacement(0, G4ThreeVector(0., 0., det5Zpos), logicALPIDE, "physALPIDE5", logicWorld, false, 5, true);
 
+    double ALPIDE_x = 1024 * 29.24 * micrometer;
+    double ALPIDE_y = 512 * 26.88 * micrometer;
+    double ALPIDE_distance = 100 * micrometer;
     // OBM 0
     G4int ID = 10;
     for (G4int i = 0; i < 7; i++)
     {
         for (G4int j = 0; j < 2; j++)
         {
-            std::stringstream strOBM_ID;
-            strOBM_ID << i << j;
-            double ALPIDE_x = 1024 * 29.24 * micrometer;
-            double ALPIDE_y = 512 * 26.88 * micrometer;
-            double ALPIDE_distance = 100 * micrometer;
             G4VPhysicalVolume *physOBM1 = new G4PVPlacement(0,
                                                             G4ThreeVector(-3 * (ALPIDE_x + ALPIDE_distance) + (i * (ALPIDE_x + ALPIDE_distance)), -0.5 * (ALPIDE_y + ALPIDE_distance) + (j * (ALPIDE_y + ALPIDE_distance)), OBM1Zpos),
                                                             logicALPIDE,
@@ -94,11 +91,6 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     {
         for (G4int j = 0; j < 2; j++)
         {
-            std::stringstream strOBM_ID;
-            strOBM_ID << i << j;
-            double ALPIDE_x = 1024 * 29.24 * micrometer;
-            double ALPIDE_y = 512 * 26.88 * micrometer;
-            double ALPIDE_distance = 100 * micrometer;
             G4VPhysicalVolume *physOBM2 = new G4PVPlacement(0,
                                                             G4ThreeVector(-3 * (ALPIDE_x + ALPIDE_distance) + (i * (ALPIDE_x + ALPIDE_distance)), -0.5 * (ALPIDE_y + ALPIDE_distance) + (j * (ALPIDE_y + ALPIDE_distance)), OBM2Zpos),
                                                             logicALPIDE,

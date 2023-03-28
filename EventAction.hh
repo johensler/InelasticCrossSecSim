@@ -14,6 +14,7 @@ public:
     void BeginOfEventAction(const G4Event *event) override;
     void EndOfEventAction(const G4Event *event) override;
 
+    // Monte Carlo Variables
     G4bool bIsEntered = false;
     G4bool bIsPassed = false;
     G4bool bIsAbsorbed = false;
@@ -26,20 +27,39 @@ public:
     G4bool bHitOB0 = false;
     G4bool bHitOB1 = false;
 
-    G4bool bChargedHitDet0 = false;
-    G4bool bChargedHitDet1 = false;
-    G4bool bChargedHitDet2 = false;
-    G4bool bChargedHitDet3 = false;
-    G4bool bChargedHitDet4 = false;
-    G4bool bChargedHitDet5 = false;
-    G4bool bChargedHitOB0 = false;
-    G4bool bChargedHitOB1 = false;
+    std::vector<G4ThreeVector> OutTrackSecondaries;
+    std::vector<std::string> ParticleTypeSecondaries;
+
+    // Measurement variables
+
+    G4bool bIsInTrack = false;
+    G4int NrInTrack = 0;
+
+    G4int NrOutTrack = 0;
+    G4bool bIsOutSingleTrack = false;
+    G4bool bIsOutMultipleTrack = false;
+    G4bool bIsNoOutTrack = false;
+
+    std::map<int, std::vector<G4Track *> *> detector_hitvector_map{
+        {0, &HitTracksDet0},
+        {1, &HitTracksDet1},
+        {2, &HitTracksDet2},
+        {3, &HitTracksDet3},
+        {4, &HitTracksDet4},
+        {5, &HitTracksDet5},
+    };
+
+    std::vector<G4Track *> HitTracksDet0;
+    std::vector<G4Track *> HitTracksDet1;
+    std::vector<G4Track *> HitTracksDet2;
+    std::vector<G4Track *> HitTracksDet3;
+    std::vector<G4Track *> HitTracksDet4;
+    std::vector<G4Track *> HitTracksDet5;
+    std::vector<G4Track *> HitTracksOBM0;
+    std::vector<G4Track *> HitTracksOBM1;
 
     G4ThreeVector InTrack;
     G4ThreeVector OutTrack;
-
-    std::vector<G4ThreeVector> OutTrackSecondaries;
-    std::vector<std::string> ParticleTypeSecondaries;
 
 private:
     bool atLeastThree(bool a, bool b, bool c, bool d, bool e);

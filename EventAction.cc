@@ -30,14 +30,22 @@ void EventAction::BeginOfEventAction(const G4Event *event)
     bHitOB0 = false;
     bHitOB1 = false;
 
-    bChargedHitDet0 = false;
-    bChargedHitDet1 = false;
-    bChargedHitDet2 = false;
-    bChargedHitDet3 = false;
-    bChargedHitDet4 = false;
-    bChargedHitDet5 = false;
-    bChargedHitOB0 = false;
-    bChargedHitOB1 = false;
+    bIsInTrack = false;
+    NrInTrack = 0;
+
+    NrOutTrack = 0;
+    bIsOutSingleTrack = false;
+    bIsOutMultipleTrack = false;
+    bIsNoOutTrack = false;
+
+    HitTracksDet0.clear();
+    HitTracksDet1.clear();
+    HitTracksDet2.clear();
+    HitTracksDet3.clear();
+    HitTracksDet4.clear();
+    HitTracksDet5.clear();
+    HitTracksOBM0.clear();
+    HitTracksOBM1.clear();
 
     // Reset tracks
     InTrack = G4ThreeVector(0, 0, 0);
@@ -45,7 +53,6 @@ void EventAction::BeginOfEventAction(const G4Event *event)
 
     OutTrackSecondaries.clear();
     ParticleTypeSecondaries.clear();
-
 }
 
 void EventAction::EndOfEventAction(const G4Event *event)
@@ -55,11 +62,9 @@ void EventAction::EndOfEventAction(const G4Event *event)
 
     // Inelastic cross section data storage ---------------------------------------------------------------------
 
-    //
     // Store number of particles entering the target
     if (bIsEntered)
     {
-        // G4cout << "Particle entered the target" << G4endl;
         man->FillH1(0, 0);
     }
 
@@ -67,54 +72,110 @@ void EventAction::EndOfEventAction(const G4Event *event)
     if (bIsEntered && !bIsAbsorbed)
     {
         man->FillH1(0, 1);
-        // G4cout << "Particle passed the target" << G4endl;
     }
 
     // Store number of particles passed the target and measured
     if (bHitDet0 && bHitDet1 && bHitDet2 && bHitDet3 && bHitDet4 && bHitDet5 && bHitOB0 && bHitOB1)
     {
         man->FillH1(0, 4);
-        // G4cout << "Particle was measured in 5 planes after target" << G4endl;
     }
 
     if (atLeastFour(bHitDet3, bHitDet4, bHitDet5, bHitOB0, bHitOB1))
     {
         man->FillH1(0, 5);
-        // G4cout << "Particle was measured in at least 4 planes after target" << G4endl;
     }
 
     if (atLeastThree(bHitDet3, bHitDet4, bHitDet5, bHitOB0, bHitOB1))
     {
         man->FillH1(0, 6);
-        // G4cout << "Particle was measured in at least 3 planes after target" << G4endl;
     }
 
     if (bIsAbsorbed)
     {
         man->FillH1(0, 3);
-        // G4cout << "Particle absorbed in target " << G4endl;
     }
 
-    // Handle measurement data: All Charged particles are measured
+    // Handle measurement data: All Charged particles are measured -------------------------------------------------------------------------------------------------
+    // Distinguish three measurement signatures: i) track in track out (TITO), ii)track in no (track) out (TINO), iii) track in, multiple out (TIMO)
+    // Track in: 3 planes infornt hit, Track out: the first plane after target is hit and min 3 planes total after target
 
-
-    if (bChargedHitDet0 && bChargedHitDet1 && bChargedHitDet2 && bChargedHitDet3 && bChargedHitDet4 && bChargedHitDet5 && bChargedHitOB0 && bChargedHitOB1)
+    // Extract all "in" tracks (in general track through all first three planes, so also charged secondaries)
+    std::unordered_map<int, int> freq_in; // Store the frequency of each TrackID in the first three planes
+    for (int CopyNo = 0; CopyNo < 3; CopyNo++)
     {
-        man->FillH1(0, 7);
-        // G4cout << "Charged particle was measured in 5 planes after target" << G4endl;
+        for (int i = 0; i < detector_hitvector_map[CopyNo]->size(); i++)
+        {
+            // Add one for that TrackID
+            freq_in[(*(detector_hitvector_map[CopyNo]))[i]->GetTrackID()]++;
+        }
+    }
+    for (auto it = freq_in.begin(); it != freq_in.end(); it++)
+    {
+        if (it->second >= 3)
+        {
+            bIsInTrack = true;
+            NrInTrack++;
+        }
+        // G4cout << it->first << " appears " << it->second << " times." << G4endl;
+    }
+    if (bIsInTrack)
+    {
+        man->FillH1(1, 0);
     }
 
-    if (atLeastFour(bChargedHitDet3, bChargedHitDet4, bChargedHitDet5, bChargedHitOB0, bChargedHitOB1))
+    // Extract all out tracks (differentiate between one out track and multiple out tracks)
+    std::unordered_map<int, int> freq_out;          // Store the frequency of each TrackID in the 5 planes after the target
+    std::unordered_map<int, bool> bHit3rdPlane_map; //  Store if the first plane after target was hit for each TrackID
+
+    // Count frequecy of TrackIDs in single ALPIDEs after the target
+    for (int CopyNo = 3; CopyNo < 6; CopyNo++)
     {
-        man->FillH1(0, 8);
-        // G4cout << "Charged particle was measured in at least 4 planes after target" << G4endl;
+        for (int i = 0; i < detector_hitvector_map[CopyNo]->size(); i++)
+        {
+            freq_out[(*(detector_hitvector_map[CopyNo]))[i]->GetTrackID()]++; // Add one for that TrackID
+
+            if (CopyNo == 3)
+            {
+                bHit3rdPlane_map[(*(detector_hitvector_map[CopyNo]))[i]->GetTrackID()] = true; // Mark this TrackID as hit in the 3rd plane
+            }
+        }
+    }
+    // Count frequency of TrackIDs in OBM
+    for (int i = 0; i < HitTracksOBM0.size(); i++)
+    {
+        freq_out[(HitTracksOBM0[i])->GetTrackID()]++;
+    }
+    for (int i = 0; i < HitTracksOBM1.size(); i++)
+    {
+        freq_out[(HitTracksOBM1[i])->GetTrackID()]++;
     }
 
-    if (atLeastThree(bChargedHitDet3, bChargedHitDet4, bChargedHitDet5, bChargedHitOB0, bChargedHitOB1))
+    for (auto it = freq_out.begin(); it != freq_out.end(); it++)
     {
-        man->FillH1(0, 9);
-        // G4cout << "Charged particle measured in at least 3 planes after target" << G4endl;
+        // OutTrack requirement: 3rd plane hit and total min 3 planes hit
+        if (bHit3rdPlane_map[it->first] && it->second >= 3)
+        {
+            NrOutTrack++;
+        }
+        // G4cout << it->first << " appears " << it->second << " times." << G4endl;
     }
+
+    if (NrOutTrack == 1)
+    {
+        bIsOutSingleTrack = true;
+        man->FillH1(1, 2);
+    }
+    else if (NrOutTrack > 1)
+    {
+        bIsOutMultipleTrack = true;
+        man->FillH1(1, 3);
+    }
+    else if (NrOutTrack == 0)
+    {
+        bIsNoOutTrack = true;
+        man->FillH1(1, 1);
+    }
+    G4cout << "Out Tracks: " << NrOutTrack << G4endl;
 
     // Elastic Scattering Distribution data storage --------------------------------------------------------------------------------
     if (OutTrack != G4ThreeVector(0, 0, 0))

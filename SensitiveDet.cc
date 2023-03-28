@@ -105,8 +105,8 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
     // ALPIDEs
     else if (0 <= CopyNo && CopyNo <= 43)
     {
-        //Monte Carlo: Consider only the primary particles to study the "real" scenario 
-        // Three needed properties to be counted as passed
+        // Monte Carlo: Consider only the primary particles to study the "real" scenario
+        //  Three needed properties to be counted as passed
         //(i) Step at Boundary (to not double count for multiple steps)
         //(ii) particle is of specified (produced) type
         //(iii) particle produced in world (reject secondary particles)
@@ -157,46 +157,20 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         // Handle measurement: All Charged particles are measured
         if (PreStepStatus == fGeomBoundary && (track->GetParticleDefinition()->GetPDGCharge() == 1 || track->GetParticleDefinition()->GetPDGCharge() == -1))
         {
-
-            if (CopyNo == 0)
+            // Hit in single ALPIDEs
+            if (CopyNo < 10)
             {
-                // G4cout << "Proton registered in Det 0" << G4endl;
-                eventAction->bChargedHitDet0 = true;
+                eventAction->detector_hitvector_map[CopyNo]->push_back(track);
             }
-            else if (CopyNo == 1)
-            {
-                // G4cout << "Proton registered in Det 1" << G4endl;
-                eventAction->bChargedHitDet1 = true;
-            }
-            else if (CopyNo == 2)
-            {
-                // G4cout << "Proton registered in Det 2" << G4endl;
-                eventAction->bChargedHitDet2 = true;
-            }
-            else if (CopyNo == 3)
-            {
-                // G4cout << "Proton registered in Det 3" << G4endl;
-                eventAction->bChargedHitDet3 = true;
-            }
-            else if (CopyNo == 4)
-            {
-                // G4cout << "Proton registered in Det 4" << G4endl;
-                eventAction->bChargedHitDet4 = true;
-            }
-            else if (CopyNo == 5)
-            {
-                // G4cout << "Proton registered in Det 5" << G4endl;
-                eventAction->bChargedHitDet5 = true;
-            }
+            // Hit in OBM0
             else if (10 <= CopyNo && CopyNo <= 23)
             {
-                // G4cout << "Proton registered in OBM1" << G4endl;
-                eventAction->bChargedHitOB0 = true;
+                eventAction->HitTracksOBM0.push_back(track);
             }
+            // Hit in OBM1
             else if (30 <= CopyNo && CopyNo <= 43)
             {
-                // G4cout << "Proton registered in OBM2" << G4endl;
-                eventAction->bChargedHitOB1 = true;
+                eventAction->HitTracksOBM1.push_back(track);
             }
         }
     }
