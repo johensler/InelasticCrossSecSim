@@ -83,6 +83,12 @@ RunAction::RunAction()
     man->CreateNtupleDColumn("phiDist");   // column Id = 0
     man->CreateNtupleDColumn("thetaDist"); // column Id = 1
     man->FinishNtuple();
+
+    //  Create 13th  ntuple (id = 12)
+    man->CreateNtuple("BeamProfile", "BeamProfile");
+    man->CreateNtupleDColumn("X");   // column Id = 0
+    man->CreateNtupleDColumn("Y"); // column Id = 1
+    man->FinishNtuple();
 }
 
 RunAction::~RunAction()

@@ -30,6 +30,9 @@ void EventAction::BeginOfEventAction(const G4Event *event)
     bHitOB0 = false;
     bHitOB1 = false;
 
+    G4double BeamPosDet0X = 0;
+    G4double BeamPosDet0Y = 0;
+
     bIsInTrack = false;
     NrInTrack = 0;
 
@@ -189,6 +192,17 @@ void EventAction::EndOfEventAction(const G4Event *event)
             man->FillH1(1, 5);
         }
     }
+    //(II) TINO
+    if (bIsNoOutTrack)
+    {
+        // Three possible cases considered
+        //(II.i) InelasNO (Inelastic interaction with no charged particle in acceptance)
+        if (bIsAbsorbed)
+        {
+            man->FillH1(1, 6);
+        }
+        //(II.ii) InelasALP (Inelastic interaction on ALPIDE after target with no chared particle in acceptance)
+    }
 
     // Elastic Scattering Distribution data storage --------------------------------------------------------------------------------
     if (OutTrack != G4ThreeVector(0, 0, 0))
@@ -275,6 +289,10 @@ void EventAction::EndOfEventAction(const G4Event *event)
             i++;
         }
     }
+    // Handle beam profile data storage
+    man->FillNtupleDColumn(12, 0, BeamPosDet0X);
+    man->FillNtupleDColumn(12, 1, BeamPosDet0Y);
+    man->AddNtupleRow(12);
 }
 
 bool EventAction::atLeastThree(bool a, bool b, bool c, bool d, bool e)

@@ -30,6 +30,9 @@ public:
     std::vector<G4ThreeVector> OutTrackSecondaries;
     std::vector<std::string> ParticleTypeSecondaries;
 
+    G4double BeamPosDet0X;
+    G4double BeamPosDet0Y;
+
     // Measurement variables
 
     G4bool bIsInTrack = false;

@@ -3,6 +3,8 @@
 
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include "G4particleGun.hh"
+#include "G4SingleParticleSource.hh"
+#include "G4GeneralParticleSource.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4ParticleTable.hh"
 #include "G4Box.hh"
@@ -24,9 +26,7 @@ public:
     G4double BeamRadius = 0 * cm;
 
 private:
-    G4TwoVector RandPointInCircle(G4ThreeVector position, G4double radius);
-
-    G4ParticleGun *fParticleGun;
+    G4GeneralParticleSource *fGenParSource;
 
     // Store world box
     G4Box *fWorldBox = nullptr;

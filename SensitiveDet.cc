@@ -116,6 +116,10 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             {
                 // G4cout << "Proton registered in Det 0" << G4endl;
                 eventAction->bHitDet0 = true;
+
+                // Beam Profile
+                eventAction->BeamPosDet0X = track->GetPosition().getX();
+                eventAction->BeamPosDet0Y = track->GetPosition().getY();
             }
             else if (CopyNo == 1)
             {
