@@ -33,6 +33,7 @@ void EventAction::BeginOfEventAction(const G4Event *event)
     G4double BeamPosDet0X = 0;
     G4double BeamPosDet0Y = 0;
 
+    bIsTrigger = false;
     bIsInTrack = false;
     NrInTrack = 0;
 
@@ -98,7 +99,13 @@ void EventAction::EndOfEventAction(const G4Event *event)
 
     // Handle measurement signatures: All Charged particles are measured -------------------------------------------------------------------------------------------------
     // Distinguish three measurement signatures: i) track in track out (TITO), ii)track in no (track) out (TINO), iii) track in, multiple out (TIMO)
-    // Track in: 3 planes infornt hit, Track out: the first plane after target is hit and min 3 planes total after target
+    // Track in: 3 planes infront hit + scintillator, Track out: the first plane after target is hit and min 3 planes total after target
+
+    // Determine the number of triggers
+    if (bIsTrigger)
+    {
+        man->FillH1(1, 0);
+    }
 
     // Extract all "in" tracks (in general track through all first three planes, so also charged secondaries)
     std::unordered_map<int, int> freq_in; // Store the frequency of each TrackID in the first three planes
@@ -112,7 +119,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
     }
     for (auto it = freq_in.begin(); it != freq_in.end(); it++)
     {
-        if (it->second >= 3)
+        if (it->second >= 3 && bIsTrigger)
         {
             bIsInTrack = true;
             NrInTrack++;
@@ -121,7 +128,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
     }
     if (bIsInTrack)
     {
-        man->FillH1(1, 0);
+        man->FillH1(1, 1);
     }
 
     // Extract all out tracks (differentiate between one out track and multiple out tracks)
@@ -164,17 +171,17 @@ void EventAction::EndOfEventAction(const G4Event *event)
     if (NrOutTrack == 1)
     {
         bIsOutSingleTrack = true;
-        man->FillH1(1, 2);
+        man->FillH1(1, 3);
     }
     else if (NrOutTrack > 1)
     {
         bIsOutMultipleTrack = true;
-        man->FillH1(1, 3);
+        man->FillH1(1, 4);
     }
     else if (NrOutTrack == 0)
     {
         bIsNoOutTrack = true;
-        man->FillH1(1, 1);
+        man->FillH1(1, 2);
     }
     // Categorise proccesses ------------------------------------------------------------------------------
     // (I)TITO
@@ -184,12 +191,12 @@ void EventAction::EndOfEventAction(const G4Event *event)
         //(I.i) ElasP (Elastic interacted primary particle)
         if (!bIsAbsorbed)
         {
-            man->FillH1(1, 4);
+            man->FillH1(1, 5);
         }
         // (I.ii) InelasO (Inelastic interaction with one charde particle in acceptance)
         else
         {
-            man->FillH1(1, 5);
+            man->FillH1(1, 6);
         }
     }
     //(II) TINO

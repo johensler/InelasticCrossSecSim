@@ -76,6 +76,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         }
     }
 
+    // Target
     else if (CopyNo == 101)
     {
         // Detect ingoing primary particle
@@ -84,11 +85,6 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             // G4cout << "Particle entered the target" << G4endl;
             eventAction->bIsEntered = true;
         }
-        // Detect outgoing priamry particle NOT USED FOR NOW-> outgoing counted as ingoing and no inelastic interaction
-        // if (PostStepStatus == fGeomBoundary && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
-        // {
-        //     eventAction->bIsPassed = true;
-        // }
 
         // Track inelastic interaction
         if (preStepPoint->GetProcessDefinedStep())
@@ -96,9 +92,17 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             G4String ProcessName = postStepPoint->GetProcessDefinedStep()->GetProcessName();
             if (track->GetParticleDefinition() == ParticleDefinition && ProcessName == InelasitcProcessName)
             {
-                // G4cout << "Inelastic Interaction" << G4endl;
                 eventAction->bIsAbsorbed = true;
             }
+        }
+    }
+
+    // Scintillator
+    else if (CopyNo == 102)
+    {
+        if (PreStepStatus == fGeomBoundary && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
+        {
+            eventAction->bIsTrigger = true;
         }
     }
 

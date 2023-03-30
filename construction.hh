@@ -41,20 +41,21 @@ private:
     G4Box *solidWorld;
     G4Box *solidTarget;
     G4Box *solidDet;
+    G4Box *solidSci;
     G4SubtractionSolid *solidVeto;
     // G4Sphere *solidVeto;
     // Logics-------------------------------------------------------------
     G4LogicalVolume *logicWorld;
     G4LogicalVolume *logicTarget;
     G4LogicalVolume *logicVeto;
-
-    // Single ALPIDE
     G4LogicalVolume *logicALPIDE;
+    G4LogicalVolume *logicSci;
 
     // Physics-------------------------------------------------------------
     G4VPhysicalVolume *physWorld;
     G4VPhysicalVolume *physTarget;
     G4VPhysicalVolume *physVeto;
+    G4VPhysicalVolume *physSci;
 
     // Signle ALPIDEs
     G4VPhysicalVolume *physALPIDE0;
@@ -64,13 +65,11 @@ private:
     G4VPhysicalVolume *physALPIDE4;
     G4VPhysicalVolume *physALPIDE5;
 
-    // OBM 1
-    // std::vector<G4VPhysicalVolume *> physOBM1;
-
     // Mats-------------------------------------------------------------
     G4Material *worldMat;
     G4Material *targetMat;
     G4Material *detMat;
+    G4Material *sciMat;
 };
 
 #endif

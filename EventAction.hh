@@ -34,7 +34,7 @@ public:
     G4double BeamPosDet0Y;
 
     // Measurement variables
-
+    G4bool bIsTrigger = false;
     G4bool bIsInTrack = false;
     G4int NrInTrack = 0;
 

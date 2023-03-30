@@ -1,6 +1,5 @@
 #RUN 0
-#/gun/momentumAmp 300 MeV
-/gps/ene/mono 221 MeV    # p = 303.9 MeV
+/gps/ene/mono 48 MeV    # p = 303.9 MeV
 /construction/target_thickness 5 mm
 /run/reinitializeGeometry
-/run/beamOn 100000
+/run/beamOn 1000000

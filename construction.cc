@@ -27,6 +27,7 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     solidWorld = new G4Box("solidWorld", world_halfsizeX, world_halfsizeY, world_halfsizeZ); // half of the length
     solidTarget = new G4Box("solidTarget", 5 / 2 * cm, 5 / 2 * cm, target_thickness / 2);
     solidDet = new G4Box("solidDet", 1024 * 29.24 / 2 * micrometer, 512 * 26.88 / 2 * micrometer, 50 / 2 * micrometer);
+    solidSci = new G4Box("solidSci", 45 / 2 * mm, 25 / 2 * mm, 10 / 2 * mm);
 
     G4Box *Box1 = new G4Box("Box1", 5 / 2 * cm, 5 / 2 * cm, target_thickness / 2);
     G4Box *Box2 = new G4Box("Box2", 5.1 / 2 * cm, 5.1 / 2 * cm, target_thickness / 2 + 1);
@@ -37,6 +38,7 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     logicVeto = new G4LogicalVolume(solidVeto, worldMat, "logicVeto");
     logicTarget = new G4LogicalVolume(solidTarget, targetMat, "logicTarget");
     logicALPIDE = new G4LogicalVolume(solidDet, detMat, "logicALPIDE");
+    logicSci = new G4LogicalVolume(solidSci, sciMat, "logicSci");
 
     // WORLD POSITIONS ......oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
     G4double det2Zpos = target_thickness / 2 - 1 * cm;
@@ -50,10 +52,13 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     G4double OBM1Zpos = det5Zpos + 3 * cm;
     G4double OBM2Zpos = OBM1Zpos + 3 * cm;
 
+    G4double sciZpos = det0Zpos - 2 * cm;
+
     // PHYSIC VOLUMES ......oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
     physWorld = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicWorld, "physWorld", 0, false, 0, true);
     physTarget = new G4PVPlacement(0, G4ThreeVector(0, 0., 0), logicTarget, "physTarget", logicWorld, false, 101, true);
     physVeto = new G4PVPlacement(0, G4ThreeVector(0., 0., 0), logicVeto, "physVeto", logicWorld, false, 100, true);
+    physSci = new G4PVPlacement(0, G4ThreeVector(0, 0., sciZpos), logicSci, "physSci", logicWorld, false, 102, true);
 
     // Single ALPIDEs
     physALPIDE0 = new G4PVPlacement(0, G4ThreeVector(0., 0., det0Zpos), logicALPIDE, "physALPIDE0", logicWorld, false, 0, true);
@@ -116,6 +121,9 @@ void SimulationConstruction::ConstructSDandField()
 
     SensitiveDetector *SensALPIDE = new SensitiveDetector("SensitiveALPIDE");
     logicALPIDE->SetSensitiveDetector(SensALPIDE);
+
+    SensitiveDetector *SensSci = new SensitiveDetector("SensitiveScintillator");
+    logicSci->SetSensitiveDetector(SensSci);
 }
 
 void SimulationConstruction::DefineMaterials()
@@ -125,4 +133,5 @@ void SimulationConstruction::DefineMaterials()
     worldMat = nist->FindOrBuildMaterial("G4_AIR");
     targetMat = nist->FindOrBuildMaterial("G4_Al");
     detMat = nist->FindOrBuildMaterial("G4_Si");
+    sciMat = nist->FindOrBuildMaterial("G4_PLASTIC_SC_VINYLTOLUENE");
 }
