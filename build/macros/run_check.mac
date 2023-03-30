@@ -1,5 +1,5 @@
 #RUN 0
-/gps/ene/mono 48 MeV    # p = 303.9 MeV
+/gps/ene/mono 232 MeV
 /construction/target_thickness 5 mm
 /run/reinitializeGeometry
 /run/beamOn 1000000

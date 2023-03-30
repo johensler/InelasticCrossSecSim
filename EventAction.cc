@@ -17,7 +17,7 @@ void EventAction::BeginOfEventAction(const G4Event *event)
     // Get AnalysisManager
     G4AnalysisManager *man = G4AnalysisManager::Instance();
 
-    // Reset count bools
+    // Reset count bools and other data storage objects
     bIsEntered = false;
     bIsPassed = false;
     bIsAbsorbed = false;
@@ -29,6 +29,7 @@ void EventAction::BeginOfEventAction(const G4Event *event)
     bHitDet5 = false;
     bHitOB0 = false;
     bHitOB1 = false;
+    bIsAbsorbedALP34 = false;
 
     G4double BeamPosDet0X = 0;
     G4double BeamPosDet0Y = 0;
@@ -171,44 +172,78 @@ void EventAction::EndOfEventAction(const G4Event *event)
     if (NrOutTrack == 1)
     {
         bIsOutSingleTrack = true;
-        man->FillH1(1, 3);
     }
     else if (NrOutTrack > 1)
     {
         bIsOutMultipleTrack = true;
-        man->FillH1(1, 4);
     }
     else if (NrOutTrack == 0)
     {
         bIsNoOutTrack = true;
-        man->FillH1(1, 2);
     }
     // Categorise proccesses ------------------------------------------------------------------------------
     // (I)TITO
-    if (bIsOutSingleTrack)
+    if (bIsInTrack && bIsOutSingleTrack)
     {
+        man->FillH1(1, 2);
+
         // Two possible cases considerd:
-        //(I.i) ElasP (Elastic interacted primary particle)
+        //(I.i) TITO.ElasP (Elastic interacted primary particle)
         if (!bIsAbsorbed)
         {
+            // G4cout << "TITO.ElasP" << G4endl;
             man->FillH1(1, 5);
         }
-        // (I.ii) InelasO (Inelastic interaction with one charde particle in acceptance)
+        // (I.ii) TITO.InelasOT (Inelastic interaction in target with one charged particle in acceptance)
         else
         {
+            // G4cout << "TITO.InelasOT" << G4endl;
             man->FillH1(1, 6);
         }
     }
     //(II) TINO
-    if (bIsNoOutTrack)
+    if (bIsInTrack && bIsNoOutTrack)
     {
+        man->FillH1(1, 4);
+
         // Three possible cases considered
-        //(II.i) InelasNO (Inelastic interaction with no charged particle in acceptance)
+        //(II.i) TINO.InelasNO (Inelastic interaction with no charged particle in acceptance)
         if (bIsAbsorbed)
         {
+            // G4cout << "TINO.InelasNO" << G4endl;
             man->FillH1(1, 6);
         }
-        //(II.ii) InelasALP (Inelastic interaction on ALPIDE after target with no chared particle in acceptance)
+        //(II.ii) TINO.InelasALP (Inelastic interaction on ALPIDE after target with no chared particle in acceptance)
+        if (bIsAbsorbedALP34)
+        {
+            // G4cout << "TINO.InelasALP" << G4endl;
+            man->FillH1(1, 7);
+        }
+        //(II.iii) TINO.ElasP (Single elastic scattering in target or ALPIDEs out of acceptance)
+        if (!bIsAbsorbed)
+        {
+            // G4cout << "TINO.ElasP" << G4endl;
+            man->FillH1(1, 8);
+        }
+    }
+
+    //(III) TIMO
+    if (bIsInTrack && bIsOutMultipleTrack)
+    {
+        man->FillH1(1, 3);
+
+        // (III.i) TIMO.InelasMo (inelastic interaction in target with multiple charged secondaries in acceptance)
+        if (bIsAbsorbed)
+        {
+            // G4cout << "TIMO.InelasMO" << G4endl;
+            man->FillH1(1, 9);
+        }
+        // (III.ii) TIMO.Delta (High energy delta electron (or other chared particle if possible) produced between target and ALPIDE 3)
+        if (!bIsAbsorbed)
+        {
+            // G4cout << "TIMO.Delta" << G4endl;
+            man->FillH1(1, 10);
+        }
     }
 
     // Elastic Scattering Distribution data storage --------------------------------------------------------------------------------
