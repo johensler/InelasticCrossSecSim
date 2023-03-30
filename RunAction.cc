@@ -9,7 +9,7 @@ RunAction::RunAction()
     man->CreateH1("Pcount", "Particles counted", 7, 0, 7);
 
     // Create Histogramm to store counted particles (Measurement)
-    man->CreateH1("PcountMeas", "Particles counted (measurement)", 10, 0, 10);
+    man->CreateH1("PcountMeas", "Particles counted (measurement)", 11, 0, 11);
 
     // Create n-Tuples to store scattering angles / secondaries
     //  Create 1st ntuple (id = 0)

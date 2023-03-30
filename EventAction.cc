@@ -185,6 +185,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
     // (I)TITO
     if (bIsInTrack && bIsOutSingleTrack)
     {
+        // G4cout << "TITO" << G4endl;
         man->FillH1(1, 2);
 
         // Two possible cases considerd:
@@ -200,6 +201,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
             // G4cout << "TITO.InelasOT" << G4endl;
             man->FillH1(1, 6);
         }
+
     }
     //(II) TINO
     if (bIsInTrack && bIsNoOutTrack)
@@ -211,19 +213,19 @@ void EventAction::EndOfEventAction(const G4Event *event)
         if (bIsAbsorbed)
         {
             // G4cout << "TINO.InelasNO" << G4endl;
-            man->FillH1(1, 6);
-        }
-        //(II.ii) TINO.InelasALP (Inelastic interaction on ALPIDE after target with no chared particle in acceptance)
-        if (bIsAbsorbedALP34)
-        {
-            // G4cout << "TINO.InelasALP" << G4endl;
             man->FillH1(1, 7);
         }
+        //(II.ii) TINO.InelasALP (Inelastic interaction on ALPIDE after target with no chared particle in acceptance)
+        if (bIsAbsorbedALP34 && !bIsAbsorbed)
+        {
+            // G4cout << "TINO.InelasALP" << G4endl;
+            man->FillH1(1, 8);
+        }
         //(II.iii) TINO.ElasP (Single elastic scattering in target or ALPIDEs out of acceptance)
-        if (!bIsAbsorbed)
+        if (!bIsAbsorbedALP34 && !bIsAbsorbed)
         {
             // G4cout << "TINO.ElasP" << G4endl;
-            man->FillH1(1, 8);
+            man->FillH1(1, 9);
         }
     }
 
@@ -236,13 +238,13 @@ void EventAction::EndOfEventAction(const G4Event *event)
         if (bIsAbsorbed)
         {
             // G4cout << "TIMO.InelasMO" << G4endl;
-            man->FillH1(1, 9);
+            man->FillH1(1, 10);
         }
         // (III.ii) TIMO.Delta (High energy delta electron (or other chared particle if possible) produced between target and ALPIDE 3)
         if (!bIsAbsorbed)
         {
             // G4cout << "TIMO.Delta" << G4endl;
-            man->FillH1(1, 10);
+            man->FillH1(1, 11);
         }
     }
 
