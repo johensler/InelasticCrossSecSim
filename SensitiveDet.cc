@@ -95,6 +95,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
                 eventAction->bIsAbsorbed = true;
             }
         }
+
     }
 
     // Scintillator
