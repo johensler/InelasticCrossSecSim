@@ -4,6 +4,7 @@
 #include "G4UserEventAction.hh"
 #include "globals.hh"
 #include "G4Event.hh"
+#include "G4UImanager.hh"
 
 class EventAction : public G4UserEventAction
 {

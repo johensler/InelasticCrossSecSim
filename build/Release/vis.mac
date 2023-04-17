@@ -4,6 +4,9 @@
 #Opens OpenGl viewer
 /vis/open OGL
 
+#Disable vis for debugging of single events
+/vis/disable
+
 #Sets default viepoint 
 /vis/viewer/set/viewpointVector 1 0 0 
 
@@ -19,6 +22,9 @@
 
 /vis/geometry/set/forceWireframe logicVeto 1 1
 /vis/geometry/set/colour logicVeto 1 magenta 1
+
+/vis/geometry/set/forceWireframe logicSci 1 1
+/vis/geometry/set/colour logicSci 1 black 1
 
 /vis/viewer/set/autoRefresh true
 
@@ -36,6 +42,9 @@
 #/vis/filtering/trajectories/particleFilter-0/add e-
 
 #Show StepPoints
-#/vis/modeling/trajectories/create/drawByCharge
-#/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
-#/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 3
+/vis/modeling/trajectories/create/drawByCharge
+/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
+/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 3
+
+#Background colour
+/vis/viewer/set/background white

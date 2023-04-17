@@ -129,6 +129,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
     }
     if (bIsInTrack)
     {
+        // G4cout << "Intrack" << G4endl;
         man->FillH1(1, 1);
     }
 
@@ -169,6 +170,12 @@ void EventAction::EndOfEventAction(const G4Event *event)
         // G4cout << it->first << " appears " << it->second << " times." << G4endl;
     }
 
+    // Fill number of out tracks
+    for (int i = 0; i < NrOutTrack; i++)
+    {
+        man->FillH1(1, 13);
+    }
+
     if (NrOutTrack == 1)
     {
         bIsOutSingleTrack = true;
@@ -189,47 +196,56 @@ void EventAction::EndOfEventAction(const G4Event *event)
         man->FillH1(1, 2);
 
         // Three possible cases considerd:
-        //(I.i) TITO.ElasP (Elastic interacted primary particle)
+        //(I.i) TITO.ElasIn (Elastic interacted primary particle)
         if (!bIsAbsorbed && !bIsAbsorbedALP34)
         {
-            // G4cout << "TITO.ElasP" << G4endl;
+            // G4cout << "TITO.ElasIn" << G4endl;
             man->FillH1(1, 5);
         }
         //(I.ii) TITO.InelasOA (Inelastic interaction in ALPIDE 3/4 with one charged particle in acceptance)
         else if (!bIsAbsorbed && bIsAbsorbedALP34)
         {
-            // G4cout << "TITO.InelasOA" << G4endl;
+            // G4cout << "TITO.InelasAO" << G4endl;
             man->FillH1(1, 6);
         }
         // (I.iii) TITO.InelasOT (Inelastic interaction in target with one charged particle in acceptance)
         else if (bIsAbsorbed && !bIsAbsorbedALP34)
         {
-            // G4cout << "TITO.InelasOT" << G4endl;
+            // G4cout << "TITO.InelasTO" << G4endl;
             man->FillH1(1, 7);
         }
     }
     //(II) TINO
     if (bIsInTrack && bIsNoOutTrack)
     {
+
+        //Debug: Display one current event
+        G4UImanager *uiManager = G4UImanager::GetUIpointer();
+        uiManager->ApplyCommand("/vis/enable");
+        G4EventManager *eventManager = G4EventManager::GetEventManager();
+        eventManager->KeepTheCurrentEvent();
+        G4RunManager::GetRunManager()->AbortRun();
+
+
         man->FillH1(1, 4);
 
         // Three possible cases considered
-        //(II.i) TINO.InelasNO (Inelastic interaction with no charged particle in acceptance)
+        //(II.i) TINO.InelasTN (Inelastic interaction with no charged particle in acceptance)
         if (bIsAbsorbed)
         {
-            // G4cout << "TINO.InelasNO" << G4endl;
+            // G4cout << "TINO.InelasTN" << G4endl;
             man->FillH1(1, 8);
         }
-        //(II.ii) TINO.InelasALP (Inelastic interaction on ALPIDE after target with no chared particle in acceptance)
+        //(II.ii) TINO.InelasAN (Inelastic interaction on ALPIDE after target with no chared particle in acceptance)
         if (bIsAbsorbedALP34 && !bIsAbsorbed)
         {
-            // G4cout << "TINO.InelasALP" << G4endl;
+            // G4cout << "TINO.InelasAN" << G4endl;
             man->FillH1(1, 9);
         }
-        //(II.iii) TINO.ElasP (Single elastic scattering in target or ALPIDEs out of acceptance)
+        //(II.iii) TINO.ElasOut (Single elastic scattering in target or ALPIDEs out of acceptance)
         if (!bIsAbsorbedALP34 && !bIsAbsorbed)
         {
-            // G4cout << "TINO.ElasP" << G4endl;
+            // G4cout << "TINO.ElasOut" << G4endl;
             man->FillH1(1, 10);
         }
     }
@@ -239,16 +255,16 @@ void EventAction::EndOfEventAction(const G4Event *event)
     {
         man->FillH1(1, 3);
 
-        // (III.i) TIMO.InelasMo (inelastic interaction in target with multiple charged secondaries in acceptance)
+        // (III.i) TIMO.InelasTM (inelastic interaction in target with multiple charged secondaries in acceptance)
         if (bIsAbsorbed)
         {
-            // G4cout << "TIMO.InelasMO" << G4endl;
+            // G4cout << "TIMO.InelasTM" << G4endl;
             man->FillH1(1, 11);
         }
-        // (III.ii) TIMO.Delta (High energy delta electron (or other chared particle if possible) produced between target and ALPIDE 3)
+        // (III.ii) TIMO.ElasDelta (High energy delta electron (or other chared particle if possible) produced between target and ALPIDE 3)
         if (!bIsAbsorbed)
         {
-            // G4cout << "TIMO.Delta" << G4endl;
+            // G4cout << "TIMO.ElasDelta" << G4endl;
             man->FillH1(1, 12);
         }
     }
