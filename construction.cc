@@ -7,12 +7,13 @@ SimulationConstruction::SimulationConstruction()
     fMessenger->DeclarePropertyWithUnit("target_thickness", "mm", target_thickness, "Thickness of the target");
     fMessenger->DeclarePropertyWithUnit("d_target_det0", "mm", d_target_det0, "Distance from target to first detector");
     fMessenger->DeclarePropertyWithUnit("d_det0_det1", "mm", d_det0_det1, "Distance from first detector to last");
-
+    fMessenger->DeclareProperty("bIsTargetIn", bIsTargetIn, "Include / exclude target");
 
     // Initial Values
     target_thickness = 5 * mm;
     d_target_det0 = 4 * mm;
     d_det0_det1 = 6.9 * cm;
+    bIsTargetIn = true;
 
     // Once define the materials
     DefineMaterials();
@@ -57,9 +58,13 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
 
     // PHYSIC VOLUMES ......oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
     physWorld = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicWorld, "physWorld", 0, false, 0, true);
-    physTarget = new G4PVPlacement(0, G4ThreeVector(0, 0., 0), logicTarget, "physTarget", logicWorld, false, 101, true);
-    physVeto = new G4PVPlacement(0, G4ThreeVector(0., 0., 0), logicVeto, "physVeto", logicWorld, false, 100, true);
     physSci = new G4PVPlacement(0, G4ThreeVector(0, 0., sciZpos), logicSci, "physSci", logicWorld, false, 102, true);
+    
+    if (bIsTargetIn)
+    {
+        physTarget = new G4PVPlacement(0, G4ThreeVector(0, 0., 0), logicTarget, "physTarget", logicWorld, false, 101, true);
+        physVeto = new G4PVPlacement(0, G4ThreeVector(0., 0., 0), logicVeto, "physVeto", logicWorld, false, 100, true);
+    }
 
     // Single ALPIDEs
     physALPIDE0 = new G4PVPlacement(0, G4ThreeVector(0., 0., det0Zpos), logicALPIDE, "physALPIDE0", logicWorld, false, 0, true);
