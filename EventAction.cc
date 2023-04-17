@@ -140,18 +140,12 @@ void EventAction::EndOfEventAction(const G4Event *event)
     // Count frequecy of TrackIDs in single ALPIDEs after the target
     for (int CopyNo = 3; CopyNo < 6; CopyNo++)
     {
-        std::unordered_map<int, bool> TrackID_map; //  Store if TrackID was already found for same detector plane -> avoid two entries of same TrackID in one detector
-
         for (int i = 0; i < detector_hitvector_map[CopyNo]->size(); i++)
         {
             G4int TrackID = (*(detector_hitvector_map[CopyNo]))[i]->GetTrackID();
             G4String ParticleID = (*(detector_hitvector_map[CopyNo]))[i]->GetParticleDefinition()->GetParticleName();
 
-            if (TrackID_map[TrackID] == false && ParticleID != "e-")    //Assuming that delta electrons are removed by tracking and do not produce an out-track
-            {
-                TrackID_map[TrackID] = true;
-                freq_out[TrackID]++; // Add one for that TrackID
-            }
+            freq_out[TrackID]++; // Add one for that TrackID
 
             if (CopyNo == 3)
             {
@@ -246,6 +240,13 @@ void EventAction::EndOfEventAction(const G4Event *event)
         //(II.iii) TINO.ElasOut (Single elastic scattering in target or ALPIDEs out of acceptance)
         if (!bIsAbsorbedALP34 && !bIsAbsorbed)
         {
+            // // Debug: Display one current event
+            // G4UImanager *uiManager = G4UImanager::GetUIpointer();
+            // uiManager->ApplyCommand("/vis/enable");
+            // G4EventManager *eventManager = G4EventManager::GetEventManager();
+            // eventManager->KeepTheCurrentEvent();
+            // G4RunManager::GetRunManager()->AbortRun();
+
             // G4cout << "TINO.ElasOut" << G4endl;
             man->FillH1(1, 10);
         }
@@ -254,13 +255,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
     //(III) TIMO
     if (bIsInTrack && bIsOutMultipleTrack)
     {
-
-        // // Debug: Display one current event
-        // G4UImanager *uiManager = G4UImanager::GetUIpointer();
-        // uiManager->ApplyCommand("/vis/enable");
-        // G4EventManager *eventManager = G4EventManager::GetEventManager();
-        // eventManager->KeepTheCurrentEvent();
-        // G4RunManager::GetRunManager()->AbortRun();
 
         man->FillH1(1, 3);
 
