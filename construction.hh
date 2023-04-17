@@ -26,6 +26,7 @@ public:
     G4double d_target_det0;
     G4double d_det0_det1;
     G4double target_thickness;
+    G4bool bIsTargetIn;
 
 private:
     G4GenericMessenger *fMessenger;

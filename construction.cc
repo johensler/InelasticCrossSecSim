@@ -8,6 +8,7 @@ SimulationConstruction::SimulationConstruction()
     fMessenger->DeclarePropertyWithUnit("d_target_det0", "mm", d_target_det0, "Distance from target to first detector");
     fMessenger->DeclarePropertyWithUnit("d_det0_det1", "mm", d_det0_det1, "Distance from first detector to last");
 
+
     // Initial Values
     target_thickness = 5 * mm;
     d_target_det0 = 4 * mm;

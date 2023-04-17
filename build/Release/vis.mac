@@ -5,7 +5,7 @@
 /vis/open OGL
 
 #Disable vis for debugging of single events
-/vis/disable
+#/vis/disable
 
 #Sets default viepoint 
 /vis/viewer/set/viewpointVector 1 0 0 
