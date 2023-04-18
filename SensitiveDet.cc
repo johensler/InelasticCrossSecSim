@@ -92,10 +92,19 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             G4String ProcessName = postStepPoint->GetProcessDefinedStep()->GetProcessName();
             if (track->GetParticleDefinition() == ParticleDefinition && ProcessName == InelasitcProcessName)
             {
-                eventAction->bIsAbsorbed = true;
+                eventAction->bIsInelastic = true;
             }
         }
 
+        // Track elastic interactions (hadronic elastic and coulomb) CoulombScat hadElastic
+        if (preStepPoint->GetProcessDefinedStep())
+        {
+            G4String ProcessName = postStepPoint->GetProcessDefinedStep()->GetProcessName();
+            if (track->GetParticleDefinition() == ParticleDefinition && (ProcessName == "CoulombScat" || ProcessName == "hadElastic"))
+            {
+                eventAction->bIsElastic = true;
+            }
+        }
     }
 
     // Scintillator
@@ -177,7 +186,8 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         }
 
         // Handle measurement: All Charged particles are measured
-        if (PreStepStatus == fGeomBoundary && (track->GetParticleDefinition()->GetPDGCharge() == 1 || track->GetParticleDefinition()->GetPDGCharge() == -1))
+        G4double charge = track->GetParticleDefinition()->GetPDGCharge();
+        if (PreStepStatus == fGeomBoundary && (charge == 1 || charge == -1) && !(track->GetParticleDefinition()->GetParticleName() == "e-" && track->GetKineticEnergy() < 1 * MeV))
         {
             // Hit in single ALPIDEs
             if (CopyNo < 10)
@@ -193,6 +203,12 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             else if (30 <= CopyNo && CopyNo <= 43)
             {
                 eventAction->HitTracksOBM1.push_back(track);
+            }
+
+            // Access energy of particles at position of OBM0
+            if(10 <= CopyNo && CopyNo <= 23)
+            {
+                eventAction->PostEnergy.push_back(track->GetKineticEnergy());
             }
         }
     }

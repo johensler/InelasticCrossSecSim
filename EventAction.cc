@@ -20,7 +20,8 @@ void EventAction::BeginOfEventAction(const G4Event *event)
     // Reset count bools and other data storage objects
     bIsEntered = false;
     bIsPassed = false;
-    bIsAbsorbed = false;
+    bIsInelastic = false;
+    bIsElastic = false;
     bHitDet0 = false;
     bHitDet1 = false;
     bHitDet2 = false;
@@ -58,6 +59,8 @@ void EventAction::BeginOfEventAction(const G4Event *event)
 
     OutTrackSecondaries.clear();
     ParticleTypeSecondaries.clear();
+
+    PostEnergy.clear();
 }
 
 void EventAction::EndOfEventAction(const G4Event *event)
@@ -72,7 +75,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
     }
 
     // Store number of particles passed the target
-    if (bIsEntered && !bIsAbsorbed)
+    if (bIsEntered && !bIsInelastic)
     {
         man->FillH1(0, 1);
     }
@@ -93,7 +96,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
         man->FillH1(0, 6);
     }
 
-    if (bIsAbsorbed)
+    if (bIsInelastic)
     {
         man->FillH1(0, 3);
     }
@@ -176,7 +179,8 @@ void EventAction::EndOfEventAction(const G4Event *event)
     // Fill number of out tracks
     for (int i = 0; i < NrOutTrack; i++)
     {
-        man->FillH1(1, 13);
+        if (bIsInTrack) // Only register out-tracks if intrack was registered, avoid no track in - track out events
+            man->FillH1(1, 2);
     }
 
     if (NrOutTrack == 1)
@@ -196,78 +200,73 @@ void EventAction::EndOfEventAction(const G4Event *event)
     if (bIsInTrack && bIsOutSingleTrack)
     {
         // G4cout << "TITO" << G4endl;
-        man->FillH1(1, 2);
+        man->FillH1(1, 3);
 
-        // Three possible cases considerd:
+        // Two possible cases considerd:
         //(I.i) TITO.ElasIn (Elastic interacted primary particle)
-        if (!bIsAbsorbed && !bIsAbsorbedALP34)
+        if (!bIsInelastic)
         {
             // G4cout << "TITO.ElasIn" << G4endl;
-            man->FillH1(1, 5);
+            man->FillH1(1, 4);
         }
-        //(I.ii) TITO.InelasOA (Inelastic interaction in ALPIDE 3/4 with one charged particle in acceptance)
-        else if (!bIsAbsorbed && bIsAbsorbedALP34)
-        {
-            // G4cout << "TITO.InelasAO" << G4endl;
-            man->FillH1(1, 6);
-        }
-        // (I.iii) TITO.InelasOT (Inelastic interaction in target with one charged particle in acceptance)
-        else if (bIsAbsorbed && !bIsAbsorbedALP34)
+
+        // (I.ii) TITO.InelasTO (Inelastic interaction in target with one charged particle in acceptance)
+        else if (bIsInelastic)
         {
             // G4cout << "TITO.InelasTO" << G4endl;
-            man->FillH1(1, 7);
-        }
-    }
-    //(II) TINO
-    if (bIsInTrack && bIsNoOutTrack)
-    {
+            man->FillH1(1, 5);
 
-        man->FillH1(1, 4);
-
-        // Three possible cases considered
-        //(II.i) TINO.InelasTN (Inelastic interaction with no charged particle in acceptance)
-        if (bIsAbsorbed)
-        {
-            // G4cout << "TINO.InelasTN" << G4endl;
-            man->FillH1(1, 8);
-        }
-        //(II.ii) TINO.InelasAN (Inelastic interaction on ALPIDE after target with no chared particle in acceptance)
-        if (bIsAbsorbedALP34 && !bIsAbsorbed)
-        {
-            // G4cout << "TINO.InelasAN" << G4endl;
-            man->FillH1(1, 9);
-        }
-        //(II.iii) TINO.ElasOut (Single elastic scattering in target or ALPIDEs out of acceptance)
-        if (!bIsAbsorbedALP34 && !bIsAbsorbed)
-        {
-            // // Debug: Display one current event
+            //  // Debug: Display one current event
             // G4UImanager *uiManager = G4UImanager::GetUIpointer();
             // uiManager->ApplyCommand("/vis/enable");
             // G4EventManager *eventManager = G4EventManager::GetEventManager();
             // eventManager->KeepTheCurrentEvent();
             // G4RunManager::GetRunManager()->AbortRun();
+        }
+    }
+    //(II) TINO
+    if (bIsInTrack && bIsNoOutTrack)
+    {
+        man->FillH1(1, 6);
+
+        // Three possible cases considered
+        //(II.i) TINO.InelasTN (Inelastic interaction with no charged particle in acceptance)
+        if (bIsInelastic)
+        {
+            // G4cout << "TINO.InelasTN" << G4endl;
+            man->FillH1(1, 7);
+        }
+
+        //(II.ii) TINO.ElasOut (Single elastic scattering in target out of acceptance)
+        else if (bIsElastic)
+        {
 
             // G4cout << "TINO.ElasOut" << G4endl;
-            man->FillH1(1, 10);
+            man->FillH1(1, 8);
+        }
+        //(II.iii) TINO.Bg (background, like scattering in ALPIDEs / divergence of beam / inelastic in ALPIDE)
+        else if (!bIsInelastic && !bIsElastic)
+        {
+            // G4cout << "TINO.Bg" << G4endl;
+            man->FillH1(1, 9);
         }
     }
 
     //(III) TIMO
     if (bIsInTrack && bIsOutMultipleTrack)
     {
-
-        man->FillH1(1, 3);
+        man->FillH1(1, 10);
 
         // (III.i) TIMO.InelasTM (inelastic interaction in target with multiple charged secondaries in acceptance)
-        if (bIsAbsorbed)
+        if (bIsInelastic)
         {
             // G4cout << "TIMO.InelasTM" << G4endl;
             man->FillH1(1, 11);
         }
-        // (III.ii) TIMO.ElasDelta (High energy delta electron (or other chared particle if possible) produced between target and ALPIDE 3)
-        if (!bIsAbsorbed)
+        // (III.ii) TIMO.Bg (i.e. delta electrons, whill be filtered out by tracking)
+        if (!bIsInelastic)
         {
-            // G4cout << "TIMO.ElasDelta" << G4endl;
+            // G4cout << "TIMO.Bg" << G4endl;
             man->FillH1(1, 12);
         }
     }
@@ -361,6 +360,13 @@ void EventAction::EndOfEventAction(const G4Event *event)
     man->FillNtupleDColumn(12, 0, BeamPosDet0X);
     man->FillNtupleDColumn(12, 1, BeamPosDet0Y);
     man->AddNtupleRow(12);
+
+    // Handle post energy data storage
+    for (int i = 0; i < PostEnergy.size(); i++)
+    {
+        man->FillNtupleDColumn(13, 0, PostEnergy[i]);
+        man->AddNtupleRow(13);
+    }
 }
 
 bool EventAction::atLeastThree(bool a, bool b, bool c, bool d, bool e)

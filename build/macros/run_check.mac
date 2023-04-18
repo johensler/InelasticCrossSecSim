@@ -4,3 +4,8 @@
 /run/reinitializeGeometry
 /run/beamOn 100000
 
+#RUN 1
+#/construction/bIsTargetIn false
+#/run/reinitializeGeometry 
+#/run/beamOn 1000000
+

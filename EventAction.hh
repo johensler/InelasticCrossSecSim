@@ -18,7 +18,8 @@ public:
     // Monte Carlo Variables
     G4bool bIsEntered = false;
     G4bool bIsPassed = false;
-    G4bool bIsAbsorbed = false;
+    G4bool bIsInelastic = false;
+    G4bool bIsElastic = false;
     G4bool bHitDet0 = false;
     G4bool bHitDet1 = false;
     G4bool bHitDet2 = false;
@@ -65,6 +66,8 @@ public:
 
     G4ThreeVector InTrack;
     G4ThreeVector OutTrack;
+
+    std::vector<G4double> PostEnergy;
 
 private:
     bool atLeastThree(bool a, bool b, bool c, bool d, bool e);

@@ -86,9 +86,15 @@ RunAction::RunAction()
 
     //  Create 13th  ntuple (id = 12)
     man->CreateNtuple("BeamProfile", "BeamProfile");
-    man->CreateNtupleDColumn("X");   // column Id = 0
+    man->CreateNtupleDColumn("X"); // column Id = 0
     man->CreateNtupleDColumn("Y"); // column Id = 1
     man->FinishNtuple();
+
+    //  Create 14th  ntuple (id = 13)
+    man->CreateNtuple("PostEnergy", "Energy of particles after target");
+    man->CreateNtupleDColumn("PostEnergy"); // column Id = 0
+    man->FinishNtuple();
+
 }
 
 RunAction::~RunAction()
