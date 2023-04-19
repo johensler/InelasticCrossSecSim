@@ -1,0 +1,36 @@
+/construction/target_thickness 1 mm
+/run/reinitializeGeometry
+
+#RUN 0
+/gps/ene/mono 48 MeV
+/construction/bIsTargetIn true
+/run/reinitializeGeometry 
+/run/beamOn 20000000
+
+#RUN 1
+/construction/bIsTargetIn false
+/run/reinitializeGeometry 
+/run/beamOn 20000000
+
+#RUN 2
+/gps/ene/mono 150 MeV
+/construction/bIsTargetIn true
+/run/reinitializeGeometry
+/run/beamOn 20000000
+
+#RUN 3
+/construction/bIsTargetIn false
+/run/reinitializeGeometry 
+/run/beamOn 20000000
+
+#RUN 4
+/gps/ene/mono 232 MeV
+/construction/bIsTargetIn true
+/run/reinitializeGeometry
+/run/beamOn 20000000
+
+#RUN 5
+/construction/bIsTargetIn false
+/run/reinitializeGeometry 
+/run/beamOn 20000000
+

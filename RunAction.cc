@@ -95,6 +95,10 @@ RunAction::RunAction()
     man->CreateNtupleDColumn("PostEnergy"); // column Id = 0
     man->FinishNtuple();
 
+    //  Create 15th  ntuple (id = 14)
+    man->CreateNtuple("NrMO", "Nr of Outgoing tracks in TIMO events");
+    man->CreateNtupleDColumn("NrMO"); // column Id = 0
+    man->FinishNtuple();
 }
 
 RunAction::~RunAction()

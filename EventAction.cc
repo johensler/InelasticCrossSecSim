@@ -367,6 +367,13 @@ void EventAction::EndOfEventAction(const G4Event *event)
         man->FillNtupleDColumn(13, 0, PostEnergy[i]);
         man->AddNtupleRow(13);
     }
+
+    // Store amout of outgoing tracks
+    if (NrOutTrack > 1)
+    {
+        man->FillNtupleDColumn(14, 0, NrOutTrack);
+        man->AddNtupleRow(14);
+    }
 }
 
 bool EventAction::atLeastThree(bool a, bool b, bool c, bool d, bool e)
