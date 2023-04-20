@@ -195,6 +195,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
     {
         bIsNoOutTrack = true;
     }
+
     // Categorise proccesses ------------------------------------------------------------------------------
     // (I)TITO
     if (bIsInTrack && bIsOutSingleTrack)
@@ -215,13 +216,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
         {
             // G4cout << "TITO.InelasTO" << G4endl;
             man->FillH1(1, 5);
-
-            //  // Debug: Display one current event
-            // G4UImanager *uiManager = G4UImanager::GetUIpointer();
-            // uiManager->ApplyCommand("/vis/enable");
-            // G4EventManager *eventManager = G4EventManager::GetEventManager();
-            // eventManager->KeepTheCurrentEvent();
-            // G4RunManager::GetRunManager()->AbortRun();
         }
     }
     //(II) TINO
@@ -240,13 +234,18 @@ void EventAction::EndOfEventAction(const G4Event *event)
         //(II.ii) TINO.ElasOut (Single elastic scattering in target out of acceptance)
         else if (bIsElastic)
         {
-
             // G4cout << "TINO.ElasOut" << G4endl;
             man->FillH1(1, 8);
         }
         //(II.iii) TINO.Bg (background, like scattering in ALPIDEs / divergence of beam / inelastic in ALPIDE)
         else if (!bIsInelastic && !bIsElastic)
         {
+            // Debug: Display one current event
+            // G4UImanager *uiManager = G4UImanager::GetUIpointer();
+            // uiManager->ApplyCommand("/vis/enable");
+            // G4EventManager *eventManager = G4EventManager::GetEventManager();
+            // eventManager->KeepTheCurrentEvent();
+            // G4RunManager::GetRunManager()->AbortRun();
             // G4cout << "TINO.Bg" << G4endl;
             man->FillH1(1, 9);
         }

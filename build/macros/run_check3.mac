@@ -1,0 +1,16 @@
+/runaction/outputPath output_3/
+
+/construction/target_thickness 1 mm
+/run/reinitializeGeometry
+
+#RUN 0
+/gps/ene/mono 170 MeV
+/construction/bIsTargetIn true
+/run/reinitializeGeometry 
+/run/beamOn 10000000
+
+#RUN 1
+/gps/ene/mono 169 MeV
+/construction/bIsTargetIn false
+/run/reinitializeGeometry 
+/run/beamOn 10000000

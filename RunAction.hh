@@ -7,6 +7,8 @@
 #include "G4SystemOfUnits.hh"
 #include "G4Run.hh"
 
+#include "G4GenericMessenger.hh"
+
 class RunAction : public G4UserRunAction
 {
 public:
@@ -16,6 +18,8 @@ public:
     virtual void BeginOfRunAction(const G4Run *);
     virtual void EndOfRunAction(const G4Run *);
 
+    G4GenericMessenger *fMessenger;
+    G4String OutputPath;
 };
 
 #endif

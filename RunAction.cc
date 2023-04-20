@@ -5,6 +5,12 @@ RunAction::RunAction()
     G4AnalysisManager *man = G4AnalysisManager::Instance();
     G4RunManager::GetRunManager()->SetPrintProgress(1);
 
+    fMessenger = new G4GenericMessenger(this, "/runaction/", "Run Action");
+    fMessenger->DeclareProperty("outputPath", OutputPath, "Path where rootfiles are stored");
+    // Initial Values
+    OutputPath = "output/";
+
+
     // Create Histogramm to store counted particles (Monte Carlo)
     man->CreateH1("Pcount", "Particles counted", 7, 0, 7);
 
@@ -111,8 +117,8 @@ void RunAction::BeginOfRunAction(const G4Run *aRun)
 
     G4int runNumber = aRun->GetRunID();
     std::stringstream strRunID;
-    strRunID << runNumber;
-    man->OpenFile("output/absorb_run" + strRunID.str() + ".root");
+    strRunID << OutputPath << "absorb_run" << runNumber << ".root";
+    man->OpenFile(strRunID.str());
 }
 
 void RunAction::EndOfRunAction(const G4Run *aRun)
