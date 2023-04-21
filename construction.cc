@@ -23,7 +23,7 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
 {
     // SOLID VOLUMES ......oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
     solidWorld = new G4Box("solidWorld", world_halfsizeX, world_halfsizeY, world_halfsizeZ); // half of the length
-    solidTarget = new G4Box("solidTarget", 5 / 2 * cm, 5 / 2 * cm, target_thickness / 2);
+    solidTarget = new G4Box("solidTarget", 7 / 2 * cm, 7 / 2 * cm, target_thickness / 2);
     solidDet = new G4Box("solidDet", 1024 * 29.24 / 2 * micrometer, 512 * 26.88 / 2 * micrometer, 50 / 2 * micrometer);
     solidSci = new G4Box("solidSci", 45 / 2 * mm, 25 / 2 * mm, 10 / 2 * mm);
 
