@@ -187,8 +187,8 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
                 eventAction->HitTracksOBM1.push_back(track);
             }
 
-            // Access energy of particles at position of OBM0
-            if (10 <= CopyNo && CopyNo <= 23)
+            // Access energy of particles at position of ALP5
+            if (CopyNo == 5)
             {
                 eventAction->PostEnergy.push_back(track->GetKineticEnergy());
             }
