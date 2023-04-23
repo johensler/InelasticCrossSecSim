@@ -221,6 +221,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
     //(II) TINO
     if (bIsInTrack && bIsNoOutTrack)
     {
+
         man->FillH1(1, 6);
 
         // Three possible cases considered
@@ -240,12 +241,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
         //(II.iii) TINO.Bg (background, like scattering in ALPIDEs / divergence of beam / inelastic in ALPIDE)
         else if (!bIsInelastic && !bIsElastic)
         {
-            // Debug: Display one current event
-            // G4UImanager *uiManager = G4UImanager::GetUIpointer();
-            // uiManager->ApplyCommand("/vis/enable");
-            // G4EventManager *eventManager = G4EventManager::GetEventManager();
-            // eventManager->KeepTheCurrentEvent();
-            // G4RunManager::GetRunManager()->AbortRun();
             // G4cout << "TINO.Bg" << G4endl;
             man->FillH1(1, 9);
         }
@@ -267,6 +262,14 @@ void EventAction::EndOfEventAction(const G4Event *event)
         {
             // G4cout << "TIMO.Bg" << G4endl;
             man->FillH1(1, 12);
+
+            // // Debug:
+            // // Display one current event
+            // G4UImanager *uiManager = G4UImanager::GetUIpointer();
+            // uiManager->ApplyCommand("/vis/enable");
+            // G4EventManager *eventManager = G4EventManager::GetEventManager();
+            // eventManager->KeepTheCurrentEvent();
+            // G4RunManager::GetRunManager()->AbortRun();
         }
     }
 

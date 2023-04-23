@@ -40,53 +40,35 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
     G4ParticleDefinition *ParticleDefinition = G4Proton::Definition();
     G4String InelasitcProcessName = "protonInelastic";
 
-    // VetoDetector
-    if (CopyNo == 100)
+    // Target
+    if (CopyNo == 101)
     {
-        // Handle primary particles ------------------------------------------------------------------------------------------------------------------------------------
-        //  Three needed properties to be counted as passed
-        //(i) particle moved from veto to world volume (not double count incoming particles)
-        //(ii) particle is of specified (produced) type
-        //(iii) particle produced in world (reject secondary particles)
-        if (PostStepVolume == "physWorld" && PreStepVolume == "physVeto" && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
-        {
-            // G4cout << "Primary particle left target" << G4endl;
-            eventAction->OutTrack = preStepPoint->GetMomentumDirection();
-        }
-
-        // Three needed properties to be counted as entered particle
-        //(i) particle moved from veto to target volume
-        //(ii) particle is of specified (produced) type
-        //(iii) particle produced in world (reject secondary particles)
-        if (PostStepVolume == "physTarget" && PreStepVolume == "physVeto" && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
-        {
-            // G4cout << "Primary particle entered target" << G4endl;
-            eventAction->InTrack = preStepPoint->GetMomentumDirection();
-        }
-
-        // Handle outgoing secondary particles ------------------------------------------------------------------------------------------------------------------------------------
-        //  Two needed properties to be counted as passed secondary
-        //(i) particle moved from veto to world volume (not double count incoming particles)
-        //(ii) particle produced in target (reject primary particles)
-        if (PostStepVolume == "physWorld" && PreStepVolume == "physVeto" && ParticleOriginVolume == "physTarget")
+        // Handle outgoing secondary particles --------------------------------------------------------------------------------------------
+        if (PostStepVolume == "physWorld" && PreStepVolume == "physTarget" && ParticleOriginVolume == "physTarget")
         {
             // G4cout << "Secondary " << track->GetParticleDefinition()->GetParticleName() << " left target" << G4endl;
             eventAction->OutTrackSecondaries.push_back(track->GetMomentumDirection());
             eventAction->ParticleTypeSecondaries.push_back(track->GetParticleDefinition()->GetParticleName());
         }
-    }
 
-    // Target
-    else if (CopyNo == 101)
-    {
-        // Detect ingoing primary particle
+        // Detect ingoing primary particle ---------------------------------------------------------------------------------------
         if (PreStepStatus == fGeomBoundary && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
         {
             // G4cout << "Particle entered the target" << G4endl;
             eventAction->bIsEntered = true;
+
+            // G4cout << "Primary particle entered target" << preStepPoint->GetPosition() << G4endl;
+            eventAction->InTrack = preStepPoint->GetMomentumDirection();
         }
 
-        // Track inelastic interaction
+        // Detect outgoing primary particle ----------------------------------------------------------------------------------------------------
+        if (PostStepStatus == fGeomBoundary && PreStepVolume == "physTarget" && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
+        {
+            // G4cout << "Primary particle left target" << postStepPoint->GetPosition() << G4endl;
+            eventAction->OutTrack = postStepPoint->GetMomentumDirection();
+        }
+
+        // Track inelastic interaction -------------------------------------------------------------------------
         if (preStepPoint->GetProcessDefinedStep())
         {
             G4String ProcessName = postStepPoint->GetProcessDefinedStep()->GetProcessName();
@@ -206,7 +188,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             }
 
             // Access energy of particles at position of OBM0
-            if(10 <= CopyNo && CopyNo <= 23)
+            if (10 <= CopyNo && CopyNo <= 23)
             {
                 eventAction->PostEnergy.push_back(track->GetKineticEnergy());
             }

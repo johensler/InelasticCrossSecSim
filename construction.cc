@@ -27,13 +27,8 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     solidDet = new G4Box("solidDet", 1024 * 29.24 / 2 * micrometer, 512 * 26.88 / 2 * micrometer, 50 / 2 * micrometer);
     solidSci = new G4Box("solidSci", 45 / 2 * mm, 25 / 2 * mm, 10 / 2 * mm);
 
-    G4Box *Box1 = new G4Box("Box1", 5 / 2 * cm, 5 / 2 * cm, target_thickness / 2);
-    G4Box *Box2 = new G4Box("Box2", 5.1 / 2 * cm, 5.1 / 2 * cm, target_thickness / 2 + 1);
-    solidVeto = new G4SubtractionSolid("solidVeto", Box2, Box1);
-
     // LOGIC VOLUMES ......oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
     logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld");
-    logicVeto = new G4LogicalVolume(solidVeto, worldMat, "logicVeto");
     logicTarget = new G4LogicalVolume(solidTarget, targetMat, "logicTarget");
     logicALPIDE = new G4LogicalVolume(solidDet, detMat, "logicALPIDE");
     logicSci = new G4LogicalVolume(solidSci, sciMat, "logicSci");
@@ -59,7 +54,6 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     if (bIsTargetIn)
     {
         physTarget = new G4PVPlacement(0, G4ThreeVector(0, 0., 0), logicTarget, "physTarget", logicWorld, false, 101, true);
-        physVeto = new G4PVPlacement(0, G4ThreeVector(0., 0., 0), logicVeto, "physVeto", logicWorld, false, 100, true);
     }
 
     // Single ALPIDEs
@@ -115,8 +109,6 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
 
 void SimulationConstruction::ConstructSDandField()
 {
-    SensitiveDetector *SensVeto = new SensitiveDetector("SensitiveVeto");
-    logicVeto->SetSensitiveDetector(SensVeto);
 
     SensitiveDetector *SensTarget = new SensitiveDetector("SensitiveTarget");
     logicTarget->SetSensitiveDetector(SensTarget);

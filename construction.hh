@@ -41,19 +41,15 @@ private:
     G4Box *solidTarget;
     G4Box *solidDet;
     G4Box *solidSci;
-    G4SubtractionSolid *solidVeto;
-    // G4Sphere *solidVeto;
     // Logics-------------------------------------------------------------
     G4LogicalVolume *logicWorld;
     G4LogicalVolume *logicTarget;
-    G4LogicalVolume *logicVeto;
     G4LogicalVolume *logicALPIDE;
     G4LogicalVolume *logicSci;
 
     // Physics-------------------------------------------------------------
     G4VPhysicalVolume *physWorld;
     G4VPhysicalVolume *physTarget;
-    G4VPhysicalVolume *physVeto;
     G4VPhysicalVolume *physSci;
 
     // Signle ALPIDEs
