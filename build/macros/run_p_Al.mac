@@ -1,182 +1,182 @@
 
 #RUN 0
-/gun/momentumAmp 200 MeV
+/gps/ene/mono 21 MeV
 /construction/target_thickness 1 mm
 /run/reinitializeGeometry
 /run/beamOn 500000
 
 #RUN 1 
-/gun/momentumAmp 217 MeV
+/gps/ene/mono 25 MeV
 /run/beamOn 500000
 
 #RUN 2 
-/gun/momentumAmp 228 MeV
+/gps/ene/mono 27 MeV
 /run/beamOn 500000
 
 #RUN 3
-/gun/momentumAmp 235 MeV
+/gps/ene/mono 29 MeV
 /run/beamOn 500000
 
 #RUN 4
-/gun/momentumAmp 241 MeV
+/gps/ene/mono 30 MeV
 /run/beamOn 500000
 
 #RUN 5 
-/gun/momentumAmp 254 MeV
+/gps/ene/mono 33.5 MeV
 /run/beamOn 500000
 
 #RUN 6 
-/gun/momentumAmp 255 MeV
+/gps/ene/mono 34 MeV
 /run/beamOn 500000
 
 #RUN 7
-/gun/momentumAmp 266 MeV
+/gps/ene/mono 37 MeV
 /run/beamOn 500000
 
 #RUN 8 
-/gun/momentumAmp 276 MeV
+/gps/ene/mono 39 MeV
 /run/beamOn 500000
 
 #RUN 9
-/gun/momentumAmp 277 MeV
+/gps/ene/mono 40 MeV
 /run/beamOn 500000
 
 #RUN 10 
-/gun/momentumAmp 288 MeV
+/gps/ene/mono 43 MeV
 /run/beamOn 500000
 
 #RUN 11
-/gun/momentumAmp 293 MeV
+/gps/ene/mono 44 MeV
 /run/beamOn 500000
 
 #RUN 12
-/gun/momentumAmp 343 MeV
+/gps/ene/mono 60 MeV
 /run/beamOn 500000
 
 #RUN 13
-/gun/momentumAmp 388 MeV
+/gps/ene/mono 77 MeV
 /run/beamOn 500000
 
 #RUN 14 
-/gun/momentumAmp 433 MeV
+/gps/ene/mono 94 MeV
 /run/beamOn 500000
 
 #RUN 15
-/gun/momentumAmp 444 MeV
+/gps/ene/mono 99 MeV
 /run/beamOn 500000
 
 #RUN 16
-/gun/momentumAmp 474 MeV
+/gps/ene/mono 112 MeV
 /run/beamOn 500000
 
 #RUN 17
-/gun/momentumAmp 517 MeV
+/gps/ene/mono 132 MeV
 /run/beamOn 500000
 
 #RUN 18
-/gun/momentumAmp 519 MeV
+/gps/ene/mono 133 MeV
 /run/beamOn 500000
 
 #RUN 19
-/gun/momentumAmp 550 MeV
+/gps/ene/mono 148 MeV
 /run/beamOn 500000
 
 #RUN 20
-/gun/momentumAmp 608 MeV
+/gps/ene/mono 178 MeV
 /run/beamOn 500000
 
 #RUN 21
-/gun/momentumAmp 617 MeV
+/gps/ene/mono 183 MeV
 /run/beamOn 500000
 
 #RUN 22
-/gun/momentumAmp 650 MeV
+/gps/ene/mono 202 MeV
 /run/beamOn 500000
 
 #RUN 23
-/gun/momentumAmp 703 MeV
+/gps/ene/mono 232 MeV
 /run/beamOn 500000
 
 #RUN 24
-/gun/momentumAmp 713 MeV
+/gps/ene/mono 238 MeV
 /run/beamOn 500000
 
 #RUN 25
-/gun/momentumAmp 750 MeV
+/gps/ene/mono 261 MeV
 /run/beamOn 500000
 
 #RUN 26              
-/gun/momentumAmp 793 MeV
+/gps/ene/mono 288 MeV
 /run/beamOn 500000
 
 #RUN 27
-/gun/momentumAmp 816 MeV
+/gps/ene/mono 303 MeV
 /run/beamOn 500000
 
 #RUN 28              
-/gun/momentumAmp 850 MeV
+/gps/ene/mono 325 MeV
 /run/beamOn 500000
 
 #RUN 29
-/gun/momentumAmp 880 MeV
+/gps/ene/mono 346 MeV
 /run/beamOn 500000
 
 #RUN 30
-/gun/momentumAmp 900 MeV
+/gps/ene/mono 359 MeV
 /run/beamOn 500000
 
 #RUN 31
-/gun/momentumAmp 950 MeV
+/gps/ene/mono 394 MeV
 /run/beamOn 500000
 
 #RUN 32
-/gun/momentumAmp 1000 MeV
+/gps/ene/mono 430 MeV
 /run/beamOn 500000
 
 #RUN 33
-/gun/momentumAmp 1045 MeV
+/gps/ene/mono 463 MeV
 /run/beamOn 500000
 
 #RUN 34
-/gun/momentumAmp 1045 MeV
+/gps/ene/mono 463 MeV
 /run/beamOn 500000
 
 #RUN 35
-/gun/momentumAmp 1159 MeV
+/gps/ene/mono 549 MeV
 /run/beamOn 500000
 
 #RUN 36              
-/gun/momentumAmp 1200 MeV
+/gps/ene/mono 581 MeV
 /run/beamOn 500000
 
 #RUN 37
-/gun/momentumAmp 1250 MeV
+/gps/ene/mono 620 MeV
 /run/beamOn 500000
 
 #RUN 38
-/gun/momentumAmp 1300 MeV
+/gps/ene/mono 660 MeV
 /run/beamOn 500000
 
 #RUN 39
-/gun/momentumAmp 1350 MeV
+/gps/ene/mono 701 MeV
 /run/beamOn 500000
 
 #RUN 40
-/gun/momentumAmp 1400 MeV
+/gps/ene/mono 742 MeV
 /run/beamOn 500000
 
 #RUN 41
-/gun/momentumAmp 1450 MeV
+/gps/ene/mono 783 MeV
 /run/beamOn 500000
 
 #RUN 42
-/gun/momentumAmp 1500 MeV
+/gps/ene/mono 825 MeV
 /run/beamOn 500000
 
 #RUN 43
-/gun/momentumAmp 1534 MeV
+/gps/ene/mono 854 MeV
 /run/beamOn 500000
 
 #RUN 44
-/gun/momentumAmp 1600 MeV
+/gps/ene/mono 910 MeV
 /run/beamOn 500000
