@@ -6,6 +6,7 @@
 #include "G4UIExecutive.hh"
 #include "G4SystemOfUnits.hh"
 #include "FTFP_BERT.hh"
+#include "QBBC.hh"
 
 #include "RunManager.hh"
 #include "construction.hh"
@@ -20,7 +21,7 @@ int main(int argc, char **argv)
     runManager->SetUserInitialization(new SimulationConstruction());
 
     // Physics
-    G4VModularPhysicsList *physicsList = new FTFP_BERT;
+    G4VModularPhysicsList *physicsList = new QBBC;
     // runManager->SetUserInitialization(new PhysicsList()); // own physics list
     runManager->SetUserInitialization(physicsList); // Geant4 physics list
 
