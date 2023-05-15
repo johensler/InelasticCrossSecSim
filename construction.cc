@@ -49,7 +49,7 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
 
     // PHYSIC VOLUMES ......oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
     physWorld = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicWorld, "physWorld", 0, false, 0, true);
-    physSci = new G4PVPlacement(0, G4ThreeVector(0, 0., sciZpos), logicSci, "physSci", logicWorld, false, 102, true);
+    // physSci = new G4PVPlacement(0, G4ThreeVector(0, 0., sciZpos), logicSci, "physSci", logicWorld, false, 102, true);
 
     if (bIsTargetIn)
     {
@@ -57,52 +57,52 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     }
 
     // Single ALPIDEs
-    physALPIDE0 = new G4PVPlacement(0, G4ThreeVector(0., 0., det0Zpos), logicALPIDE, "physALPIDE0", logicWorld, false, 0, true);
-    physALPIDE1 = new G4PVPlacement(0, G4ThreeVector(0., 0., det1Zpos), logicALPIDE, "physALPIDE1", logicWorld, false, 1, true);
-    physALPIDE2 = new G4PVPlacement(0, G4ThreeVector(0., 0., det2Zpos), logicALPIDE, "physALPIDE2", logicWorld, false, 2, true);
-    physALPIDE3 = new G4PVPlacement(0, G4ThreeVector(0., 0., det3Zpos), logicALPIDE, "physALPIDE3", logicWorld, false, 3, true);
-    physALPIDE4 = new G4PVPlacement(0, G4ThreeVector(0., 0., det4Zpos), logicALPIDE, "physALPIDE4", logicWorld, false, 4, true);
-    physALPIDE5 = new G4PVPlacement(0, G4ThreeVector(0., 0., det5Zpos), logicALPIDE, "physALPIDE5", logicWorld, false, 5, true);
+    // physALPIDE0 = new G4PVPlacement(0, G4ThreeVector(0., 0., det0Zpos), logicALPIDE, "physALPIDE0", logicWorld, false, 0, true);
+    // physALPIDE1 = new G4PVPlacement(0, G4ThreeVector(0., 0., det1Zpos), logicALPIDE, "physALPIDE1", logicWorld, false, 1, true);
+    // physALPIDE2 = new G4PVPlacement(0, G4ThreeVector(0., 0., det2Zpos), logicALPIDE, "physALPIDE2", logicWorld, false, 2, true);
+    // physALPIDE3 = new G4PVPlacement(0, G4ThreeVector(0., 0., det3Zpos), logicALPIDE, "physALPIDE3", logicWorld, false, 3, true);
+    // physALPIDE4 = new G4PVPlacement(0, G4ThreeVector(0., 0., det4Zpos), logicALPIDE, "physALPIDE4", logicWorld, false, 4, true);
+    // physALPIDE5 = new G4PVPlacement(0, G4ThreeVector(0., 0., det5Zpos), logicALPIDE, "physALPIDE5", logicWorld, false, 5, true);
 
     double ALPIDE_x = 1024 * 29.24 * micrometer;
     double ALPIDE_y = 512 * 26.88 * micrometer;
     double ALPIDE_distance = 100 * micrometer;
     // OBM 0
     G4int ID = 10;
-    for (G4int i = 0; i < 7; i++)
-    {
-        for (G4int j = 0; j < 2; j++)
-        {
-            G4VPhysicalVolume *physOBM1 = new G4PVPlacement(0,
-                                                            G4ThreeVector(-3 * (ALPIDE_x + ALPIDE_distance) + (i * (ALPIDE_x + ALPIDE_distance)), -0.5 * (ALPIDE_y + ALPIDE_distance) + (j * (ALPIDE_y + ALPIDE_distance)), OBM1Zpos),
-                                                            logicALPIDE,
-                                                            "physOBM1",
-                                                            logicWorld,
-                                                            false,
-                                                            ID,
-                                                            true);
+    // for (G4int i = 0; i < 7; i++)
+    // {
+    //     for (G4int j = 0; j < 2; j++)
+    //     {
+    //         G4VPhysicalVolume *physOBM1 = new G4PVPlacement(0,
+    //                                                         G4ThreeVector(-3 * (ALPIDE_x + ALPIDE_distance) + (i * (ALPIDE_x + ALPIDE_distance)), -0.5 * (ALPIDE_y + ALPIDE_distance) + (j * (ALPIDE_y + ALPIDE_distance)), OBM1Zpos),
+    //                                                         logicALPIDE,
+    //                                                         "physOBM1",
+    //                                                         logicWorld,
+    //                                                         false,
+    //                                                         ID,
+    //                                                         true);
 
-            ID++;
-        }
-    }
+    //         ID++;
+    //     }
+    // }
 
     // OBM 1
-    ID = 30;
-    for (G4int i = 0; i < 7; i++)
-    {
-        for (G4int j = 0; j < 2; j++)
-        {
-            G4VPhysicalVolume *physOBM2 = new G4PVPlacement(0,
-                                                            G4ThreeVector(-3 * (ALPIDE_x + ALPIDE_distance) + (i * (ALPIDE_x + ALPIDE_distance)), -0.5 * (ALPIDE_y + ALPIDE_distance) + (j * (ALPIDE_y + ALPIDE_distance)), OBM2Zpos),
-                                                            logicALPIDE,
-                                                            "physOBM0",
-                                                            logicWorld,
-                                                            false,
-                                                            ID,
-                                                            true);
-            ID++;
-        }
-    }
+    // ID = 30;
+    // for (G4int i = 0; i < 7; i++)
+    // {
+    //     for (G4int j = 0; j < 2; j++)
+    //     {
+    //         G4VPhysicalVolume *physOBM2 = new G4PVPlacement(0,
+    //                                                         G4ThreeVector(-3 * (ALPIDE_x + ALPIDE_distance) + (i * (ALPIDE_x + ALPIDE_distance)), -0.5 * (ALPIDE_y + ALPIDE_distance) + (j * (ALPIDE_y + ALPIDE_distance)), OBM2Zpos),
+    //                                                         logicALPIDE,
+    //                                                         "physOBM0",
+    //                                                         logicWorld,
+    //                                                         false,
+    //                                                         ID,
+    //                                                         true);
+    //         ID++;
+    //     }
+    // }
 
     return physWorld;
 }
