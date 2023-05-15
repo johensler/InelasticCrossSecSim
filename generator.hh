@@ -20,7 +20,7 @@ public:
     virtual void GeneratePrimaries(G4Event *anEvent);
 
     // Defines the distance between the beam exit and the target position
-    G4double d_BeamStart_target = 9 * cm;
+    G4double d_BeamStart_target = 0.6 * cm;
     G4double BeamAngle = 0 * degree;
     G4double BeamRadius = 0 * cm;
 
