@@ -18,13 +18,13 @@ PrimaryGenerator::PrimaryGenerator()
     fGenParSource->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
     fGenParSource->GetCurrentSource()->GetEneDist()->SetMonoEnergy(232 * MeV);
 
-    // Defina beam position distribution
+    // Define beam position distribution
     G4double FWHM = 1 * cm;
     G4double sigma = (1 / 2.35482004503) * FWHM;
 
     fGenParSource->GetCurrentSource()->GetPosDist()->SetPosDisType("Beam");                                       // Type beam: gaussian distrbution
     fGenParSource->GetCurrentSource()->GetPosDist()->SetBeamSigmaInR(sigma);                                      // Set sigma of beam profile
-    fGenParSource->GetCurrentSource()->GetPosDist()->SetCentreCoords(G4ThreeVector(0., 0., -d_BeamStart_target)); // Centre of beam
+    fGenParSource->GetCurrentSource()->GetPosDist()->SetCentreCoords(G4ThreeVector(0., 0., -d_BeamStart_target)); // Center of beam
 }
 
 PrimaryGenerator::~PrimaryGenerator()
