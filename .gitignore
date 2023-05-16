@@ -1,7 +1,5 @@
 build/macros/run_TITO.mac
 
-build/macros/run_check.mac
-
 build/Release/output_4/absorb_run3.root
 build/Release/output/absorb_run0.root
 build/Release/output/absorb_run1.root

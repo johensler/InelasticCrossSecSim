@@ -1,0 +1,8 @@
+/construction/target_thickness 1 mm
+/run/reinitializeGeometry
+
+#RUN 0
+/gps/ene/mono 232 MeV
+/construction/bIsTargetIn true
+/run/reinitializeGeometry 
+/run/beamOn 1000000
