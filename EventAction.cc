@@ -359,9 +359,12 @@ void EventAction::EndOfEventAction(const G4Event *event)
         }
     }
     // Handle beam profile data storage
-    man->FillNtupleDColumn(12, 0, BeamPosDet0X);
-    man->FillNtupleDColumn(12, 1, BeamPosDet0Y);
-    man->AddNtupleRow(12);
+    if (bHitDet0)
+    {
+        man->FillNtupleDColumn(12, 0, BeamPosDet0X);
+        man->FillNtupleDColumn(12, 1, BeamPosDet0Y);
+        man->AddNtupleRow(12);
+    }
 
     // Handle post energy data storage
     for (int i = 0; i < PostEnergy.size(); i++)
