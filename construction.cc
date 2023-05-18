@@ -45,7 +45,7 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     G4double OBM1Zpos = det5Zpos + 3 * cm;
     G4double OBM2Zpos = OBM1Zpos + 3 * cm;
 
-    G4double sciZpos = det0Zpos - 2 * cm;
+    G4double sciZpos = det0Zpos - 2 * cm - 10 / 2 * mm;
 
     // PHYSIC VOLUMES ......oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
     physWorld = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicWorld, "physWorld", 0, false, 0, true);
