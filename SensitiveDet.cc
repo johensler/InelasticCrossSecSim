@@ -72,7 +72,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         if (preStepPoint->GetProcessDefinedStep())
         {
             G4String ProcessName = postStepPoint->GetProcessDefinedStep()->GetProcessName();
-            if (track->GetParticleDefinition() == ParticleDefinition && ProcessName == InelasitcProcessName)
+            if (ProcessName == InelasitcProcessName && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
             {
                 eventAction->bIsInelastic = true;
             }
