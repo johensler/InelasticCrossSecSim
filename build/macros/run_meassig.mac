@@ -1,5 +1,5 @@
 
-/ construction/target_thickness 1 mm
+/construction/target_thickness 1 mm
 /construction/bIsTargetIn true
 /run/reinitializeGeometry
 
