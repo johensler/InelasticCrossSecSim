@@ -8,8 +8,9 @@
 #/vis/disable
 
 #Sets default viepoint 
-/vis/viewer/set/viewpointVector 1 0.7 -1
-/vis/viewer/set/lightsVector 0 0.5  -1
+#/vis/viewer/set/viewpointVector 1 0.5 0.7
+/vis/viewer/set/viewpointVector 1 0 0
+/vis/viewer/set/lightsVector 0 0.5  1
 #Draws construction
 /vis/drawVolume
 /vis/geometry/set/visibility logicWorld 0 false
@@ -19,9 +20,6 @@
 
 /vis/geometry/set/forceSolid logicTarget 1 1
 /vis/geometry/set/colour logicTarget 1 grey 1
-
-/vis/geometry/set/forceWireframe logicVeto 1 1
-/vis/geometry/set/colour logicVeto 1 magenta 1
 
 /vis/geometry/set/forceWireframe logicSci 1 1
 /vis/geometry/set/colour logicSci 1 black 1

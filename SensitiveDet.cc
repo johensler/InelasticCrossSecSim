@@ -169,7 +169,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
 
         // Handle measurement: All Charged particles are measured
         G4double charge = track->GetParticleDefinition()->GetPDGCharge();
-        if (PreStepStatus == fGeomBoundary && (charge == 1 || charge == -1) && !(track->GetParticleDefinition()->GetParticleName() == "e-" && track->GetKineticEnergy() < 1 * MeV))
+        if (PreStepStatus == fGeomBoundary && (charge == 1 || charge == -1))
         {
             // Hit in single ALPIDEs
             if (CopyNo < 10)
