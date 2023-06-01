@@ -20,7 +20,6 @@ public:
     G4bool bIsPassed = false;
     G4bool bIsInelastic = false;
     G4bool bIsElastic = false;
-    G4bool bIsIon = false;
     G4bool bHitDet0 = false;
     G4bool bHitDet1 = false;
     G4bool bHitDet2 = false;

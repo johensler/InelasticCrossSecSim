@@ -88,15 +88,6 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             }
         }
 
-        // Track ionisation processes
-        if (preStepPoint->GetProcessDefinedStep())
-        {
-            G4String ProcessName = postStepPoint->GetProcessDefinedStep()->GetProcessName();
-            if (track->GetParticleDefinition() == ParticleDefinition && ProcessName == "hIoni" && ParticleOriginVolume == "physWorld")
-            {
-                eventAction->bIsIon = true;
-            }
-        }
     }
 
     // Scintillator
@@ -179,7 +170,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
 
         // Handle measurement: All Charged particles are measured
         G4double charge = track->GetParticleDefinition()->GetPDGCharge();
-        if (PreStepStatus == fGeomBoundary && (charge == 1 || charge == -1))
+        if (PreStepStatus == fGeomBoundary && (charge == 1 || charge == -1) && !(track->GetParticleDefinition()->GetParticleName() == "e-" && track->GetKineticEnergy() < 1 * MeV))
         {
             // Hit in single ALPIDEs
             if (CopyNo < 10)

@@ -22,7 +22,6 @@ void EventAction::BeginOfEventAction(const G4Event *event)
     bIsPassed = false;
     bIsInelastic = false;
     bIsElastic = false;
-    bIsIon = false;
     bHitDet0 = false;
     bHitDet1 = false;
     bHitDet2 = false;
@@ -248,13 +247,8 @@ void EventAction::EndOfEventAction(const G4Event *event)
         {
             man->FillH1(1, 11);
         }
-        //(III.ii) TIMO.Delta 
-        if (!bIsInelastic && bIsIon)
-        {
-            man->FillH1(1, 12);
-        }
-        // (III.iii) TIMO.Bg (i.e. delta electrons, whill be filtered out by tracking)
-        if (!bIsInelastic && !bIsIon)
+        // (III.ii) TIMO.Bg (i.e. delta electrons, whill be filtered out by tracking)
+        if (!bIsInelastic)
         {
             // // Debug:
             // // Display one current event
@@ -263,8 +257,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
             // G4EventManager *eventManager = G4EventManager::GetEventManager();
             // eventManager->KeepTheCurrentEvent();
             // G4RunManager::GetRunManager()->AbortRun();
-
-            man->FillH1(1, 13);
+            man->FillH1(1, 12);
         }
     }
 
