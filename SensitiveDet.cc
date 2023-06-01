@@ -82,9 +82,19 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         if (preStepPoint->GetProcessDefinedStep())
         {
             G4String ProcessName = postStepPoint->GetProcessDefinedStep()->GetProcessName();
-            if (track->GetParticleDefinition() == ParticleDefinition && (ProcessName == "CoulombScat" || ProcessName == "hadElastic"))
+            if (track->GetParticleDefinition() == ParticleDefinition && (ProcessName == "CoulombScat" || ProcessName == "hadElastic") && ParticleOriginVolume == "physWorld")
             {
                 eventAction->bIsElastic = true;
+            }
+        }
+
+        // Track ionisation processes
+        if (preStepPoint->GetProcessDefinedStep())
+        {
+            G4String ProcessName = postStepPoint->GetProcessDefinedStep()->GetProcessName();
+            if (track->GetParticleDefinition() == ParticleDefinition && ProcessName == "hIoni" && ParticleOriginVolume == "physWorld")
+            {
+                eventAction->bIsIon = true;
             }
         }
     }
@@ -174,17 +184,20 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             // Hit in single ALPIDEs
             if (CopyNo < 10)
             {
-                eventAction->detector_hitvector_map[CopyNo]->push_back(track);
+                if (!(ContainsTrackID(*(eventAction->detector_hitvector_map[CopyNo]), track->GetTrackID())))
+                    eventAction->detector_hitvector_map[CopyNo]->push_back(track);
             }
             // Hit in OBM0
             else if (10 <= CopyNo && CopyNo <= 23)
             {
-                eventAction->HitTracksOBM0.push_back(track);
+                if (!(ContainsTrackID(eventAction->HitTracksOBM0, track->GetTrackID())))
+                    eventAction->HitTracksOBM0.push_back(track);
             }
             // Hit in OBM1
             else if (30 <= CopyNo && CopyNo <= 43)
             {
-                eventAction->HitTracksOBM1.push_back(track);
+                if (!(ContainsTrackID(eventAction->HitTracksOBM1, track->GetTrackID())))
+                    eventAction->HitTracksOBM1.push_back(track);
             }
 
             // Access energy of particles at position of ALP5
@@ -195,4 +208,17 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         }
     }
     return true;
+}
+
+// Function to check if a trackID is already stored during the same event -> prevent multiple hits of same particle on one plane (delta electrons)
+bool SensitiveDetector::ContainsTrackID(std::vector<G4Track *> vec, int trackID)
+{
+    for (auto it = vec.begin(); it != vec.end(); it++)
+    {
+        if ((*it)->GetTrackID() == trackID)
+        {
+            return true;
+        }
+    }
+    return false;
 }

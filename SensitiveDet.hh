@@ -27,6 +27,8 @@ private:
     EventAction *eventAction = NULL;
 
     G4ParticleDefinition *PrimaryDefinition;
+
+    bool ContainsTrackID(std::vector<G4Track*> vec, int trackID);
 };
 
 #endif

@@ -22,6 +22,7 @@ void EventAction::BeginOfEventAction(const G4Event *event)
     bIsPassed = false;
     bIsInelastic = false;
     bIsElastic = false;
+    bIsIon = false;
     bHitDet0 = false;
     bHitDet1 = false;
     bHitDet2 = false;
@@ -128,11 +129,10 @@ void EventAction::EndOfEventAction(const G4Event *event)
             bIsInTrack = true;
             NrInTrack++;
         }
-        // G4cout << it->first << " appears " << it->second << " times." << G4endl;
     }
+
     if (bIsInTrack)
     {
-        // G4cout << "Intrack" << G4endl;
         man->FillH1(1, 1);
     }
 
@@ -173,7 +173,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
         {
             NrOutTrack++;
         }
-        // G4cout << it->first << " appears " << it->second << " times." << G4endl;
     }
 
     // Fill number of out tracks
@@ -200,48 +199,41 @@ void EventAction::EndOfEventAction(const G4Event *event)
     // (I)TITO
     if (bIsInTrack && bIsOutSingleTrack)
     {
-        // G4cout << "TITO" << G4endl;
         man->FillH1(1, 3);
 
         // Two possible cases considerd:
         //(I.i) TITO.ElasIn (Elastic interacted primary particle)
         if (!bIsInelastic)
         {
-            // G4cout << "TITO.ElasIn" << G4endl;
             man->FillH1(1, 4);
         }
 
         // (I.ii) TITO.InelasTO (Inelastic interaction in target with one charged particle in acceptance)
         else if (bIsInelastic)
         {
-            // G4cout << "TITO.InelasTO" << G4endl;
             man->FillH1(1, 5);
         }
     }
     //(II) TINO
     if (bIsInTrack && bIsNoOutTrack)
     {
-
         man->FillH1(1, 6);
 
         // Three possible cases considered
         //(II.i) TINO.InelasTN (Inelastic interaction with no charged particle in acceptance)
         if (bIsInelastic)
         {
-            // G4cout << "TINO.InelasTN" << G4endl;
             man->FillH1(1, 7);
         }
 
         //(II.ii) TINO.ElasOut (Single elastic scattering in target out of acceptance)
         else if (bIsElastic)
         {
-            // G4cout << "TINO.ElasOut" << G4endl;
             man->FillH1(1, 8);
         }
         //(II.iii) TINO.Bg (background, like scattering in ALPIDEs / divergence of beam / inelastic in ALPIDE)
         else if (!bIsInelastic && !bIsElastic)
         {
-            // G4cout << "TINO.Bg" << G4endl;
             man->FillH1(1, 9);
         }
     }
@@ -254,15 +246,16 @@ void EventAction::EndOfEventAction(const G4Event *event)
         // (III.i) TIMO.InelasTM (inelastic interaction in target with multiple charged secondaries in acceptance)
         if (bIsInelastic)
         {
-            // G4cout << "TIMO.InelasTM" << G4endl;
             man->FillH1(1, 11);
         }
-        // (III.ii) TIMO.Bg (i.e. delta electrons, whill be filtered out by tracking)
-        if (!bIsInelastic)
+        //(III.ii) TIMO.Delta 
+        if (!bIsInelastic && bIsIon)
         {
-            // G4cout << "TIMO.Bg" << G4endl;
             man->FillH1(1, 12);
-
+        }
+        // (III.iii) TIMO.Bg (i.e. delta electrons, whill be filtered out by tracking)
+        if (!bIsInelastic && !bIsIon)
+        {
             // // Debug:
             // // Display one current event
             // G4UImanager *uiManager = G4UImanager::GetUIpointer();
@@ -270,6 +263,8 @@ void EventAction::EndOfEventAction(const G4Event *event)
             // G4EventManager *eventManager = G4EventManager::GetEventManager();
             // eventManager->KeepTheCurrentEvent();
             // G4RunManager::GetRunManager()->AbortRun();
+
+            man->FillH1(1, 13);
         }
     }
 
