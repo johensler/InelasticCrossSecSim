@@ -145,7 +145,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
         for (int i = 0; i < detector_hitvector_map[CopyNo]->size(); i++)
         {
             G4int TrackID = (*(detector_hitvector_map[CopyNo]))[i]->GetTrackID();
-            G4String ParticleID = (*(detector_hitvector_map[CopyNo]))[i]->GetParticleDefinition()->GetParticleName();
 
             freq_out[TrackID]++; // Add one for that TrackID
 
@@ -258,6 +257,40 @@ void EventAction::EndOfEventAction(const G4Event *event)
             // eventManager->KeepTheCurrentEvent();
             // G4RunManager::GetRunManager()->AbortRun();
             man->FillH1(1, 12);
+
+            std::ofstream out("Bg.txt");
+            out << "\n Next event: \n";
+
+            // Get information on these events
+            for (int CopyNo = 3; CopyNo < 6; CopyNo++)
+            {
+                for (int i = 0; i < detector_hitvector_map[CopyNo]->size(); i++)
+                {
+                    G4int TrackID = (*(detector_hitvector_map[CopyNo]))[i]->GetTrackID();
+                    G4String ParticleName = (*(detector_hitvector_map[CopyNo]))[i]->GetParticleDefinition()->GetParticleName();
+
+                    out << ParticleName << " hit detector nr " << CopyNo << "\n";
+                }
+            }
+            for (int i = 0; i < HitTracksOBM0.size(); i++)
+            {
+                freq_out[(HitTracksOBM0[i])->GetTrackID()]++;
+                G4int TrackID = HitTracksOBM0[i]->GetTrackID();
+                G4String ParticleName = HitTracksOBM0[i]->GetParticleDefinition()->GetParticleName();
+
+                out << ParticleName << " hit detector nr OBM0"
+                    << "\n";
+            }
+            for (int i = 0; i < HitTracksOBM1.size(); i++)
+            {
+                G4int TrackID = HitTracksOBM1[i]->GetTrackID();
+                G4String ParticleName = HitTracksOBM1[i]->GetParticleDefinition()->GetParticleName();
+
+                out << ParticleName << " hit detector nr OBM1"
+                    << "\n";
+            }
+
+            out.close();
         }
     }
 
