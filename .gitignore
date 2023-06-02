@@ -1,23 +1,7 @@
 build/macros/run_TITO.mac
 
-build/Release/output_4/absorb_run3.root
-build/Release/output/absorb_run0.root
-build/Release/output/absorb_run1.root
-build/Release/output/absorb_run2.root
-build/Release/output/absorb_run3.root
-build/Release/output/absorb_run4.root
-build/Release/output/absorb_run5.root
-build/Release/output/absorb_run6.root
-build/Release/output/absorb_run7.root
-build/Release/output/absorb_run8.root
-build/Release/output_1/absorb_run0.root
-build/Release/output_1/absorb_run1.root
-build/Release/output_2/absorb_run0.root
-build/Release/output_2/absorb_run1.root
-build/Release/output_3/absorb_run0.root
-build/Release/output_3/absorb_run1.root
-build/Release/output_3/absorb_run2.root
-build/Release/output_4/absorb_run0.root
-build/Release/output_4/absorb_run1.root
+build/Release/output/absorb_run*
 build/Release/sim.exe
 
+build/Release/Bg.txt
+build/Release/sim.exe
