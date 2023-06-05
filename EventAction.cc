@@ -6,6 +6,10 @@
 
 EventAction::EventAction()
 {
+    fMessenger = new G4GenericMessenger(this, "/eventaction/", "Event Action");
+    fMessenger->DeclareProperty("RestrictInTracks", bIsRestrictedInTrack, "Should the incoming tracks be restricted by area?");
+    // Initial Values
+    bIsRestrictedInTrack = false;
 }
 
 EventAction::~EventAction()
@@ -117,12 +121,25 @@ void EventAction::EndOfEventAction(const G4Event *event)
     {
         for (int i = 0; i < detector_hitvector_map[CopyNo]->size(); i++)
         {
-            // Add one for that TrackID
-            freq_in[(*(detector_hitvector_map[CopyNo]))[i]->GetTrackID()]++;
+            if (bIsRestrictedInTrack)
+            {
+                // Only register these hits if in specified area on ALPIDEs
+                G4ThreeVector HitPosition = (*(detector_hitvector_map[CopyNo]))[i].GetPosition();
+                if (abs(HitPosition.getX()) < 10 * mm && abs(HitPosition.getY()) < 3 * mm)
+                {
+                    // G4cout << "Det numb: " << CopyNo << "Hit: " << HitPosition << G4endl;
+                    freq_in[(*(detector_hitvector_map[CopyNo]))[i].GetTrackID()]++;
+                }
+            }
+            else
+            {
+                freq_in[(*(detector_hitvector_map[CopyNo]))[i].GetTrackID()]++;
+            }
         }
     }
     for (auto it = freq_in.begin(); it != freq_in.end(); it++)
     {
+        // Definition of incoming tracks: Hit all three planes + scintillator
         if (it->second >= 3 && bIsTrigger)
         {
             bIsInTrack = true;
@@ -142,26 +159,26 @@ void EventAction::EndOfEventAction(const G4Event *event)
     // Count frequecy of TrackIDs in single ALPIDEs after the target
     for (int CopyNo = 3; CopyNo < 6; CopyNo++)
     {
-        for (int i = 0; i < detector_hitvector_map[CopyNo]->size(); i++)
+        for (int i = 0; i < (detector_hitvector_map[CopyNo])->size(); i++)
         {
-            G4int TrackID = (*(detector_hitvector_map[CopyNo]))[i]->GetTrackID();
+            G4int TrackID = (*(detector_hitvector_map[CopyNo]))[i].GetTrackID();
 
             freq_out[TrackID]++; // Add one for that TrackID
 
             if (CopyNo == 3)
             {
-                bHit3rdPlane_map[(*(detector_hitvector_map[CopyNo]))[i]->GetTrackID()] = true; // Mark this TrackID as hit in the 3rd plane
+                bHit3rdPlane_map[(*(detector_hitvector_map[CopyNo]))[i].GetTrackID()] = true; // Mark this TrackID as hit in the 3rd plane
             }
         }
     }
     // Count frequency of TrackIDs in OBM
     for (int i = 0; i < HitTracksOBM0.size(); i++)
     {
-        freq_out[(HitTracksOBM0[i])->GetTrackID()]++;
+        freq_out[(HitTracksOBM0[i]).GetTrackID()]++;
     }
     for (int i = 0; i < HitTracksOBM1.size(); i++)
     {
-        freq_out[(HitTracksOBM1[i])->GetTrackID()]++;
+        freq_out[(HitTracksOBM1[i]).GetTrackID()]++;
     }
 
     for (auto it = freq_out.begin(); it != freq_out.end(); it++)
@@ -233,6 +250,13 @@ void EventAction::EndOfEventAction(const G4Event *event)
         else if (!bIsInelastic && !bIsElastic)
         {
             man->FillH1(1, 9);
+            // Debug:
+            // Display one current event
+            G4UImanager *uiManager = G4UImanager::GetUIpointer();
+            uiManager->ApplyCommand("/vis/enable");
+            G4EventManager *eventManager = G4EventManager::GetEventManager();
+            eventManager->KeepTheCurrentEvent();
+            G4RunManager::GetRunManager()->AbortRun();
         }
     }
 
@@ -249,13 +273,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
         // (III.ii) TIMO.Bg (i.e. delta electrons, whill be filtered out by tracking)
         if (!bIsInelastic)
         {
-            // // Debug:
-            // // Display one current event
-            // G4UImanager *uiManager = G4UImanager::GetUIpointer();
-            // uiManager->ApplyCommand("/vis/enable");
-            // G4EventManager *eventManager = G4EventManager::GetEventManager();
-            // eventManager->KeepTheCurrentEvent();
-            // G4RunManager::GetRunManager()->AbortRun();
             man->FillH1(1, 12);
 
             std::ofstream out("Bg.txt");
@@ -266,25 +283,25 @@ void EventAction::EndOfEventAction(const G4Event *event)
             {
                 for (int i = 0; i < detector_hitvector_map[CopyNo]->size(); i++)
                 {
-                    G4int TrackID = (*(detector_hitvector_map[CopyNo]))[i]->GetTrackID();
-                    G4String ParticleName = (*(detector_hitvector_map[CopyNo]))[i]->GetParticleDefinition()->GetParticleName();
+                    G4int TrackID = (*(detector_hitvector_map[CopyNo]))[i].GetTrackID();
+                    G4String ParticleName = (*(detector_hitvector_map[CopyNo]))[i].GetParticleDefinition()->GetParticleName();
 
                     out << ParticleName << " hit detector nr " << CopyNo << "\n";
                 }
             }
             for (int i = 0; i < HitTracksOBM0.size(); i++)
             {
-                freq_out[(HitTracksOBM0[i])->GetTrackID()]++;
-                G4int TrackID = HitTracksOBM0[i]->GetTrackID();
-                G4String ParticleName = HitTracksOBM0[i]->GetParticleDefinition()->GetParticleName();
+                freq_out[(HitTracksOBM0[i]).GetTrackID()]++;
+                G4int TrackID = HitTracksOBM0[i].GetTrackID();
+                G4String ParticleName = HitTracksOBM0[i].GetParticleDefinition()->GetParticleName();
 
                 out << ParticleName << " hit detector nr OBM0"
                     << "\n";
             }
             for (int i = 0; i < HitTracksOBM1.size(); i++)
             {
-                G4int TrackID = HitTracksOBM1[i]->GetTrackID();
-                G4String ParticleName = HitTracksOBM1[i]->GetParticleDefinition()->GetParticleName();
+                G4int TrackID = HitTracksOBM1[i].GetTrackID();
+                G4String ParticleName = HitTracksOBM1[i].GetParticleDefinition()->GetParticleName();
 
                 out << ParticleName << " hit detector nr OBM1"
                     << "\n";

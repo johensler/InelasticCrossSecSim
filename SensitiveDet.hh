@@ -28,7 +28,7 @@ private:
 
     G4ParticleDefinition *PrimaryDefinition;
 
-    bool ContainsTrackID(std::vector<G4Track*> vec, int trackID);
+    bool ContainsTrackID(std::vector<G4Track> vec, int trackID);
 };
 
 #endif

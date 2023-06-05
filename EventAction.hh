@@ -6,6 +6,9 @@
 #include "G4Event.hh"
 #include "G4UImanager.hh"
 
+#include "G4GenericMessenger.hh"
+#include "G4SystemOfUnits.hh"
+
 class EventAction : public G4UserEventAction
 {
 public:
@@ -46,7 +49,7 @@ public:
     G4bool bIsOutMultipleTrack = false;
     G4bool bIsNoOutTrack = false;
 
-    std::map<int, std::vector<G4Track *> *> detector_hitvector_map{
+    std::map<int, std::vector<G4Track> *> detector_hitvector_map{
         {0, &HitTracksDet0},
         {1, &HitTracksDet1},
         {2, &HitTracksDet2},
@@ -55,19 +58,23 @@ public:
         {5, &HitTracksDet5},
     };
 
-    std::vector<G4Track *> HitTracksDet0;
-    std::vector<G4Track *> HitTracksDet1;
-    std::vector<G4Track *> HitTracksDet2;
-    std::vector<G4Track *> HitTracksDet3;
-    std::vector<G4Track *> HitTracksDet4;
-    std::vector<G4Track *> HitTracksDet5;
-    std::vector<G4Track *> HitTracksOBM0;
-    std::vector<G4Track *> HitTracksOBM1;
+    std::vector<G4Track> HitTracksDet0;
+    std::vector<G4Track> HitTracksDet1;
+    std::vector<G4Track> HitTracksDet2;
+    std::vector<G4Track> HitTracksDet3;
+    std::vector<G4Track> HitTracksDet4;
+    std::vector<G4Track> HitTracksDet5;
+    std::vector<G4Track> HitTracksOBM0;
+    std::vector<G4Track> HitTracksOBM1;
 
     G4ThreeVector InTrack;
     G4ThreeVector OutTrack;
 
     std::vector<G4double> PostEnergy;
+
+    // Messenger
+    G4GenericMessenger *fMessenger;
+    G4bool bIsRestrictedInTrack;
 
 private:
     bool atLeastThree(bool a, bool b, bool c, bool d, bool e);

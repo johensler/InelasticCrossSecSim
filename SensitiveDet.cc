@@ -87,7 +87,6 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
                 eventAction->bIsElastic = true;
             }
         }
-
     }
 
     // Scintillator
@@ -176,19 +175,28 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             if (CopyNo < 10)
             {
                 if (!(ContainsTrackID(*(eventAction->detector_hitvector_map[CopyNo]), track->GetTrackID())))
-                    eventAction->detector_hitvector_map[CopyNo]->push_back(track);
+                {
+                    G4Track HitTrack = *track;
+                    eventAction->detector_hitvector_map[CopyNo]->push_back(HitTrack);
+                }
             }
             // Hit in OBM0
             else if (10 <= CopyNo && CopyNo <= 23)
             {
                 if (!(ContainsTrackID(eventAction->HitTracksOBM0, track->GetTrackID())))
-                    eventAction->HitTracksOBM0.push_back(track);
+                {
+                    G4Track HitTrack = *track;
+                    eventAction->HitTracksOBM0.push_back(HitTrack);
+                }
             }
             // Hit in OBM1
             else if (30 <= CopyNo && CopyNo <= 43)
             {
                 if (!(ContainsTrackID(eventAction->HitTracksOBM1, track->GetTrackID())))
-                    eventAction->HitTracksOBM1.push_back(track);
+                {
+                    G4Track HitTrack = *track;
+                    eventAction->HitTracksOBM1.push_back(HitTrack);
+                }
             }
 
             // Access energy of particles at position of ALP5
@@ -202,11 +210,11 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
 }
 
 // Function to check if a trackID is already stored during the same event -> prevent multiple hits of same particle on one plane (delta electrons)
-bool SensitiveDetector::ContainsTrackID(std::vector<G4Track *> vec, int trackID)
+bool SensitiveDetector::ContainsTrackID(std::vector<G4Track> vec, int trackID)
 {
     for (auto it = vec.begin(); it != vec.end(); it++)
     {
-        if ((*it)->GetTrackID() == trackID)
+        if ((*it).GetTrackID() == trackID)
         {
             return true;
         }
