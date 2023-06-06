@@ -1,6 +1,6 @@
 /runaction/outputPath output_2/
 
-/construction/target_thickness 1 mm
+/construction/target_thickness 0.5 mm
 /run/reinitializeGeometry
 /eventaction/RestrictInTracks true
 

@@ -250,13 +250,13 @@ void EventAction::EndOfEventAction(const G4Event *event)
         else if (!bIsInelastic && !bIsElastic)
         {
             man->FillH1(1, 9);
-            // // Debug:
-            // // Display one current event
-            // G4UImanager *uiManager = G4UImanager::GetUIpointer();
-            // uiManager->ApplyCommand("/vis/enable");
-            // G4EventManager *eventManager = G4EventManager::GetEventManager();
-            // eventManager->KeepTheCurrentEvent();
-            // G4RunManager::GetRunManager()->AbortRun();
+                // // Debug:
+                // // Display one current event
+                // G4UImanager *uiManager = G4UImanager::GetUIpointer();
+                // uiManager->ApplyCommand("/vis/enable");
+                // G4EventManager *eventManager = G4EventManager::GetEventManager();
+                // eventManager->KeepTheCurrentEvent();
+                // G4RunManager::GetRunManager()->AbortRun();
         }
     }
 
@@ -275,7 +275,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
         {
             man->FillH1(1, 12);
 
-            std::ofstream out("Bg.txt");
+            std::ofstream out("Timo.Bg.txt");
             out << "\n Next event: \n";
 
             // Get information on these events
