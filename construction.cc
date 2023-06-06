@@ -8,7 +8,7 @@ SimulationConstruction::SimulationConstruction()
     fMessenger->DeclareProperty("bIsTargetIn", bIsTargetIn, "Include / exclude target");
 
     // Initial Values
-    target_thickness = 5 * mm;
+    target_thickness = 1 * mm;
     bIsTargetIn = true;
 
     // Once define the materials
@@ -34,7 +34,7 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     logicSci = new G4LogicalVolume(solidSci, sciMat, "logicSci");
 
     // WORLD POSITIONS ......oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
-    G4double det2Zpos = target_thickness / 2 - 1 * cm;
+    G4double det2Zpos = -target_thickness / 2 - 0.5 * cm;
     G4double det1Zpos = det2Zpos - 2.3 * cm;
     G4double det0Zpos = det1Zpos - 2.3 * cm;
 
