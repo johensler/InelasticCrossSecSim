@@ -264,7 +264,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
             // eventManager->KeepTheCurrentEvent();
             // G4RunManager::GetRunManager()->AbortRun();
 
-            man->Fill(1, 13);
+            man->FillH1(1, 13);
         }
     }
 
