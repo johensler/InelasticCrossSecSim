@@ -254,7 +254,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
         }
 
         //(II.iv) TINO.Absorb(primary particl enetered the target but did not exit. No inelastic interaction and no elastic interaction occured.)
-        if (bIsEntered && !bIsExited && !bIsInelastic && !bIsElastic)
+        if (bIsEntered && !bIsExited && !bIsInelastic)
         {
             // // Debug:
             // // Display one current event
