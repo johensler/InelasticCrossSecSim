@@ -20,6 +20,7 @@ public:
 
     // Monte Carlo Variables
     G4bool bIsEntered = false;
+    G4bool bIsExited = false;
     G4bool bIsPassed = false;
     G4bool bIsInelastic = false;
     G4bool bIsElastic = false;

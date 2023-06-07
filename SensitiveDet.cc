@@ -64,6 +64,8 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         // Detect outgoing primary particle ----------------------------------------------------------------------------------------------------
         if (PostStepStatus == fGeomBoundary && PreStepVolume == "physTarget" && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
         {
+            eventAction->bIsExited = true; 
+            
             // G4cout << "Primary particle left target" << postStepPoint->GetPosition() << G4endl;
             eventAction->OutTrack = postStepPoint->GetMomentumDirection();
         }

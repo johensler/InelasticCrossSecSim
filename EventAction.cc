@@ -23,6 +23,7 @@ void EventAction::BeginOfEventAction(const G4Event *event)
 
     // Reset count bools and other data storage objects
     bIsEntered = false;
+    bIsExited = false;
     bIsPassed = false;
     bIsInelastic = false;
     bIsElastic = false;
@@ -250,13 +251,20 @@ void EventAction::EndOfEventAction(const G4Event *event)
         else if (!bIsInelastic && !bIsElastic)
         {
             man->FillH1(1, 9);
-                // // Debug:
-                // // Display one current event
-                // G4UImanager *uiManager = G4UImanager::GetUIpointer();
-                // uiManager->ApplyCommand("/vis/enable");
-                // G4EventManager *eventManager = G4EventManager::GetEventManager();
-                // eventManager->KeepTheCurrentEvent();
-                // G4RunManager::GetRunManager()->AbortRun();
+        }
+
+        //(II.iv) TINO.Absorb(primary particl enetered the target but did not exit. No inelastic interaction and no elastic interaction occured.)
+        if (bIsEntered && !bIsExited && !bIsInelastic && !bIsElastic)
+        {
+            // // Debug:
+            // // Display one current event
+            // G4UImanager *uiManager = G4UImanager::GetUIpointer();
+            // uiManager->ApplyCommand("/vis/enable");
+            // G4EventManager *eventManager = G4EventManager::GetEventManager();
+            // eventManager->KeepTheCurrentEvent();
+            // G4RunManager::GetRunManager()->AbortRun();
+
+            man->Fill(1, 13);
         }
     }
 
