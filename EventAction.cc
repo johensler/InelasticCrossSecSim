@@ -272,7 +272,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
         man->FillH1(1, 6);
 
         // Three possible cases considered
-        G4bool bElasticCondition = !bIsInelastic && (bIsElastic || abs(theta) > 0.042 ||abs(phi) > 0.042);
+        G4bool bElasticCondition = !bIsInelastic && (bIsElastic || abs(theta) > 0.07 || abs(phi) > 0.07);
         //(II.i) TINO.InelasTN (Inelastic interaction with no charged particle in acceptance)
         if (bIsInelastic)
         {
@@ -283,11 +283,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
         else if (bElasticCondition)
         {
             man->FillH1(1, 8);
-        }
-        //(II.iii) TINO.Bg (background, like scattering in ALPIDEs / divergence of beam / inelastic in ALPIDE)
-        else if (!bIsInelastic && !bElasticCondition)
-        {
-            man->FillH1(1, 9);
             // // Debug:
             // // Display one current event
             // G4UImanager *uiManager = G4UImanager::GetUIpointer();
@@ -295,6 +290,11 @@ void EventAction::EndOfEventAction(const G4Event *event)
             // G4EventManager *eventManager = G4EventManager::GetEventManager();
             // eventManager->KeepTheCurrentEvent();
             // G4RunManager::GetRunManager()->AbortRun();
+        }
+        //(II.iii) TINO.Bg (background, like scattering in ALPIDEs / divergence of beam / inelastic in ALPIDE)
+        else
+        {
+            man->FillH1(1, 9);
         }
 
         //(II.iv) TINO.Absorb(primary particl enetered the target but did not exit. No inelastic interaction and no elastic interaction occured.)
