@@ -72,6 +72,42 @@ void EventAction::EndOfEventAction(const G4Event *event)
 {
     G4AnalysisManager *man = G4AnalysisManager::Instance(); // Get AnalysisManager
 
+    // Elastic Scattering Distribution data storage --------------------------------------------------------------------------------
+    G4double phi = 0;
+    G4double theta = 0;
+    if (OutTrack != G4ThreeVector(0, 0, 0))
+    {
+        // Calculate scattering angle in phi and theta (spherical coordinates, phi from (-pi, pi) and theta from (-pi/2, pi/2)
+        // where phi, theta = (0,0 is the forwards unaffected direction))
+        // G4cout << "InTrack: " << InTrack << " OutTrack: " << OutTrack << G4endl;
+        // To calculate phi, project incoming track and outgoing track in XZ plane
+        InTrack = G4ThreeVector(0, 0, 1);
+        G4ThreeVector TrackBeforeX = G4ThreeVector(InTrack.getX(), 0, InTrack.getZ());
+        G4ThreeVector TrackAfterX = G4ThreeVector(OutTrack.getX(), 0, OutTrack.getZ());
+        phi = TrackBeforeX.angle(TrackAfterX);
+
+        // To calculate theta, the angle between the outoing track in XZ plane and the outoing track needs to be considered
+        //  Note: The incoming particle is lie in the XZ plane. To correct, maybe substract the theta of incoming track.
+        G4ThreeVector TrackBeforeY = G4ThreeVector(0, InTrack.getY(), InTrack.getZ());
+        G4ThreeVector TrackAfterY = G4ThreeVector(0, OutTrack.getY(), OutTrack.getZ());
+        theta = TrackAfterX.angle(OutTrack);
+
+        // Acount for sign of the angle (counter clockwise = positive)
+        if (TrackBeforeX.getX() > TrackAfterX.getX())
+        {
+            phi = -phi;
+        }
+        if (TrackBeforeY.getY() > TrackAfterY.getY())
+        {
+            theta = -theta;
+        }
+
+        // Store scatter angles [rad]
+        man->FillNtupleDColumn(0, 0, phi);
+        man->FillNtupleDColumn(0, 1, theta);
+        man->AddNtupleRow(0);
+    }
+
     // Inelastic cross section data storage ---------------------------------------------------------------------
     // Store number of particles entering the target
     if (bIsEntered)
@@ -236,6 +272,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
         man->FillH1(1, 6);
 
         // Three possible cases considered
+        G4bool bElasticCondition = !bIsInelastic && (bIsElastic || abs(theta) > 0.042 ||abs(phi) > 0.042);
         //(II.i) TINO.InelasTN (Inelastic interaction with no charged particle in acceptance)
         if (bIsInelastic)
         {
@@ -243,19 +280,14 @@ void EventAction::EndOfEventAction(const G4Event *event)
         }
 
         //(II.ii) TINO.ElasOut (Single elastic scattering in target out of acceptance)
-        else if (bIsElastic)
+        else if (bElasticCondition)
         {
             man->FillH1(1, 8);
         }
         //(II.iii) TINO.Bg (background, like scattering in ALPIDEs / divergence of beam / inelastic in ALPIDE)
-        else if (!bIsInelastic && !bIsElastic)
+        else if (!bIsInelastic && !bElasticCondition)
         {
             man->FillH1(1, 9);
-        }
-
-        //(II.iv) TINO.Absorb(primary particl enetered the target but did not exit. No inelastic interaction and no elastic interaction occured.)
-        if (bIsEntered && !bIsExited && !bIsInelastic)
-        {
             // // Debug:
             // // Display one current event
             // G4UImanager *uiManager = G4UImanager::GetUIpointer();
@@ -263,6 +295,11 @@ void EventAction::EndOfEventAction(const G4Event *event)
             // G4EventManager *eventManager = G4EventManager::GetEventManager();
             // eventManager->KeepTheCurrentEvent();
             // G4RunManager::GetRunManager()->AbortRun();
+        }
+
+        //(II.iv) TINO.Absorb(primary particl enetered the target but did not exit. No inelastic interaction and no elastic interaction occured.)
+        if (bIsEntered && !bIsExited && !bIsInelastic)
+        {
 
             man->FillH1(1, 13);
         }
@@ -317,40 +354,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
 
             out.close();
         }
-    }
-
-    // Elastic Scattering Distribution data storage --------------------------------------------------------------------------------
-    if (OutTrack != G4ThreeVector(0, 0, 0))
-    {
-        // Calculate scattering angle in phi and theta (spherical coordinates, phi from (-pi, pi) and theta from (-pi/2, pi/2)
-        // where phi, theta = (0,0 is the forwards unaffected direction))
-        // G4cout << "InTrack: " << InTrack << " OutTrack: " << OutTrack << G4endl;
-        // To calculate phi, project incoming track and outgoing track in XZ plane
-        InTrack = G4ThreeVector(0, 0, 1);
-        G4ThreeVector TrackBeforeX = G4ThreeVector(InTrack.getX(), 0, InTrack.getZ());
-        G4ThreeVector TrackAfterX = G4ThreeVector(OutTrack.getX(), 0, OutTrack.getZ());
-        G4double phi = TrackBeforeX.angle(TrackAfterX);
-
-        // To calculate theta, the angle between the outoing track in XZ plane and the outoing track needs to be considered
-        //  Note: The incoming particle is lie in the XZ plane. To correct, maybe substract the theta of incoming track.
-        G4ThreeVector TrackBeforeY = G4ThreeVector(0, InTrack.getY(), InTrack.getZ());
-        G4ThreeVector TrackAfterY = G4ThreeVector(0, OutTrack.getY(), OutTrack.getZ());
-        G4double theta = TrackAfterX.angle(OutTrack);
-
-        // Acount for sign of the angle (counter clockwise = positive)
-        if (TrackBeforeX.getX() > TrackAfterX.getX())
-        {
-            phi = -phi;
-        }
-        if (TrackBeforeY.getY() > TrackAfterY.getY())
-        {
-            theta = -theta;
-        }
-
-        // Store scatter angles [rad]
-        man->FillNtupleDColumn(0, 0, phi);
-        man->FillNtupleDColumn(0, 1, theta);
-        man->AddNtupleRow(0);
     }
 
     // Secondary production data storage --------------------------------------------------------------------
@@ -413,11 +416,14 @@ void EventAction::EndOfEventAction(const G4Event *event)
     }
 
     // Handle post energy data storage
+    // Calculate total energy deposited in the event:
+    G4double E_tot = 0;
     for (int i = 0; i < PostEnergy.size(); i++)
     {
-        man->FillNtupleDColumn(13, 0, PostEnergy[i]);
-        man->AddNtupleRow(13);
+        E_tot = E_tot + PostEnergy[i];
     }
+    man->FillNtupleDColumn(13, 0, E_tot);
+    man->AddNtupleRow(13);
 
     // Store amout of outgoing tracks
     if (NrOutTrack > 1)

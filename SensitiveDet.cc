@@ -64,14 +64,14 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         // Detect outgoing primary particle ----------------------------------------------------------------------------------------------------
         if (PostStepStatus == fGeomBoundary && PreStepVolume == "physTarget" && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
         {
-            eventAction->bIsExited = true; 
-            
+            eventAction->bIsExited = true;
+
             // G4cout << "Primary particle left target" << postStepPoint->GetPosition() << G4endl;
             eventAction->OutTrack = postStepPoint->GetMomentumDirection();
         }
 
         // Track inelastic interaction -------------------------------------------------------------------------
-        if (preStepPoint->GetProcessDefinedStep())
+        if (postStepPoint->GetProcessDefinedStep())
         {
             G4String ProcessName = postStepPoint->GetProcessDefinedStep()->GetProcessName();
             if (ProcessName == InelasitcProcessName && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
@@ -81,7 +81,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         }
 
         // Track elastic interactions (hadronic elastic and coulomb) CoulombScat hadElastic
-        if (preStepPoint->GetProcessDefinedStep())
+        if (postStepPoint->GetProcessDefinedStep())
         {
             G4String ProcessName = postStepPoint->GetProcessDefinedStep()->GetProcessName();
             if (track->GetParticleDefinition() == ParticleDefinition && (ProcessName == "CoulombScat" || ProcessName == "hadElastic") && ParticleOriginVolume == "physWorld")
@@ -201,8 +201,8 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
                 }
             }
 
-            // Access energy of particles at position of ALP5
-            if (CopyNo == 5)
+            // Access energy of particles at position of ALP3
+            if (CopyNo == 3)
             {
                 eventAction->PostEnergy.push_back(track->GetKineticEnergy());
             }
