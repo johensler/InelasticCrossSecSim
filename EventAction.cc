@@ -81,7 +81,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
         // where phi, theta = (0,0 is the forwards unaffected direction))
         // G4cout << "InTrack: " << InTrack << " OutTrack: " << OutTrack << G4endl;
         // To calculate phi, project incoming track and outgoing track in XZ plane
-        InTrack = G4ThreeVector(0, 0, 1);
         G4ThreeVector TrackBeforeX = G4ThreeVector(InTrack.getX(), 0, InTrack.getZ());
         G4ThreeVector TrackAfterX = G4ThreeVector(OutTrack.getX(), 0, OutTrack.getZ());
         phi = TrackBeforeX.angle(TrackAfterX);
@@ -90,7 +89,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
         //  Note: The incoming particle is lie in the XZ plane. To correct, maybe substract the theta of incoming track.
         G4ThreeVector TrackBeforeY = G4ThreeVector(0, InTrack.getY(), InTrack.getZ());
         G4ThreeVector TrackAfterY = G4ThreeVector(0, OutTrack.getY(), OutTrack.getZ());
-        theta = TrackAfterX.angle(OutTrack);
+        theta = TrackBeforeY.angle(TrackAfterY);
 
         // Acount for sign of the angle (counter clockwise = positive)
         if (TrackBeforeX.getX() > TrackAfterX.getX())
@@ -102,7 +101,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
             theta = -theta;
         }
 
-        // G4cout << phi << " " << theta << G4endl;
         // Store scatter angles [rad]
         man->FillNtupleDColumn(0, 0, phi);
         man->FillNtupleDColumn(0, 1, theta);
@@ -197,7 +195,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
     // Count frequecy of TrackIDs in single ALPIDEs after the target
     for (int CopyNo = 3; CopyNo < 6; CopyNo++)
     {
-            // G4cout << "ALP" << CopyNo << G4endl;
+        // G4cout << "ALP" << CopyNo << G4endl;
         for (int i = 0; i < (detector_hitvector_map[CopyNo])->size(); i++)
         {
             G4int TrackID = (*(detector_hitvector_map[CopyNo]))[i].GetTrackID();
@@ -217,7 +215,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
         freq_out[(HitTracksOBM0[i]).GetTrackID()]++;
         // G4cout << (HitTracksOBM0[i]).GetTrackID() << G4endl;
     }
-        // G4cout << "OBM1" << G4endl;
+    // G4cout << "OBM1" << G4endl;
     for (int i = 0; i < HitTracksOBM1.size(); i++)
     {
         freq_out[(HitTracksOBM1[i]).GetTrackID()]++;
@@ -290,16 +288,16 @@ void EventAction::EndOfEventAction(const G4Event *event)
         {
             man->FillH1(1, 8);
 
-            if (!bIsElastic)
-            {
-                // // Debug:
-                // // Display one current event
-                // G4UImanager *uiManager = G4UImanager::GetUIpointer();
-                // uiManager->ApplyCommand("/vis/enable");
-                // G4EventManager *eventManager = G4EventManager::GetEventManager();
-                // eventManager->KeepTheCurrentEvent();
-                // G4RunManager::GetRunManager()->AbortRun();
-            }
+            // if (!bIsElastic)
+            // {
+            //     // Debug:
+            //     // Display one current event
+            //     G4UImanager *uiManager = G4UImanager::GetUIpointer();
+            //     uiManager->ApplyCommand("/vis/enable");
+            //     G4EventManager *eventManager = G4EventManager::GetEventManager();
+            //     eventManager->KeepTheCurrentEvent();
+            //     G4RunManager::GetRunManager()->AbortRun();
+            // }
         }
         //(II.iii) TINO.Bg (background, like scattering in ALPIDEs / divergence of beam / inelastic in ALPIDE)
         else
@@ -361,7 +359,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
             {
                 theta = -theta;
             }
-
             // Store production angles according to produced type
             if (particle_map.find(ParticleTypeSecondaries[i]) == particle_map.end())
             {

@@ -57,8 +57,11 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             // G4cout << "Particle entered the target" << G4endl;
             eventAction->bIsEntered = true;
 
-            // G4cout << "Primary particle entered target" << preStepPoint->GetPosition() << G4endl;
-            eventAction->InTrack = preStepPoint->GetMomentumDirection();
+            if (eventAction->InTrack == G4ThreeVector(0, 0, 0)) // Only save the Intrack wenn the particle first enters the target, not overwrite of backscattering happens
+            {
+                // G4cout << "Primary particle entered target" << preStepPoint->GetPosition() << G4endl;
+                eventAction->InTrack = preStepPoint->GetMomentumDirection();
+            }
         }
 
         // Detect outgoing proton ----------------------------------------------------------------------------------------------------
@@ -66,8 +69,11 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         {
             eventAction->bIsExited = true;
 
-            // G4cout << "Primary particle left target" << postStepPoint->GetPosition() << G4endl;
-            eventAction->OutTrack = postStepPoint->GetMomentumDirection();
+            if (eventAction->OutTrack == G4ThreeVector(0, 0, 0)) // Only save the Outtrack wenn the particle first exits the target, not overwrite of backscattering happens
+            {
+                // G4cout << "Primary particle left target" << postStepPoint->GetPosition() << G4endl;
+                eventAction->OutTrack = postStepPoint->GetMomentumDirection();
+            }
         }
 
         // Track inelastic interaction -------------------------------------------------------------------------
@@ -174,7 +180,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         if (PreStepStatus == fGeomBoundary && (charge == 1 || charge == -1) && !(track->GetParticleDefinition()->GetParticleName() == "e-" && track->GetKineticEnergy() < 1 * MeV))
         {
             G4Track HitTrack = G4Track(*track);
-            HitTrack.SetTrackID(track->GetTrackID());   //TrackID gets initialised with 0 -> use the correct one by setting it to the current track id
+            HitTrack.SetTrackID(track->GetTrackID()); // TrackID gets initialised with 0 -> use the correct one by setting it to the current track id
 
             // Hit in single ALPIDEs
             if (CopyNo < 10)
