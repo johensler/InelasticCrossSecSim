@@ -173,30 +173,31 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         G4double charge = track->GetParticleDefinition()->GetPDGCharge();
         if (PreStepStatus == fGeomBoundary && (charge == 1 || charge == -1) && !(track->GetParticleDefinition()->GetParticleName() == "e-" && track->GetKineticEnergy() < 1 * MeV))
         {
+            G4Track HitTrack = G4Track(*track);
+            HitTrack.SetTrackID(track->GetTrackID());   //TrackID gets initialised with 0 -> use the correct one by setting it to the current track id
+
             // Hit in single ALPIDEs
             if (CopyNo < 10)
             {
-                if (!(ContainsTrackID(*(eventAction->detector_hitvector_map[CopyNo]), track->GetTrackID())))
+
+                if (!(ContainsTrackID(*(eventAction->detector_hitvector_map[CopyNo]), HitTrack.GetTrackID())))
                 {
-                    G4Track HitTrack = *track;
                     eventAction->detector_hitvector_map[CopyNo]->push_back(HitTrack);
                 }
             }
             // Hit in OBM0
             else if (10 <= CopyNo && CopyNo <= 23)
             {
-                if (!(ContainsTrackID(eventAction->HitTracksOBM0, track->GetTrackID())))
+                if (!(ContainsTrackID(eventAction->HitTracksOBM0, HitTrack.GetTrackID())))
                 {
-                    G4Track HitTrack = *track;
                     eventAction->HitTracksOBM0.push_back(HitTrack);
                 }
             }
             // Hit in OBM1
             else if (30 <= CopyNo && CopyNo <= 43)
             {
-                if (!(ContainsTrackID(eventAction->HitTracksOBM1, track->GetTrackID())))
+                if (!(ContainsTrackID(eventAction->HitTracksOBM1, HitTrack.GetTrackID())))
                 {
-                    G4Track HitTrack = *track;
                     eventAction->HitTracksOBM1.push_back(HitTrack);
                 }
             }

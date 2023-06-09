@@ -197,10 +197,11 @@ void EventAction::EndOfEventAction(const G4Event *event)
     // Count frequecy of TrackIDs in single ALPIDEs after the target
     for (int CopyNo = 3; CopyNo < 6; CopyNo++)
     {
+            // G4cout << "ALP" << CopyNo << G4endl;
         for (int i = 0; i < (detector_hitvector_map[CopyNo])->size(); i++)
         {
             G4int TrackID = (*(detector_hitvector_map[CopyNo]))[i].GetTrackID();
-
+            // G4cout << TrackID << G4endl;
             freq_out[TrackID]++; // Add one for that TrackID
 
             if (CopyNo == 3)
@@ -210,13 +211,17 @@ void EventAction::EndOfEventAction(const G4Event *event)
         }
     }
     // Count frequency of TrackIDs in OBM
+    // G4cout << "OBM0" << G4endl;
     for (int i = 0; i < HitTracksOBM0.size(); i++)
     {
         freq_out[(HitTracksOBM0[i]).GetTrackID()]++;
+        // G4cout << (HitTracksOBM0[i]).GetTrackID() << G4endl;
     }
+        // G4cout << "OBM1" << G4endl;
     for (int i = 0; i < HitTracksOBM1.size(); i++)
     {
         freq_out[(HitTracksOBM1[i]).GetTrackID()]++;
+        // G4cout << (HitTracksOBM1[i]).GetTrackID() << G4endl;
     }
 
     for (auto it = freq_out.begin(); it != freq_out.end(); it++)
@@ -313,14 +318,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
     //(III) TIMO
     if (bIsInTrack && bIsOutMultipleTrack)
     {
-        man->FillH1(1, 10);
-        // Debug:
-        // Display one current event
-        G4UImanager *uiManager = G4UImanager::GetUIpointer();
-        uiManager->ApplyCommand("/vis/enable");
-        G4EventManager *eventManager = G4EventManager::GetEventManager();
-        eventManager->KeepTheCurrentEvent();
-        G4RunManager::GetRunManager()->AbortRun();
 
         // (III.i) TIMO.InelasTM (inelastic interaction in target with multiple charged secondaries in acceptance)
         if (bIsInelastic)
@@ -331,7 +328,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
         if (!bIsInelastic)
         {
             man->FillH1(1, 12);
-
         }
     }
 
