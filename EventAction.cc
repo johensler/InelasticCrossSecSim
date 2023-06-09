@@ -102,6 +102,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
             theta = -theta;
         }
 
+        // G4cout << phi << " " << theta << G4endl;
         // Store scatter angles [rad]
         man->FillNtupleDColumn(0, 0, phi);
         man->FillNtupleDColumn(0, 1, theta);
@@ -283,13 +284,17 @@ void EventAction::EndOfEventAction(const G4Event *event)
         else if (bElasticCondition)
         {
             man->FillH1(1, 8);
-            // // Debug:
-            // // Display one current event
-            // G4UImanager *uiManager = G4UImanager::GetUIpointer();
-            // uiManager->ApplyCommand("/vis/enable");
-            // G4EventManager *eventManager = G4EventManager::GetEventManager();
-            // eventManager->KeepTheCurrentEvent();
-            // G4RunManager::GetRunManager()->AbortRun();
+
+            if (!bIsElastic)
+            {
+                // // Debug:
+                // // Display one current event
+                // G4UImanager *uiManager = G4UImanager::GetUIpointer();
+                // uiManager->ApplyCommand("/vis/enable");
+                // G4EventManager *eventManager = G4EventManager::GetEventManager();
+                // eventManager->KeepTheCurrentEvent();
+                // G4RunManager::GetRunManager()->AbortRun();
+            }
         }
         //(II.iii) TINO.Bg (background, like scattering in ALPIDEs / divergence of beam / inelastic in ALPIDE)
         else
@@ -309,6 +314,13 @@ void EventAction::EndOfEventAction(const G4Event *event)
     if (bIsInTrack && bIsOutMultipleTrack)
     {
         man->FillH1(1, 10);
+        // Debug:
+        // Display one current event
+        G4UImanager *uiManager = G4UImanager::GetUIpointer();
+        uiManager->ApplyCommand("/vis/enable");
+        G4EventManager *eventManager = G4EventManager::GetEventManager();
+        eventManager->KeepTheCurrentEvent();
+        G4RunManager::GetRunManager()->AbortRun();
 
         // (III.i) TIMO.InelasTM (inelastic interaction in target with multiple charged secondaries in acceptance)
         if (bIsInelastic)
@@ -320,39 +332,6 @@ void EventAction::EndOfEventAction(const G4Event *event)
         {
             man->FillH1(1, 12);
 
-            std::ofstream out("Timo.Bg.txt");
-            out << "\n Next event: \n";
-
-            // Get information on these events
-            for (int CopyNo = 3; CopyNo < 6; CopyNo++)
-            {
-                for (int i = 0; i < detector_hitvector_map[CopyNo]->size(); i++)
-                {
-                    G4int TrackID = (*(detector_hitvector_map[CopyNo]))[i].GetTrackID();
-                    G4String ParticleName = (*(detector_hitvector_map[CopyNo]))[i].GetParticleDefinition()->GetParticleName();
-
-                    out << ParticleName << " hit detector nr " << CopyNo << "\n";
-                }
-            }
-            for (int i = 0; i < HitTracksOBM0.size(); i++)
-            {
-                freq_out[(HitTracksOBM0[i]).GetTrackID()]++;
-                G4int TrackID = HitTracksOBM0[i].GetTrackID();
-                G4String ParticleName = HitTracksOBM0[i].GetParticleDefinition()->GetParticleName();
-
-                out << ParticleName << " hit detector nr OBM0"
-                    << "\n";
-            }
-            for (int i = 0; i < HitTracksOBM1.size(); i++)
-            {
-                G4int TrackID = HitTracksOBM1[i].GetTrackID();
-                G4String ParticleName = HitTracksOBM1[i].GetParticleDefinition()->GetParticleName();
-
-                out << ParticleName << " hit detector nr OBM1"
-                    << "\n";
-            }
-
-            out.close();
         }
     }
 

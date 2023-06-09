@@ -51,8 +51,8 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             eventAction->ParticleTypeSecondaries.push_back(track->GetParticleDefinition()->GetParticleName());
         }
 
-        // Detect ingoing primary particle ---------------------------------------------------------------------------------------
-        if (PreStepStatus == fGeomBoundary && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
+        // Detect ingoing proton ---------------------------------------------------------------------------------------
+        if (PreStepStatus == fGeomBoundary && track->GetParticleDefinition() == ParticleDefinition)
         {
             // G4cout << "Particle entered the target" << G4endl;
             eventAction->bIsEntered = true;
@@ -61,8 +61,8 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             eventAction->InTrack = preStepPoint->GetMomentumDirection();
         }
 
-        // Detect outgoing primary particle ----------------------------------------------------------------------------------------------------
-        if (PostStepStatus == fGeomBoundary && PreStepVolume == "physTarget" && track->GetParticleDefinition() == ParticleDefinition && ParticleOriginVolume == "physWorld")
+        // Detect outgoing proton ----------------------------------------------------------------------------------------------------
+        if (PostStepStatus == fGeomBoundary && PreStepVolume == "physTarget" && track->GetParticleDefinition() == ParticleDefinition)
         {
             eventAction->bIsExited = true;
 
