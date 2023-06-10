@@ -8,13 +8,13 @@
 /gps/ene/mono 48 MeV
 /construction/bIsTargetIn true
 /run/reinitializeGeometry 
-/run/beamOn 100000000
+/run/beamOn 10000000
 
 #RUN 1
 /gps/ene/mono 45 MeV
 /construction/bIsTargetIn false
 /run/reinitializeGeometry 
-/run/beamOn 100000000
+/run/beamOn 10000000
 
 #RUN 2
 /gps/ene/mono 59 MeV
