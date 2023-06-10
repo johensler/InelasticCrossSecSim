@@ -78,6 +78,9 @@ public:
     G4bool bIsRestrictedInTrack;
 
 private:
+    float hResX = 14.6 * mm;
+    float hResY = 6.0 * mm;
+    
     bool atLeastThree(bool a, bool b, bool c, bool d, bool e);
     bool atLeastFour(bool a, bool b, bool c, bool d, bool e);
 
