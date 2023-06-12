@@ -33,7 +33,6 @@ public:
     G4bool bHitDet5 = false;
     G4bool bHitOB0 = false;
     G4bool bHitOB1 = false;
-    G4bool bIsAbsorbedALP34 = false;
 
     std::vector<G4ThreeVector> OutTrackSecondaries;
     std::vector<std::string> ParticleTypeSecondaries;

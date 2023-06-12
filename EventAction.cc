@@ -35,7 +35,6 @@ void EventAction::BeginOfEventAction(const G4Event *event)
     bHitDet5 = false;
     bHitOB0 = false;
     bHitOB1 = false;
-    bIsAbsorbedALP34 = false;
 
     G4double BeamPosDet0X = 0;
     G4double BeamPosDet0Y = 0;

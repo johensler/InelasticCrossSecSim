@@ -167,18 +167,6 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
             }
         }
 
-        // Track inelastic interaction in ALPIDEs 3&4 (first two after the target, later one don't matter, would be marked as "track out")
-        if (preStepPoint->GetProcessDefinedStep())
-        {
-            if (CopyNo == 3 || CopyNo == 4)
-            {
-                G4String ProcessName = postStepPoint->GetProcessDefinedStep()->GetProcessName();
-                if (track->GetParticleDefinition() == ParticleDefinition && ProcessName == InelasitcProcessName)
-                {
-                    eventAction->bIsAbsorbedALP34 = true;
-                }
-            }
-        }
 
         // Handle measurement: All Charged particles are measured
         G4double charge = track->GetParticleDefinition()->GetPDGCharge();
