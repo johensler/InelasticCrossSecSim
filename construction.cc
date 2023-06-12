@@ -1,4 +1,5 @@
 #include "construction.hh"
+#include "SensitiveDet.hh"
 
 SimulationConstruction::SimulationConstruction()
 {

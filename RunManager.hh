@@ -2,8 +2,9 @@
 #define RUNMANAGER_HH
 
 #include "G4RunManager.hh"
-#include "EventAction.hh"
 #include "RunAction.hh"
+
+class EventAction;
 
 class RunManager : public G4RunManager
 {

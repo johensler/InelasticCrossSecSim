@@ -5,10 +5,15 @@
 #include "globals.hh"
 #include "G4Event.hh"
 #include "G4UImanager.hh"
-
+#include "G4AnalysisManager.hh"
+#include "G4RunManager.hh"
+#include "G4UnitsTable.hh"
 #include "G4GenericMessenger.hh"
 #include "G4SystemOfUnits.hh"
+
 #include "UserHit.hh"
+#include "construction.hh"
+#include "RunManager.hh"
 
 class EventAction : public G4UserEventAction
 {
@@ -70,6 +75,7 @@ public:
 
     G4ThreeVector InTrack;
     G4ThreeVector OutTrack;
+    G4double EnteringEnergy = 0 * MeV;
 
     std::vector<G4double> PostEnergy;
 
@@ -80,7 +86,9 @@ public:
 private:
     double hResX = 14.6 * mm;
     double hResY = 6.0 * mm;
-    
+
+    G4double CalculateMSCAngle(G4double E, int z, G4double X_0, G4double x, G4double m);
+
     bool atLeastThree(bool a, bool b, bool c, bool d, bool e);
     bool atLeastFour(bool a, bool b, bool c, bool d, bool e);
 

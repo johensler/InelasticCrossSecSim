@@ -1,9 +1,5 @@
 #include "EventAction.hh"
 
-#include "G4AnalysisManager.hh"
-#include "G4RunManager.hh"
-#include "G4UnitsTable.hh"
-
 EventAction::EventAction()
 {
     fMessenger = new G4GenericMessenger(this, "/eventaction/", "Event Action");
@@ -60,6 +56,7 @@ void EventAction::BeginOfEventAction(const G4Event *event)
     // Reset tracks
     InTrack = G4ThreeVector(0, 0, 0);
     OutTrack = G4ThreeVector(0, 0, 0);
+    EnteringEnergy = 0 * MeV;
 
     OutTrackSecondaries.clear();
     ParticleTypeSecondaries.clear();
@@ -267,12 +264,22 @@ void EventAction::EndOfEventAction(const G4Event *event)
         }
     }
     //(II) TINO
+    // Calculate MSC angle to determin ElasOut cut
+    G4RunManager *runManager = (G4RunManager::GetRunManager());
+    if (!runManager)
+        return;
+
+    const SimulationConstruction *construction = static_cast<const SimulationConstruction *>(runManager->GetUserDetectorConstruction());
+
+    // For proton z = 1 and m = 938 MeV, and for Al X_0 = 8.897 cm
+    G4double msc_cut = 3 * CalculateMSCAngle(EnteringEnergy, 1, 8.897 * cm, construction->target_thickness, 938 * MeV);
+
     if (bIsInTrack && bIsNoOutTrack)
     {
         man->FillH1(1, 6);
 
         // Three possible cases considered
-        G4bool bElasticCondition = !bIsInelastic && (bIsElastic || abs(theta) > 0.07 || abs(phi) > 0.07);
+        G4bool bElasticCondition = !bIsInelastic && (bIsElastic || abs(theta) > msc_cut || abs(phi) > msc_cut);
         //(II.i) TINO.InelasTN (Inelastic interaction with no charged particle in acceptance)
         if (bIsInelastic)
         {
@@ -399,6 +406,15 @@ void EventAction::EndOfEventAction(const G4Event *event)
         man->FillNtupleDColumn(14, 0, NrOutTrack);
         man->AddNtupleRow(14);
     }
+}
+
+// Calculates the mean multiple scattering angle. Input energy in MeV
+G4double EventAction::CalculateMSCAngle(G4double E, int z, G4double X_0, G4double x, G4double m)
+{
+    G4double p = sqrt(pow(E, 2) - pow(m, 2));
+    G4double beta = p / E;
+
+    return 13.6 * MeV / (beta * p) * z * sqrt(x / X_0) * (1 + 0.038 * log(x * pow(z, 2) / (X_0 * pow(beta, 2))));
 }
 
 bool EventAction::atLeastThree(bool a, bool b, bool c, bool d, bool e)

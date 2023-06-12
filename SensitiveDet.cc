@@ -18,7 +18,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
     // Acess the Track corresponding to the Step
     G4Track *track = aStep->GetTrack();
 
-    //Create hit object
+    // Create hit object
     UserHit hit = UserHit();
     hit.SetTrackID(track->GetTrackID());
     hit.SetHitPosition(track->GetPosition());
@@ -64,7 +64,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
 
             if (eventAction->InTrack == G4ThreeVector(0, 0, 0)) // Only save the Intrack wenn the particle first enters the target, not overwrite of backscattering happens
             {
-                // G4cout << "Primary particle entered target" << preStepPoint->GetPosition() << G4endl;
+                eventAction->EnteringEnergy = track->GetTotalEnergy();
                 eventAction->InTrack = preStepPoint->GetMomentumDirection();
             }
         }
@@ -166,7 +166,6 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
                 eventAction->bHitOB1 = true;
             }
         }
-
 
         // Handle measurement: All Charged particles are measured
         G4double charge = track->GetParticleDefinition()->GetPDGCharge();

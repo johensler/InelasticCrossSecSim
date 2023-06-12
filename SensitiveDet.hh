@@ -3,17 +3,14 @@
 
 #include "G4VSensitiveDetector.hh"
 #include "G4AnalysisManager.hh"
-#include "G4RunManager.hh"
 #include "G4Deuteron.hh"
 #include "G4Proton.hh"
 #include "G4SystemOfUnits.hh"
 #include <cmath>
-
 #include "G4LogicalVolumeStore.hh"
 #include "G4VPhysicalVolume.hh"
+
 #include "EventAction.hh"
-#include "RunManager.hh"
-#include "UserHit.hh"
 
 class SensitiveDetector : public G4VSensitiveDetector
 {

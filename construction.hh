@@ -9,11 +9,11 @@
 #include "G4Sphere.hh"
 #include "G4PVPlacement.hh"
 #include "G4NistManager.hh"
-#include <cmath>
 #include "G4GenericMessenger.hh"
 #include "G4SubtractionSolid.hh"
+#include <cmath>
 
-#include "SensitiveDet.hh"
+class SensitiveDet;
 
 class SimulationConstruction : public G4VUserDetectorConstruction
 {
