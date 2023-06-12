@@ -13,6 +13,7 @@
 #include "G4VPhysicalVolume.hh"
 #include "EventAction.hh"
 #include "RunManager.hh"
+#include "UserHit.hh"
 
 class SensitiveDetector : public G4VSensitiveDetector
 {
@@ -28,7 +29,7 @@ private:
 
     G4ParticleDefinition *PrimaryDefinition;
 
-    bool ContainsTrackID(std::vector<G4Track> vec, int trackID);
+    bool ContainsTrackID(std::vector<UserHit> vec, int trackID);
 };
 
 #endif

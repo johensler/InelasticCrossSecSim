@@ -160,10 +160,9 @@ void EventAction::EndOfEventAction(const G4Event *event)
             if (bIsRestrictedInTrack)
             {
                 // Only register these hits if in specified area on ALPIDEs
-                G4ThreeVector HitPosition = (*(detector_hitvector_map[CopyNo]))[i].GetPosition();
+                G4ThreeVector HitPosition = (*(detector_hitvector_map[CopyNo]))[i].GetHitPosition();
                 if (abs(HitPosition.getX()) < hResX && abs(HitPosition.getY()) < hResY)
                 {
-                    // G4cout << "Det numb: " << CopyNo << "Hit: " << HitPosition << G4endl;
                     freq_in[(*(detector_hitvector_map[CopyNo]))[i].GetTrackID()]++;
                 }
             }
@@ -195,11 +194,9 @@ void EventAction::EndOfEventAction(const G4Event *event)
     // Count frequecy of TrackIDs in single ALPIDEs after the target
     for (int CopyNo = 3; CopyNo < 6; CopyNo++)
     {
-        // G4cout << "ALP" << CopyNo << G4endl;
         for (int i = 0; i < (detector_hitvector_map[CopyNo])->size(); i++)
         {
             G4int TrackID = (*(detector_hitvector_map[CopyNo]))[i].GetTrackID();
-            // G4cout << TrackID << G4endl;
             freq_out[TrackID]++; // Add one for that TrackID
 
             if (CopyNo == 3)

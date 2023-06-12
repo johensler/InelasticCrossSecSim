@@ -18,6 +18,11 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
     // Acess the Track corresponding to the Step
     G4Track *track = aStep->GetTrack();
 
+    //Create hit object
+    UserHit hit = UserHit();
+    hit.SetTrackID(track->GetTrackID());
+    hit.SetHitPosition(track->GetPosition());
+
     // Acess the Step Points
     G4StepPoint *preStepPoint = aStep->GetPreStepPoint();
     G4StepPoint *postStepPoint = aStep->GetPostStepPoint();
@@ -179,32 +184,38 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         G4double charge = track->GetParticleDefinition()->GetPDGCharge();
         if (PreStepStatus == fGeomBoundary && (charge == 1 || charge == -1) && !(track->GetParticleDefinition()->GetParticleName() == "e-" && track->GetKineticEnergy() < 1 * MeV))
         {
-            G4Track HitTrack = G4Track(*track);
-            HitTrack.SetTrackID(track->GetTrackID()); // TrackID gets initialised with 0 -> use the correct one by setting it to the current track id
 
             // Hit in single ALPIDEs
             if (CopyNo < 10)
             {
 
-                if (!(ContainsTrackID(*(eventAction->detector_hitvector_map[CopyNo]), HitTrack.GetTrackID())))
+                if (!(ContainsTrackID(*(eventAction->detector_hitvector_map[CopyNo]), hit.GetTrackID())))
                 {
-                    eventAction->detector_hitvector_map[CopyNo]->push_back(HitTrack);
+                    eventAction->detector_hitvector_map[CopyNo]->push_back(hit);
+
+                    // // Set all variables the track saved track should contain
+                    // eventAction->detector_hitvector_map[CopyNo]->back().SetTrackID((*track).GetTrackID()); // TrackID needs to be set since constructor sets it to zero when assigning
+                    // eventAction->detector_hitvector_map[CopyNo]->back().SetPosition((*track).GetPosition());
                 }
             }
             // Hit in OBM0
             else if (10 <= CopyNo && CopyNo <= 23)
             {
-                if (!(ContainsTrackID(eventAction->HitTracksOBM0, HitTrack.GetTrackID())))
+                if (!(ContainsTrackID(eventAction->HitTracksOBM0, hit.GetTrackID())))
                 {
-                    eventAction->HitTracksOBM0.push_back(HitTrack);
+                    eventAction->HitTracksOBM0.push_back(hit);
+                    // eventAction->HitTracksOBM0.back().SetTrackID((*track).GetTrackID());
+                    // eventAction->HitTracksOBM0.back().SetPosition((*track).GetPosition());
                 }
             }
             // Hit in OBM1
             else if (30 <= CopyNo && CopyNo <= 43)
             {
-                if (!(ContainsTrackID(eventAction->HitTracksOBM1, HitTrack.GetTrackID())))
+                if (!(ContainsTrackID(eventAction->HitTracksOBM1, hit.GetTrackID())))
                 {
-                    eventAction->HitTracksOBM1.push_back(HitTrack);
+                    eventAction->HitTracksOBM1.push_back(hit);
+                    // eventAction->HitTracksOBM1.back().SetTrackID((*track).GetTrackID());
+                    // eventAction->HitTracksOBM1.back().SetPosition((*track).GetPosition());
                 }
             }
 
@@ -219,7 +230,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
 }
 
 // Function to check if a trackID is already stored during the same event -> prevent multiple hits of same particle on one plane (delta electrons)
-bool SensitiveDetector::ContainsTrackID(std::vector<G4Track> vec, int trackID)
+bool SensitiveDetector::ContainsTrackID(std::vector<UserHit> vec, int trackID)
 {
     for (auto it = vec.begin(); it != vec.end(); it++)
     {

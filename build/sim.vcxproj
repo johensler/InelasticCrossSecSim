@@ -335,6 +335,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Geant4\AbsorptionCrossSecSim\RunAction.cc" />
     <ClCompile Include="C:\Geant4\AbsorptionCrossSecSim\RunManager.cc" />
     <ClCompile Include="C:\Geant4\AbsorptionCrossSecSim\SensitiveDet.cc" />
+    <ClCompile Include="C:\Geant4\AbsorptionCrossSecSim\UserHit.cc" />
     <ClCompile Include="C:\Geant4\AbsorptionCrossSecSim\action.cc" />
     <ClCompile Include="C:\Geant4\AbsorptionCrossSecSim\construction.cc" />
     <ClCompile Include="C:\Geant4\AbsorptionCrossSecSim\generator.cc" />
@@ -343,6 +344,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Geant4\AbsorptionCrossSecSim\RunAction.hh" />
     <ClInclude Include="C:\Geant4\AbsorptionCrossSecSim\RunManager.hh" />
     <ClInclude Include="C:\Geant4\AbsorptionCrossSecSim\SensitiveDet.hh" />
+    <ClInclude Include="C:\Geant4\AbsorptionCrossSecSim\UserHit.hh" />
     <ClInclude Include="C:\Geant4\AbsorptionCrossSecSim\action.hh" />
     <ClInclude Include="C:\Geant4\AbsorptionCrossSecSim\construction.hh" />
     <ClInclude Include="C:\Geant4\AbsorptionCrossSecSim\generator.hh" />

@@ -16,6 +16,9 @@
     <ClCompile Include="C:\Geant4\AbsorptionCrossSecSim\SensitiveDet.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Geant4\AbsorptionCrossSecSim\UserHit.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Geant4\AbsorptionCrossSecSim\action.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -40,6 +43,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Geant4\AbsorptionCrossSecSim\SensitiveDet.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Geant4\AbsorptionCrossSecSim\UserHit.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Geant4\AbsorptionCrossSecSim\action.hh">
