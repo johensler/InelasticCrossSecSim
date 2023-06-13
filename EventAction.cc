@@ -272,7 +272,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
     const SimulationConstruction *construction = static_cast<const SimulationConstruction *>(runManager->GetUserDetectorConstruction());
 
     // For proton z = 1 and m = 938 MeV, and for Al X_0 = 8.897 cm
-    G4double msc_cut = 3 * CalculateMSCAngle(EnteringEnergy, 1, 8.897 * cm, construction->target_thickness, 938 * MeV);
+    G4double msc_cut = 3 * CalculateMSCAngle(EnteringEnergy, 1, 8.897 * cm, construction->target_thickness, 938 * MeV) / (2*sqrt(2*log(2)));
 
     if (bIsInTrack && bIsNoOutTrack)
     {
