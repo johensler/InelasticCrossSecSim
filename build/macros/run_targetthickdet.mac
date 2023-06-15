@@ -2,123 +2,68 @@
 /gps/ene/mono 48 MeV
 /construction/target_thickness 1 mm
 /run/reinitializeGeometry
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 1
 /gps/ene/mono 49 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 2
 /gps/ene/mono 50 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 3
 /gps/ene/mono 51 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 4
 /gps/ene/mono 52 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 4
 /gps/ene/mono 53 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 6
 /gps/ene/mono 54 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 7
 /gps/ene/mono 55 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 8
 /gps/ene/mono 60 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 9
 /gps/ene/mono 65 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 10
 /gps/ene/mono 70 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 11
 /gps/ene/mono 75 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 12
 /gps/ene/mono 80 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 13
 /gps/ene/mono 85 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 14
 /gps/ene/mono 90 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 15
 /gps/ene/mono 95 MeV
-/run/beamOn 100000
+/run/beamOn 10000000
 
 #RUN 16
 /gps/ene/mono 100 MeV
-/run/beamOn 100000
-
-#RUN 17
-/gps/ene/mono 110 MeV
-/run/beamOn 100000
-
-#RUN 18
-/gps/ene/mono 120 MeV
-/run/beamOn 100000
-
-#RUN 19
-/gps/ene/mono 130 MeV
-/run/beamOn 100000
-
-#RUN 20
-/gps/ene/mono 140 MeV
-/run/beamOn 100000
-
-#RUN 21
-/gps/ene/mono 150 MeV
-/run/beamOn 100000
-
-#RUN 22
-/gps/ene/mono 160 MeV
-/run/beamOn 100000
-
-#RUN 23
-/gps/ene/mono 170 MeV
-/run/beamOn 100000
-
-#RUN 24
-/gps/ene/mono 180 MeV
-/run/beamOn 100000
-
-#RUN 25
-/gps/ene/mono 190 MeV
-/run/beamOn 100000
-
-#RUN 26
-/gps/ene/mono 200 MeV
-/run/beamOn 100000
-
-#RUN 27
-/gps/ene/mono 210 MeV
-/run/beamOn 100000
-
-#RUN 28
-/gps/ene/mono 220 MeV
-/run/beamOn 100000
-
-#RUN 29
-/gps/ene/mono 230 MeV
-/run/beamOn 100000
-
-
-
+/run/beamOn 10000000

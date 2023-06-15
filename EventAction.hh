@@ -85,7 +85,7 @@ public:
 
 private:
     double hResX = 9.8 * mm;
-    double hResY = 2.0 * mm;
+    double hResY = 1.7 * mm;
 
     G4double CalculateMSCAngle(G4double E, int z, G4double X_0, G4double x, G4double m);
 
