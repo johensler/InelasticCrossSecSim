@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     runManager->SetUserInitialization(new SimulationConstruction());
 
     // Physics
-    G4VModularPhysicsList *physicsList = new QBBC;
+    G4VModularPhysicsList *physicsList = new FTFP_BERT;
     // runManager->SetUserInitialization(new PhysicsList()); // own physics list
     runManager->SetUserInitialization(physicsList); // Geant4 physics list
 
