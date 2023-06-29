@@ -40,10 +40,8 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     G4double det0Zpos = det1Zpos - 2.3 * cm;
 
     G4double det3Zpos = target_thickness / 2 + 0.5 * cm;
-    G4double det4Zpos = det3Zpos + 2.3 * cm;
-    G4double det5Zpos = det4Zpos + 2.3 * cm;
 
-    G4double OBM1Zpos = det5Zpos + 3 * cm;
+    G4double OBM1Zpos = det3Zpos + 3 * cm;
     G4double OBM2Zpos = OBM1Zpos + 3 * cm;
 
     G4double sciZpos = det0Zpos - 2 * cm - 10 / 2 * mm;
@@ -62,8 +60,6 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     physALPIDE1 = new G4PVPlacement(0, G4ThreeVector(0., 0., det1Zpos), logicALPIDE, "physALPIDE1", logicWorld, false, 1, true);
     physALPIDE2 = new G4PVPlacement(0, G4ThreeVector(0., 0., det2Zpos), logicALPIDE, "physALPIDE2", logicWorld, false, 2, true);
     physALPIDE3 = new G4PVPlacement(0, G4ThreeVector(0., 0., det3Zpos), logicALPIDE, "physALPIDE3", logicWorld, false, 3, true);
-    physALPIDE4 = new G4PVPlacement(0, G4ThreeVector(0., 0., det4Zpos), logicALPIDE, "physALPIDE4", logicWorld, false, 4, true);
-    physALPIDE5 = new G4PVPlacement(0, G4ThreeVector(0., 0., det5Zpos), logicALPIDE, "physALPIDE5", logicWorld, false, 5, true);
 
     double ALPIDE_x = 1024 * 29.24 * micrometer;
     double ALPIDE_y = 512 * 26.88 * micrometer;
