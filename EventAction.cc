@@ -287,7 +287,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
         }
 
         //(II.ii) TINO.ElasOut (Single elastic scattering in target out of acceptance)
-        else if (bElasticCondition)
+        else if (!bIsInelastic && (bIsElastic))
         {
             man->FillH1(1, 8);
 
