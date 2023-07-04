@@ -306,6 +306,13 @@ void EventAction::EndOfEventAction(const G4Event *event)
         else
         {
             man->FillH1(1, 9);
+            // Debug:
+            // Display one current event
+            G4UImanager *uiManager = G4UImanager::GetUIpointer();
+            uiManager->ApplyCommand("/vis/enable");
+            G4EventManager *eventManager = G4EventManager::GetEventManager();
+            eventManager->KeepTheCurrentEvent();
+            G4RunManager::GetRunManager()->AbortRun();
         }
 
         //(II.iv) TINO.Absorb(primary particl enetered the target but did not exit. No inelastic interaction and no elastic interaction occured.)
@@ -392,13 +399,16 @@ void EventAction::EndOfEventAction(const G4Event *event)
 
     // Handle post energy data storage
     // Calculate total energy deposited in the event:
-    G4double E_tot = 0;
-    for (int i = 0; i < PostEnergy.size(); i++)
+    if (bIsInTrack)
     {
-        E_tot = E_tot + PostEnergy[i];
+        G4double E_tot = 0;
+        for (int i = 0; i < PostEnergy.size(); i++)
+        {
+            E_tot = E_tot + PostEnergy[i];
+        }
+        man->FillNtupleDColumn(13, 0, E_tot);
+        man->AddNtupleRow(13);
     }
-    man->FillNtupleDColumn(13, 0, E_tot);
-    man->AddNtupleRow(13);
 
     // Store amout of outgoing tracks
     if (NrOutTrack > 1)
