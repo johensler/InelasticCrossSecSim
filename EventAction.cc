@@ -4,8 +4,13 @@ EventAction::EventAction()
 {
     fMessenger = new G4GenericMessenger(this, "/eventaction/", "Event Action");
     fMessenger->DeclareProperty("RestrictInTracks", bIsRestrictedInTrack, "Should the incoming tracks be restricted by area?");
+    fMessenger->DeclarePropertyWithUnit("SetResX", "mm", hResX, "Half-height of restriction in x");
+    fMessenger->DeclarePropertyWithUnit("SetResY", "mm", hResY, "Half-height of restriction in y");
+
     // Initial Values
     bIsRestrictedInTrack = false;
+    hResX = 9.8 * mm;   //for 1mm  
+    hResY = 1.7 * mm;   //for 1mm
 }
 
 EventAction::~EventAction()

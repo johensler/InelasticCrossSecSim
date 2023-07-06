@@ -84,8 +84,8 @@ public:
     G4bool bIsRestrictedInTrack;
 
 private:
-    double hResX = 9.8 * mm;
-    double hResY = 1.7 * mm;
+    double hResX;
+    double hResY;
 
     G4double CalculateMSCAngle(G4double E, int z, G4double X_0, G4double x, G4double m);
 
