@@ -13,7 +13,7 @@
 /run/beamOn 10000000
 
 #RUN 1
-/gps/ene/mono 138 MeV
+/gps/ene/mono 136 MeV
 /construction/bIsTargetIn false
 /run/reinitializeGeometry 
 /run/beamOn 10000000
@@ -25,7 +25,7 @@
 /run/beamOn 10000000
 
 #RUN 3
-/gps/ene/mono 170 MeV
+/gps/ene/mono 168 MeV
 /construction/bIsTargetIn false
 /run/reinitializeGeometry 
 /run/beamOn 10000000
@@ -37,7 +37,7 @@
 /run/beamOn 10000000
 
 #RUN 5
-/gps/ene/mono 200 MeV
+/gps/ene/mono 198 MeV
 /construction/bIsTargetIn false
 /run/reinitializeGeometry 
 /run/beamOn 10000000
@@ -49,7 +49,7 @@
 /run/beamOn 10000000
 
 #RUN 7
-/gps/ene/mono 232 MeV
+/gps/ene/mono 230 MeV
 /construction/bIsTargetIn false
 /run/reinitializeGeometry 
 /run/beamOn 10000000
