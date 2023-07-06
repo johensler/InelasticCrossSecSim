@@ -1,10 +1,10 @@
 /runaction/outputPath output_2/
 
-/construction/target_thickness 0.1 mm
+/construction/target_thickness 2 mm
 /run/reinitializeGeometry
 /eventaction/RestrictInTracks true
-/eventaction/SetResX 10.0 mm
-/eventaction/SetResX 2.5 mm
+/eventaction/SetResX 9.7 mm
+/eventaction/SetResX 1.0 mm
 
 #RUN 0
 /gps/ene/mono 138 MeV
