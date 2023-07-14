@@ -9,7 +9,7 @@ EventAction::EventAction()
 
     // Initial Values
     bIsRestrictedInTrack = false;
-    hResX = 9.8 * mm;   //for 1mm  
+    hResX = 9.8 * mm;   //for 1mm
     hResY = 1.7 * mm;   //for 1mm
 }
 
@@ -306,6 +306,7 @@ void EventAction::EndOfEventAction(const G4Event *event)
             //     eventManager->KeepTheCurrentEvent();
             //     G4RunManager::GetRunManager()->AbortRun();
             // }
+ 
         }
         //(II.iii) TINO.Bg (background, like scattering in ALPIDEs / divergence of beam / inelastic in ALPIDE)
         else

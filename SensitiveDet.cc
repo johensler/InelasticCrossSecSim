@@ -57,7 +57,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *R0hist)
         }
 
         // Detect ingoing proton ---------------------------------------------------------------------------------------
-        if (PreStepStatus == fGeomBoundary && track->GetParticleDefinition() == ParticleDefinition)
+        if (PreStepStatus == fGeomBoundary && track->GetParticleDefinition() == ParticleDefinition, ParticleOriginVolume == "physWorld")
         {
             // G4cout << "Particle entered the target" << G4endl;
             eventAction->bIsEntered = true;
