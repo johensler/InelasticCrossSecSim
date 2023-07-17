@@ -40,11 +40,13 @@ private:
     G4Box *solidWorld;
     G4Box *solidTarget;
     G4Box *solidDet;
+        G4Box *solidDetOBM;
     G4Box *solidSci;
     // Logics-------------------------------------------------------------
     G4LogicalVolume *logicWorld;
     G4LogicalVolume *logicTarget;
     G4LogicalVolume *logicALPIDE;
+        G4LogicalVolume *logicALPIDEOBM;
     G4LogicalVolume *logicSci;
 
     // Physics-------------------------------------------------------------

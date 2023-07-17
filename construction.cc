@@ -26,12 +26,14 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     solidWorld = new G4Box("solidWorld", world_halfsizeX, world_halfsizeY, world_halfsizeZ); // half of the length
     solidTarget = new G4Box("solidTarget", 7 / 2 * cm, 7 / 2 * cm, target_thickness / 2);
     solidDet = new G4Box("solidDet", 1024 * 29.24 / 2 * micrometer, 512 * 26.88 / 2 * micrometer, 50 / 2 * micrometer);
+    solidDetOBM = new G4Box("solidDetOBM", 1024 * 29.24 / 2 * micrometer, 512 * 26.88 / 2 * micrometer, 100 / 2 * micrometer);
     solidSci = new G4Box("solidSci", 45 / 2 * mm, 25 / 2 * mm, 10 / 2 * mm);
 
     // LOGIC VOLUMES ......oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
     logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld");
     logicTarget = new G4LogicalVolume(solidTarget, targetMat, "logicTarget");
     logicALPIDE = new G4LogicalVolume(solidDet, detMat, "logicALPIDE");
+    logicALPIDEOBM = new G4LogicalVolume(solidDetOBM, detMat, "logicALPIDE");
     logicSci = new G4LogicalVolume(solidSci, sciMat, "logicSci");
 
     // WORLD POSITIONS ......oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
@@ -76,7 +78,7 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
         {
             G4VPhysicalVolume *physOBM1 = new G4PVPlacement(0,
                                                             G4ThreeVector(-3 * (ALPIDE_x + ALPIDE_distance) + (i * (ALPIDE_x + ALPIDE_distance)), -0.5 * (ALPIDE_y + ALPIDE_distance) + (j * (ALPIDE_y + ALPIDE_distance)), OBM1Zpos),
-                                                            logicALPIDE,
+                                                            logicALPIDEOBM,
                                                             "physOBM1",
                                                             logicWorld,
                                                             false,
@@ -95,7 +97,7 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
         {
             G4VPhysicalVolume *physOBM2 = new G4PVPlacement(0,
                                                             G4ThreeVector(-3 * (ALPIDE_x + ALPIDE_distance) + (i * (ALPIDE_x + ALPIDE_distance)), -0.5 * (ALPIDE_y + ALPIDE_distance) + (j * (ALPIDE_y + ALPIDE_distance)), OBM2Zpos),
-                                                            logicALPIDE,
+                                                            logicALPIDEOBM,
                                                             "physOBM0",
                                                             logicWorld,
                                                             false,
