@@ -296,16 +296,16 @@ void EventAction::EndOfEventAction(const G4Event *event)
         {
             man->FillH1(1, 8);
 
-            if (!bIsElastic)
-            {
+            // if (!bIsElastic)
+            // {
                 // Debug:
                 // Display one current event
-                G4UImanager *uiManager = G4UImanager::GetUIpointer();
-                uiManager->ApplyCommand("/vis/enable");
-                G4EventManager *eventManager = G4EventManager::GetEventManager();
-                eventManager->KeepTheCurrentEvent();
-                G4RunManager::GetRunManager()->AbortRun();
-            }
+                // G4UImanager *uiManager = G4UImanager::GetUIpointer();
+                // uiManager->ApplyCommand("/vis/enable");
+                // G4EventManager *eventManager = G4EventManager::GetEventManager();
+                // eventManager->KeepTheCurrentEvent();
+                // G4RunManager::GetRunManager()->AbortRun();
+            // }
  
         }
         //(II.iii) TINO.Bg (background, like scattering in ALPIDEs / divergence of beam / inelastic in ALPIDE)
