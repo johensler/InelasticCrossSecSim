@@ -69,7 +69,7 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
 
     double ALPIDE_x = 1024 * 29.24 * micrometer;
     double ALPIDE_y = 512 * 26.88 * micrometer;
-    double ALPIDE_distance = 10 * micrometer;
+    double ALPIDE_distance = 150 * micrometer;
     // OBM 0
     G4int ID = 10;
     for (G4int i = 0; i < 7; i++)
