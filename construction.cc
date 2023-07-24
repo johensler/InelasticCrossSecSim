@@ -119,6 +119,9 @@ void SimulationConstruction::ConstructSDandField()
     SensitiveDetector *SensALPIDE = new SensitiveDetector("SensitiveALPIDE");
     logicALPIDE->SetSensitiveDetector(SensALPIDE);
 
+    SensitiveDetector *SensALPIDEOBM = new SensitiveDetector("SensitiveALPIDE");
+    logicALPIDEOBM->SetSensitiveDetector(SensALPIDE);
+
     SensitiveDetector *SensSci = new SensitiveDetector("SensitiveScintillator");
     logicSci->SetSensitiveDetector(SensSci);
 }
