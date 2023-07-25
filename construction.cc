@@ -33,7 +33,7 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld");
     logicTarget = new G4LogicalVolume(solidTarget, targetMat, "logicTarget");
     logicALPIDE = new G4LogicalVolume(solidDet, detMat, "logicALPIDE");
-    logicALPIDEOBM = new G4LogicalVolume(solidDetOBM, detMat, "logicALPIDE");
+    logicALPIDEOBM = new G4LogicalVolume(solidDetOBM, detMat, "logicALPIDEOBM");
     logicSci = new G4LogicalVolume(solidSci, sciMat, "logicSci");
 
     // WORLD POSITIONS ......oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
@@ -119,8 +119,8 @@ void SimulationConstruction::ConstructSDandField()
     SensitiveDetector *SensALPIDE = new SensitiveDetector("SensitiveALPIDE");
     logicALPIDE->SetSensitiveDetector(SensALPIDE);
 
-    SensitiveDetector *SensALPIDEOBM = new SensitiveDetector("SensitiveALPIDE");
-    logicALPIDEOBM->SetSensitiveDetector(SensALPIDE);
+    SensitiveDetector *SensALPIDEOBM = new SensitiveDetector("SensitiveALPIDEOBM");
+    logicALPIDEOBM->SetSensitiveDetector(SensALPIDEOBM);
 
     SensitiveDetector *SensSci = new SensitiveDetector("SensitiveScintillator");
     logicSci->SetSensitiveDetector(SensSci);
