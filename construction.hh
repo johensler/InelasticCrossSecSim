@@ -53,6 +53,8 @@ private:
     G4VPhysicalVolume *physWorld;
     G4VPhysicalVolume *physTarget;
     G4VPhysicalVolume *physSci;
+    G4VPhysicalVolume *physOBM1;
+    G4VPhysicalVolume *physOBM2;
 
     // Signle ALPIDEs
     G4VPhysicalVolume *physALPIDE0;

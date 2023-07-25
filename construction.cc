@@ -76,14 +76,14 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     {
         for (G4int j = 0; j < 2; j++)
         {
-            G4VPhysicalVolume *physOBM1 = new G4PVPlacement(0,
-                                                            G4ThreeVector(-3 * (ALPIDE_x + ALPIDE_distance) + (i * (ALPIDE_x + ALPIDE_distance)), -0.5 * (ALPIDE_y + ALPIDE_distance) + (j * (ALPIDE_y + ALPIDE_distance)), OBM1Zpos),
-                                                            logicALPIDEOBM,
-                                                            "physOBM1",
-                                                            logicWorld,
-                                                            false,
-                                                            ID,
-                                                            true);
+            physOBM1 = new G4PVPlacement(0,
+                                         G4ThreeVector(-3 * (ALPIDE_x + ALPIDE_distance) + (i * (ALPIDE_x + ALPIDE_distance)), -0.5 * (ALPIDE_y + ALPIDE_distance) + (j * (ALPIDE_y + ALPIDE_distance)), OBM1Zpos),
+                                         logicALPIDEOBM,
+                                         "physOBM1",
+                                         logicWorld,
+                                         false,
+                                         ID,
+                                         true);
 
             ID++;
         }
@@ -95,14 +95,14 @@ G4VPhysicalVolume *SimulationConstruction::Construct()
     {
         for (G4int j = 0; j < 2; j++)
         {
-            G4VPhysicalVolume *physOBM2 = new G4PVPlacement(0,
-                                                            G4ThreeVector(-3 * (ALPIDE_x + ALPIDE_distance) + (i * (ALPIDE_x + ALPIDE_distance)), -0.5 * (ALPIDE_y + ALPIDE_distance) + (j * (ALPIDE_y + ALPIDE_distance)), OBM2Zpos),
-                                                            logicALPIDEOBM,
-                                                            "physOBM0",
-                                                            logicWorld,
-                                                            false,
-                                                            ID,
-                                                            true);
+            physOBM2 = new G4PVPlacement(0,
+                                         G4ThreeVector(-3 * (ALPIDE_x + ALPIDE_distance) + (i * (ALPIDE_x + ALPIDE_distance)), -0.5 * (ALPIDE_y + ALPIDE_distance) + (j * (ALPIDE_y + ALPIDE_distance)), OBM2Zpos),
+                                         logicALPIDEOBM,
+                                         "physOBM2",
+                                         logicWorld,
+                                         false,
+                                         ID,
+                                         true);
             ID++;
         }
     }

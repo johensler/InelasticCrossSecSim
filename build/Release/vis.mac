@@ -18,6 +18,9 @@
 /vis/geometry/set/forceSolid logicALPIDE 1 1
 /vis/geometry/set/colour logicALPIDE 1 0.1 0.7 0.9 1
 
+/vis/geometry/set/forceSolid logicALPIDEOBM 1 1
+/vis/geometry/set/colour logicALPIDEOBM 1 0.1 0.7 0.9 1
+
 /vis/geometry/set/forceSolid logicTarget 1 1
 /vis/geometry/set/colour logicTarget 1 grey 1
 
